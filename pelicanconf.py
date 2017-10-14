@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'Guillaume Redoulès'
 SITENAME = 'Notes on python, machine learning, linux and other programming related topics'
-SITEURL = 'output'#'redoules.github.io'
+SITEURL = 'redoules.github.io'#'output'#
 THEME = 'theme/'
 
 PATH = 'content'
