@@ -5,7 +5,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>redoules.github.io/</loc>
-<lastmod>2018-01-03T16:32:41-00:00</lastmod>
+<lastmod>2018-01-03T19:45:41-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -18,14 +18,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>redoules.github.io/bash/Reloading_.bashrc.html</loc>
+<loc>redoules.github.io/linux/share_nfs_share.html</loc>
+<lastmod>2018-01-03T19:09:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>redoules.github.io/linux/mount_nfs_share_fstab.html</loc>
+<lastmod>2018-01-03T19:02:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>redoules.github.io/cryptocurrencies/Installing_bitcoind_on_raspberry_pi.html</loc>
+<lastmod>2018-01-03T16:51:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>redoules.github.io/linux/Reloading_.bashrc.html</loc>
 <lastmod>2018-01-03T16:29:00+01:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>redoules.github.io/bash/Reloading_fstab.html</loc>
+<loc>redoules.github.io/linux/Reloading_fstab.html</loc>
 <lastmod>2018-01-03T14:16:00+01:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>

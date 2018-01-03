@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Bash template article - Bash</title>
+    <title>Synology NFS share - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,6 +34,7 @@
     <![endif]-->
         
 
+    <meta name="tags" content="Synology" />
 
 
 </head>
@@ -111,19 +112,31 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Bash template article
+      Synology NFS share
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2017-06-17T08:22:00+02:00">
-            17 juin 2017
+        <time class="published" datetime="2018-01-03T19:09:00+01:00">
+            03 janvier 2018
         </time>
     </li>
-    <li>Bash</li>
+    <li>Linux</li>
+    <li>Synology</li>
 </ol>
 </header>
 <div class='article_content'>
-
+<h3>Setting up a NFS share</h3>
+<p>login to your DSM admin account, open the "Control Panel" and go to "File Services"</p>
+<p><img alt="jpg" src="../images/share_nfs_share/1.jpg"></p>
+<p>Make sure NFS is enabled</p>
+<p><img alt="jpg" src="../images/share_nfs_share/2.jpg"></p>
+<p>Back in the control panel, go to "Shared Folder"</p>
+<p><img alt="jpg" src="../images/share_nfs_share/3.jpg"></p>
+<p>Select the folder you want to share and clic "Edit"</p>
+<p><img alt="jpg" src="../images/share_nfs_share/4.jpg"></p>
+<p>Go to the "NFS Permissions tab and clic "Create", add the ip of the device you want to mount the mapped drive on. </p>
+<p><img alt="jpg" src="../images/share_nfs_share/5.jpg"></p>
+<p>Make sure you copy the "Mount path"</p>
 </div>
     <aside>
     <div class="bug-reporting__panel">
@@ -138,9 +151,9 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 4 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 9 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
-                Copyright &copy; Chris Albon,
+                Copyright &copy; Guillaume Redoulès,
                     <time datetime="2017">2017</time>.
                 </center>
             </p>

@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>About Guillaume Redoulès</title>
+    <title>Mount a NFS share using fstab - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -33,6 +33,8 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
         
+
+    <meta name="tags" content="rpi" />
 
 
 </head>
@@ -104,42 +106,53 @@
 
     <!-- end of header section -->
     <div class="container">
+<!-- <div class="alert alert-warning" role="alert">
+    Did you find this page useful? Please do me a quick favor and <a href="#" class="alert-link">endorse me for data science on LinkedIn</a>.
+</div> -->
 <section id="content" class="body">
-  <header>
+    <header>
     <h1>
-      About Guillaume Redoulès
+      Mount a NFS share using fstab
     </h1>
-  </header>
-  <div class='article_content'>
-<p><img src="../images/banner.jpg"></img></p>
-<p>I am a data scientist and a mechanical engineer working on numerical methods for stress computations in the field of rocket propulsion. Prior to that, I've got a MSc in  Computational Fluid Dynamics and aerodynamics from Imperial College London.</p>
-<ul>
-<li>Email: &#103;&#117;&#105;&#108;&#108;&#097;&#117;&#109;&#101;&#046;&#114;&#101;&#100;&#111;&#117;&#108;&#101;&#115;&#064;&#103;&#097;&#100;&#122;&#046;&#111;&#114;&#103;</li>
-<li>Linkedin: <a href="https://www.linkedin.com/in/guillaume-redoul%C3%A8s-33923860/">Guillaume Redoulès</a></li>
-</ul>
-<h2>Curriculum Vitae</h2>
-<h3>Experience</h3>
-<ul>
-<li><strong>Thermomecanical method and tools engineer</strong>, <a href="https://www.ariane.group/fr/">Ariane Group</a>, 2015 - Present<ul>
-<li>In charge of tools and methods related to thermomecanical computations. Focal point for machine learning.</li>
-</ul>
-</li>
-</ul>
-<h3>Education</h3>
-<ul>
-<li><strong>MSc Advanced Computational Methods for Aeronautics, Flow Management and Fluid-Structure Interaction</strong>, Imperial College London, London. 2013<ul>
-<li>Dissertation: "Estimator design for fluid flows"</li>
-<li>Fields: Aeronautics, aerodynamics, computational fluid dynamics, numerical methods</li>
-</ul>
-</li>
-<li><strong>Arts et Métiers Paristech</strong>, France, 2011<ul>
-<li>Generalist engineering degree</li>
-<li>Fields: Mechanics, electrical engineering, casting, machining, project management, finance, IT, etc.</li>
-</ul>
-</li>
-</ul>
+<ol class="breadcrumb">
+    <li>
+        <time class="published" datetime="2018-01-03T19:02:00+01:00">
+            03 janvier 2018
+        </time>
+    </li>
+    <li>Linux</li>
+    <li>rpi</li>
+</ol>
+</header>
+<div class='article_content'>
+<h3>Mount nfs using fstab</h3>
+<p>The fstab file, generally located at /etc/fstab lists the differents partitions and where to load them on the filesystem. You can edit this file as root by using the following command</p>
+<div class="highlight"><pre><span></span>sudo nano /etc/fstab
+</pre></div>
+
+
+<p>in the following example, we want to mount a NFS v3 share from :
+<em> server : 192.168.1.2
+</em> mountpoint (on the server) : /volumeUSB2/usbshare
+* mountlocation (on the client) : /mnt</p>
+<p>we specify</p>
+<div class="highlight"><pre><span></span><span class="m">192</span>.168.1.2:/volumeUSB2/usbshare  /mnt  nfs <span class="nv">nfsvers</span><span class="o">=</span><span class="m">3</span>,users <span class="m">0</span>  <span class="m">0</span>
+</pre></div>
+
+
+<p>the client will then automatically mount the share ont /mnt at startup.</p>
+<h3>Related</h3>
+<p>you can reload the fstab file using this method : <a href="https://redoules.github.io/linux/Reloading_fstab.html">https://redoules.github.io/linux/Reloading_fstab.html</a></p>
+<p>You can create a NFS share on a Synology using the method : <a href="https://redoules.github.io/linux/share_nfs_share.html">https://redoules.github.io/linux/share_nfs_share.html</a></p>
 </div>
+    <aside>
+    <div class="bug-reporting__panel">
+        <h3>Find an error or bug? Have a suggestion?</h3>
+        <p>Everything on this site is avaliable on GitHub. Head on over and <a href='https://github.com/redoules/redoules.github.io/issues/new'>submit an issue.</a> You can also message me directly by <a href='mailto:guillaume.redoules@gadz.org'>email</a>.</p>
+    </div>
+    </aside>
 </section>
+
     </div>
     <!-- start of footer section -->
     <footer class="footer">
