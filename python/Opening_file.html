@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>About Guillaume Redoulès</title>
+    <title>Opening a file with python - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -33,6 +33,8 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
         
+
+    <meta name="tags" content="Basics" />
 
 
 </head>
@@ -104,42 +106,84 @@
 
     <!-- end of header section -->
     <div class="container">
+<!-- <div class="alert alert-warning" role="alert">
+    Did you find this page useful? Please do me a quick favor and <a href="#" class="alert-link">endorse me for data science on LinkedIn</a>.
+</div> -->
 <section id="content" class="body">
-  <header>
+    <header>
     <h1>
-      About Guillaume Redoulès
+      Opening a file with python
     </h1>
-  </header>
-  <div class='article_content'>
-<p><img src="../images/banner.jpg"></img></p>
-<p>I am a data scientist and a mechanical engineer working on numerical methods for stress computations in the field of rocket propulsion. Prior to that, I've got a MSc in  Computational Fluid Dynamics and aerodynamics from Imperial College London.</p>
-<ul>
-<li>Email: &#103;&#117;&#105;&#108;&#108;&#097;&#117;&#109;&#101;&#046;&#114;&#101;&#100;&#111;&#117;&#108;&#101;&#115;&#064;&#103;&#097;&#100;&#122;&#046;&#111;&#114;&#103;</li>
-<li>Linkedin: <a href="https://www.linkedin.com/in/guillaume-redoul%C3%A8s-33923860/">Guillaume Redoulès</a></li>
-</ul>
-<h2>Curriculum Vitae</h2>
-<h3>Experience</h3>
-<ul>
-<li><strong>Thermomecanical method and tools engineer</strong>, <a href="https://www.ariane.group/fr/">Ariane Group</a>, 2015 - Present<ul>
-<li>In charge of tools and methods related to thermomecanical computations. Focal point for machine learning.</li>
-</ul>
-</li>
-</ul>
-<h3>Education</h3>
-<ul>
-<li><strong>MSc Advanced Computational Methods for Aeronautics, Flow Management and Fluid-Structure Interaction</strong>, Imperial College London, London. 2013<ul>
-<li>Dissertation: "Estimator design for fluid flows"</li>
-<li>Fields: Aeronautics, aerodynamics, computational fluid dynamics, numerical methods</li>
-</ul>
-</li>
-<li><strong>Arts et Métiers Paristech</strong>, France, 2011<ul>
-<li>Generalist engineering degree</li>
-<li>Fields: Mechanics, electrical engineering, casting, machining, project management, finance, IT, etc.</li>
-</ul>
-</li>
-</ul>
+<ol class="breadcrumb">
+    <li>
+        <time class="published" datetime="2018-08-03T18:25:00+02:00">
+            03 août 2018
+        </time>
+    </li>
+    <li>Python</li>
+    <li>Basics</li>
+</ol>
+</header>
+<div class='article_content'>
+<h1>Opening a file with python</h1>
+<p>This short article show you how to open a file using python. We will use the with keyword in order to avoid having to close the file.</p>
+<p>There is no need to import anything in order to open a file. All the function related to file manipulation are part of the python standard library</p>
+<p>In order to open a file, we will use the function open. This function takes two arguments : 
+<em> the path of the file
+</em> the mode you want to open the file </p>
+<p>The mode can be :
+<em> 'r' : read
+</em> 'w' : write
+<em> 'a' : append (writes at the end of the file) 
+</em> 'b' : binary mode 
+<em> 'x' : exclusive creation 
+</em> 't' : text mode (by default)</p>
+<p>Note that if the file does not exit it will be created if you use the following options "w", "a", "x".
+If you try to open a non existing file in read mode 'r', a FileNotFoundError will be returned.</p>
+<p>It is possible to combine multiple options together. For instance, you can open a file in binary mode for writing using the 'wb' option.</p>
+<p>Python distinguishes between binary and text I/O. Files opened in binary mode return contents as bytes objects without any decoding. In text mode , the contents of the file are returned as str, the bytes having been first decoded using a platform-dependent encoding or using the specified encoding if given.</p>
+<h2>Writing to a file</h2>
+<p>Let's first open (create) a text file a write a string to it.</p>
+<div class="highlight"><pre><span></span><span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;.</span><span class="se">\\</span><span class="s2">myfile.txt&quot;</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Hello world !&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>Reading a file</h2>
+<p>we can now see how to read the content of a file. To do so, we will use the 'r' option</p>
+<div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">content</span>  <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>Hello world !
+</pre></div>
+
+
+<h1>A word on the <strong>with</strong> keyword</h1>
+<p>In python the <strong>with</strong> keyword is used when working with unmanaged resources (like file streams). </p>
+<p>The <a href="https://docs.python.org/3/whatsnew/2.6.html#pep-343-the-with-statement">python documentation</a> tells us that : </p>
+<p>The with statement clarifies code that previously would use try...finally blocks to ensure that clean-up code is executed. In this section, I’ll discuss the statement as it will commonly be used. In the next section, I’ll examine the implementation details and show how to write objects for use with this statement.</p>
+<p>The with statement is a control-flow structure whose basic structure is:</p>
+<div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">expression</span> <span class="p">[</span><span class="k">as</span> <span class="n">variable</span><span class="p">]:</span>
+        <span class="k">with</span><span class="o">-</span><span class="n">block</span>
+</pre></div>
+
+
+<p>The expression is evaluated, and it should result in an object that supports the context management protocol (that is, has <strong>enter</strong>() and <strong>exit</strong>() methods).</p>
 </div>
+    <aside>
+    <div class="bug-reporting__panel">
+        <h3>Find an error or bug? Have a suggestion?</h3>
+        <p>Everything on this site is avaliable on GitHub. Head on over and <a href='https://github.com/redoules/redoules.github.io/issues/new'>submit an issue.</a> You can also message me directly by <a href='mailto:guillaume.redoules@gadz.org'>email</a>.</p>
+    </div>
+    </aside>
 </section>
+
     </div>
     <!-- start of footer section -->
     <footer class="footer">
