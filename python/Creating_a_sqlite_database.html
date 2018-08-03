@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Mount a NFS share using fstab - Linux</title>
+    <title>Creating a sqlite database - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="rpi" />
+    <meta name="tags" content="Data Wrangling" />
 
 
 </head>
@@ -112,38 +112,73 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Mount a NFS share using fstab
+      Creating a sqlite database
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-01-03T19:02:00+01:00">
-            03 janvier 2018
+        <time class="published" datetime="2018-08-03T20:33:00+02:00">
+            03 août 2018
         </time>
     </li>
-    <li>Linux</li>
-    <li>rpi</li>
+    <li>Python</li>
+    <li>Data Wrangling</li>
 </ol>
 </header>
 <div class='article_content'>
-<h3>Mount nfs using fstab</h3>
-<p>The fstab file, generally located at /etc/fstab lists the differents partitions and where to load them on the filesystem. You can edit this file as root by using the following command</p>
-<div class="highlight"><pre><span></span>sudo nano /etc/fstab
+<h1>Creating a sqlite database</h1>
+<p>When you want to start with using databases SQlite is a great tool. It provides an easy onramp to learn and prototype you database with a SQL compatible database.</p>
+<p>First, let's import the libraries we need</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">from</span> <span class="nn">sqlite3</span> <span class="kn">import</span> <span class="n">Error</span>
 </pre></div>
 
 
-<p>in the following example, we want to mount a NFS v3 share from :
-<em> server : 192.168.1.2
-</em> mountpoint (on the server) : /volumeUSB2/usbshare
-* mountlocation (on the client) : /mnt</p>
-<p>we specify</p>
-<div class="highlight"><pre><span></span><span class="m">192</span>.168.1.2:/volumeUSB2/usbshare  /mnt  nfs <span class="nv">nfsvers</span><span class="o">=</span><span class="m">3</span>,users <span class="m">0</span>  <span class="m">0</span>
+<p>SQlite doesn't need a database server, however, you have to start by creating an empty database file</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span> 
+<span class="k">def</span> <span class="nf">check_for_db_file</span> <span class="p">():</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;mydatabase.db&quot;</span><span class="p">):</span>
+        <span class="k">print</span> <span class="p">(</span><span class="s2">&quot;the database is ready&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;no database found&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<p>the client will then automatically mount the share ont /mnt at startup.</p>
-<h3>Related</h3>
-<p>you can reload the fstab file using this method : <a href="https://redoules.github.io/linux/Reloading_fstab.html">https://redoules.github.io/linux/Reloading_fstab.html</a></p>
-<p>You can create a NFS share on a Synology using the method : <a href="https://redoules.github.io/linux/share_nfs_share.html">https://redoules.github.io/linux/share_nfs_share.html</a></p>
+<div class="highlight"><pre><span></span><span class="n">check_for_db_file</span> <span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>no database found
+</pre></div>
+
+
+<p>Let's then create a function that will connect to a database, print the verison of sqlite and then close the connexion to the database. </p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_database</span><span class="p">(</span><span class="n">db_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; create a database connection to a SQLite database &quot;&quot;&quot;</span>
+    <span class="k">try</span> <span class="p">:</span>
+        <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;database created with sqlite3 version {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sqlite3</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">create_database</span><span class="p">(</span><span class="s2">&quot;.\mydatabase.db&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>database created with sqlite3 version 2.6.0
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">check_for_db_file</span> <span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>the database is ready
+</pre></div>
+
+
+<p>You're all set. From now on, you can open the database and write sql querries into it.</p>
 </div>
     <aside>
     <div class="bug-reporting__panel">
