@@ -131,13 +131,15 @@
 <p>In order to open a file, we will use the function open. This function takes two arguments : 
 - the path of the file
 - the mode you want to open the file </p>
-<p>The mode can be :
-- 'r' : read
-- 'w' : write
-- 'a' : append (writes at the end of the file) 
-- 'b' : binary mode 
-- 'x' : exclusive creation 
-- 't' : text mode (by default)</p>
+<p>The mode can be :</p>
+<ul>
+<li>'r' : read</li>
+<li>'w' : write</li>
+<li>'a' : append (writes at the end of the file) </li>
+<li>'b' : binary mode </li>
+<li>'x' : exclusive creation </li>
+<li>'t' : text mode (by default)</li>
+</ul>
 <p>Note that if the file does not exit it will be created if you use the following options "w", "a", "x".
 If you try to open a non existing file in read mode 'r', a FileNotFoundError will be returned.</p>
 <p>It is possible to combine multiple options together. For instance, you can open a file in binary mode for writing using the 'wb' option.</p>
