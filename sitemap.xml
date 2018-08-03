@@ -5,7 +5,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>redoules.github.io/</loc>
-<lastmod>2018-08-03T17:33:49-00:00</lastmod>
+<lastmod>2018-08-03T18:03:01-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -18,8 +18,15 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>redoules.github.io/python/Writing_data_to_a_sql_database_with_pandas.html</loc>
+<lastmod>2018-08-03T17:38:00+02:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>redoules.github.io/python/Creating_a_sqlite_database.html</loc>
-<lastmod>2018-08-03T20:33:00+02:00</lastmod>
+<lastmod>2018-08-03T17:13:00+02:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
