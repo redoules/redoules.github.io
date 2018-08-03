@@ -129,15 +129,15 @@
 <p>This short article show you how to open a file using python. We will use the with keyword in order to avoid having to close the file.</p>
 <p>There is no need to import anything in order to open a file. All the function related to file manipulation are part of the python standard library</p>
 <p>In order to open a file, we will use the function open. This function takes two arguments : 
-<em> the path of the file
-</em> the mode you want to open the file </p>
+- the path of the file
+- the mode you want to open the file </p>
 <p>The mode can be :
-<em> 'r' : read
-</em> 'w' : write
-<em> 'a' : append (writes at the end of the file) 
-</em> 'b' : binary mode 
-<em> 'x' : exclusive creation 
-</em> 't' : text mode (by default)</p>
+- 'r' : read
+- 'w' : write
+- 'a' : append (writes at the end of the file) 
+- 'b' : binary mode 
+- 'x' : exclusive creation 
+- 't' : text mode (by default)</p>
 <p>Note that if the file does not exit it will be created if you use the following options "w", "a", "x".
 If you try to open a non existing file in read mode 'r', a FileNotFoundError will be returned.</p>
 <p>It is possible to combine multiple options together. For instance, you can open a file in binary mode for writing using the 'wb' option.</p>
