@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Saving a matplotlib figure with a high resolution - Python</title>
+    <title>Moving average with pandas - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Data Visualization" />
+    <meta name="tags" content="Data Wrangling" />
 
 
 </head>
@@ -112,66 +112,259 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Saving a matplotlib figure with a high resolution
+      Moving average with pandas
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2017-10-14T21:03:00+02:00">
-            14 octobre 2017
+        <time class="published" datetime="2018-08-04T17:41:00+02:00">
+            04 août 2018
         </time>
     </li>
     <li>Python</li>
-    <li>Data Visualization</li>
+    <li>Data Wrangling</li>
 </ol>
 </header>
 <div class='article_content'>
-<h3>creating a matplotlib figure</h3>
-<div class="highlight"><pre><span></span><span class="c1">#Importing matplotlib</span>
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<h1>Moving average with pandas</h1>
+<div class="highlight"><pre><span></span><span class="c1"># Import modules</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas_datareader</span> <span class="kn">import</span> <span class="n">data</span><span class="p">,</span> <span class="n">wb</span>
 </pre></div>
 
 
-<h3>Drawing a figure</h3>
-<div class="highlight"><pre><span></span><span class="c1"># Fixing random state for reproducibility</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">19680801</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="c1">#import packages</span>
 
-<span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">15</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pandas_datareader</span> <span class="kn">import</span> <span class="n">data</span>
 
-<span class="c1"># the histogram of the data</span>
-<span class="n">n</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">patches</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">aapl</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;quandl&#39;</span><span class="p">,</span> <span class="s1">&#39;1980-01-01&#39;</span><span class="p">)</span>
+<span class="n">aapl</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
 
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Smarts&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histogram of IQ&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="o">.</span><span class="mo">025</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mu=100,\ \sigma=15$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">40</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Volume</th>
+      <th>ExDividend</th>
+      <th>SplitRatio</th>
+      <th>AdjOpen</th>
+      <th>AdjHigh</th>
+      <th>AdjLow</th>
+      <th>AdjClose</th>
+      <th>AdjVolume</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2018-03-27</th>
+      <td>173.68</td>
+      <td>175.15</td>
+      <td>166.92</td>
+      <td>168.340</td>
+      <td>38962839.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>173.68</td>
+      <td>175.15</td>
+      <td>166.92</td>
+      <td>168.340</td>
+      <td>38962839.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-26</th>
+      <td>168.07</td>
+      <td>173.10</td>
+      <td>166.44</td>
+      <td>172.770</td>
+      <td>36272617.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>168.07</td>
+      <td>173.10</td>
+      <td>166.44</td>
+      <td>172.770</td>
+      <td>36272617.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-23</th>
+      <td>168.39</td>
+      <td>169.92</td>
+      <td>164.94</td>
+      <td>164.940</td>
+      <td>40248954.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>168.39</td>
+      <td>169.92</td>
+      <td>164.94</td>
+      <td>164.940</td>
+      <td>40248954.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-22</th>
+      <td>170.00</td>
+      <td>172.68</td>
+      <td>168.60</td>
+      <td>168.845</td>
+      <td>41051076.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>170.00</td>
+      <td>172.68</td>
+      <td>168.60</td>
+      <td>168.845</td>
+      <td>41051076.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-21</th>
+      <td>175.04</td>
+      <td>175.09</td>
+      <td>171.26</td>
+      <td>171.270</td>
+      <td>35247358.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>175.04</td>
+      <td>175.09</td>
+      <td>171.26</td>
+      <td>171.270</td>
+      <td>35247358.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>In order to computer the moving average, we will use the rolling function.</p>
+<div class="highlight"><pre><span></span><span class="c1">#120 days moving average</span>
+<span class="n">moving_averages</span> <span class="o">=</span> <span class="n">aapl</span><span class="p">[[</span><span class="s2">&quot;Open&quot;</span> <span class="p">,</span><span class="s2">&quot;High&quot;</span> <span class="p">,</span><span class="s2">&quot;Low&quot;</span><span class="p">,</span><span class="s2">&quot;Close&quot;</span> <span class="p">,</span><span class="s2">&quot;Volume&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">moving_averages</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Volume</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1980-12-18</th>
+      <td>28.457667</td>
+      <td>28.551917</td>
+      <td>28.385000</td>
+      <td>28.385000</td>
+      <td>139495.000000</td>
+    </tr>
+    <tr>
+      <th>1980-12-17</th>
+      <td>28.410750</td>
+      <td>28.502917</td>
+      <td>28.338083</td>
+      <td>28.338083</td>
+      <td>141772.500000</td>
+    </tr>
+    <tr>
+      <th>1980-12-16</th>
+      <td>28.362833</td>
+      <td>28.453917</td>
+      <td>28.289167</td>
+      <td>28.289167</td>
+      <td>141256.666667</td>
+    </tr>
+    <tr>
+      <th>1980-12-15</th>
+      <td>28.335750</td>
+      <td>28.426833</td>
+      <td>28.262083</td>
+      <td>28.262083</td>
+      <td>144321.666667</td>
+    </tr>
+    <tr>
+      <th>1980-12-12</th>
+      <td>28.310750</td>
+      <td>28.402833</td>
+      <td>28.238167</td>
+      <td>28.238167</td>
+      <td>159625.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aapl</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">aapl</span><span class="o">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Open price&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">moving_averages</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">moving_averages</span><span class="o">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;120 MA Open price&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
 
-<p><img alt="png" src="../images/Saving_a_matplotlib_figure_with_a_high_resolution/output_4_0.png"></p>
-<h3>Saving the figure</h3>
-<p>normally, one would use the following code</p>
-<div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;filename.png&#39;</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>&lt;matplotlib.figure.Figure at 0x2e45e92f400&gt;
-</pre></div>
-
-
-<p>The figure in then exported to the file "filename.png" with a standard resolution. In adittion, you can specify the dpi arg to some scalar value, for example:</p>
-<div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;filename_hi_dpi.png&#39;</span><span class="p">,</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>&lt;matplotlib.figure.Figure at 0x2e462164898&gt;
-</pre></div>
+<p><img alt="png" src="../images/MovingAvg/output_6_0.png"></p>
 </div>
     <aside>
     <div class="bug-reporting__panel">
