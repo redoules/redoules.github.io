@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Reloading .bashrc - Linux</title>
+    <title>Displaying the content of a TABLE - SQL</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Bash" />
+    <meta name="tags" content="Basics" />
 
 
 </head>
@@ -112,24 +112,96 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Reloading .bashrc
+      Displaying the content of a TABLE
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-01-03T16:29:00+01:00">
-            03 janvier 2018
+        <time class="published" datetime="2018-08-04T16:14:00+02:00">
+            04 août 2018
         </time>
     </li>
-    <li>Linux</li>
-    <li>Bash</li>
+    <li>SQL</li>
+    <li>Basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<h3>Reload .bashrc</h3>
-<p>The .bashrc file,  located at ~/.bashrc allows a user to personalize its bash shell. If you edit this file, the changes won't  be loaded without login out and back in. 
-However, you can use the following command to do it </p>
-<div class="highlight"><pre><span></span> <span class="nb">source</span> ~/.bashrc
+<h1>Displaying the content of a TABLE in SQL</h1>
+<p>In this very simple example we will see how to display the content of a table.
+Since we are working in the notebook, we will load the sql extension in order to manipulate the database.
+The database mydatabase.db is a SQLite database already created before the example.</p>
+<div class="highlight"><pre><span></span><span class="c1">#load the extension</span>
+<span class="o">%</span><span class="n">load_ext</span> <span class="n">sql</span> 
+<span class="c1">#connect to the database</span>
+<span class="o">%</span><span class="n">sql</span> <span class="n">sqlite</span><span class="p">:</span><span class="o">///</span><span class="n">mydatabase</span><span class="o">.</span><span class="n">db</span> 
 </pre></div>
+
+
+<div class="highlight"><pre><span></span>&#39;Connected: @mydatabase.db&#39;
+</pre></div>
+
+
+<p>In order to extract all the values from a table, we will use the following command :
+SELECT * FROM TABLE
+In our example, we want to display the data contained in the table named tutyfrutty</p>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>Banana</td>
+        <td>yellow</td>
+        <td>89</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Orange</td>
+        <td>orange</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Apple</td>
+        <td>red</td>
+        <td>52</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>lime</td>
+        <td>green</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>plum</td>
+        <td>purple</td>
+        <td>28</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Cranberry</td>
+        <td>red</td>
+        <td>308</td>
+    </tr>
+</table>
 </div>
     <aside>
     <div class="bug-reporting__panel">
