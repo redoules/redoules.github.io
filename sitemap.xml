@@ -5,7 +5,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>redoules.github.io/</loc>
-<lastmod>2018-08-04T16:59:42-00:00</lastmod>
+<lastmod>2018-08-04T17:25:34-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -13,6 +13,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>redoules.github.io/pages/about.html</loc>
 <lastmod>2017-11-02T08:13:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>redoules.github.io/sql/WHERE_SQL_keywords.html</loc>
+<lastmod>2018-08-04T17:01:00+02:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>

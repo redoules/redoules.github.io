@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Sorting results - SQL</title>
+    <title>Keywords to use with WHERE - SQL</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -112,11 +112,11 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Sorting results
+      Keywords to use with WHERE
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-04T16:49:00+02:00">
+        <time class="published" datetime="2018-08-04T17:01:00+02:00">
             04 août 2018
         </time>
     </li>
@@ -125,8 +125,7 @@
 </ol>
 </header>
 <div class='article_content'>
-<h1>Sorting results in SQL</h1>
-<p>Sorting results can be achieved by using a modifier command at the end of the SQL querry</p>
+<h1>Keywords to use with WHERE</h1>
 <div class="highlight"><pre><span></span><span class="c1">#load the extension</span>
 <span class="o">%</span><span class="n">load_ext</span> <span class="n">sql</span> 
 <span class="c1">#connect to the database</span>
@@ -138,10 +137,75 @@
 </pre></div>
 
 
-<p>The results can be sorted with the command ORDER BY</p>
-<p>SELECT column-list FROM table_name [WHERE condition] [ORDER BY column1, column2, .. columnN] [ASC | DESC]</p>
-<p>Let's show an example where we extract the fruits that are either yellow or red</p>
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;yellow&quot;</span> <span class="n">OR</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span> 
+<h2>Assignment operator</h2>
+<p>The assignment operator is =.</p>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Apple</td>
+        <td>red</td>
+        <td>52</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Cranberry</td>
+        <td>red</td>
+        <td>308</td>
+    </tr>
+</table>
+
+<h2>Comparison operators</h2>
+<p>Comparison operation can be done in a SQL querry. They are the following :</p>
+<ul>
+<li>Equality : =</li>
+<li>Greater than :  &gt;</li>
+<li>greater than or equal to : &gt;=</li>
+<li>less than : &lt;</li>
+<li>less than or equal to : &lt;=</li>
+<li>not equal to : &lt;&gt;, !=</li>
+<li>not greater than : !&gt;</li>
+<li>not less than : !&lt;</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">kcal</span> <span class="o">=</span> <span class="mi">47</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Orange</td>
+        <td>orange</td>
+        <td>47</td>
+    </tr>
+</table>
+
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">kcal</span> <span class="o">&gt;</span> <span class="mi">47</span>
 </pre></div>
 
 
@@ -170,12 +234,6 @@ Done.
         <td>52</td>
     </tr>
     <tr>
-        <td>3</td>
-        <td>lemon</td>
-        <td>yellow</td>
-        <td>15</td>
-    </tr>
-    <tr>
         <td>7</td>
         <td>Cranberry</td>
         <td>red</td>
@@ -183,8 +241,7 @@ Done.
     </tr>
 </table>
 
-<h3>Ascending sort</h3>
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;yellow&quot;</span> <span class="n">OR</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span> <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">kcal</span> <span class="n">ASC</span>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">kcal</span> <span class="o">&gt;=</span> <span class="mi">47</span>
 </pre></div>
 
 
@@ -199,99 +256,12 @@ Done.
         <th>fruit</th>
         <th>color</th>
         <th>kcal</th>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>lemon</td>
-        <td>yellow</td>
-        <td>15</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Apple</td>
-        <td>red</td>
-        <td>52</td>
     </tr>
     <tr>
         <td>0</td>
         <td>Banana</td>
         <td>yellow</td>
         <td>89</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>Cranberry</td>
-        <td>red</td>
-        <td>308</td>
-    </tr>
-</table>
-
-<h3>descending sort</h3>
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;yellow&quot;</span> <span class="n">OR</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span> <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">kcal</span> <span class="n">DESC</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
-Done.
-</pre></div>
-
-
-<table>
-    <tr>
-        <th>index</th>
-        <th>fruit</th>
-        <th>color</th>
-        <th>kcal</th>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>Cranberry</td>
-        <td>red</td>
-        <td>308</td>
-    </tr>
-    <tr>
-        <td>0</td>
-        <td>Banana</td>
-        <td>yellow</td>
-        <td>89</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Apple</td>
-        <td>red</td>
-        <td>52</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>lemon</td>
-        <td>yellow</td>
-        <td>15</td>
-    </tr>
-</table>
-
-<h3>Sort by multiple columns</h3>
-<p>You can sort by more than one column. Just specify multiple columns in the ORDER BY keyword. In the example, we will sort alphabetically on the color column first and sort alphabetically on the fruit column</p>
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">color</span><span class="p">,</span> <span class="n">fruit</span> <span class="n">ASC</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
-Done.
-</pre></div>
-
-
-<table>
-    <tr>
-        <th>index</th>
-        <th>fruit</th>
-        <th>color</th>
-        <th>kcal</th>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>lime</td>
-        <td>green</td>
-        <td>30</td>
     </tr>
     <tr>
         <td>1</td>
@@ -300,12 +270,6 @@ Done.
         <td>47</td>
     </tr>
     <tr>
-        <td>5</td>
-        <td>plum</td>
-        <td>purple</td>
-        <td>28</td>
-    </tr>
-    <tr>
         <td>2</td>
         <td>Apple</td>
         <td>red</td>
@@ -316,6 +280,170 @@ Done.
         <td>Cranberry</td>
         <td>red</td>
         <td>308</td>
+    </tr>
+</table>
+
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">kcal</span> <span class="o">&lt;</span> <span class="mi">47</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>lime</td>
+        <td>green</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>plum</td>
+        <td>purple</td>
+        <td>28</td>
+    </tr>
+</table>
+
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">kcal</span> <span class="o">&lt;=</span> <span class="mi">47</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Orange</td>
+        <td>orange</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>lime</td>
+        <td>green</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>plum</td>
+        <td>purple</td>
+        <td>28</td>
+    </tr>
+</table>
+
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">kcal</span> <span class="o">&lt;&gt;</span> <span class="mi">47</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>Banana</td>
+        <td>yellow</td>
+        <td>89</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Apple</td>
+        <td>red</td>
+        <td>52</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>lime</td>
+        <td>green</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>plum</td>
+        <td>purple</td>
+        <td>28</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Cranberry</td>
+        <td>red</td>
+        <td>308</td>
+    </tr>
+</table>
+
+<h2>Logical operators</h2>
+<p>Logical operators test a condition and return a boolean. The logicial operators in SQL are :</p>
+<ul>
+<li>ALL : true if all the condtions are true</li>
+<li>AND  : true is both conditions are true</li>
+<li>ANY : true if any one of the conditions are true</li>
+<li>BETWEEN : true if the operand in withing a range of values</li>
+<li>EXISTS : true if the subquery contains any rows</li>
+<li>IN : true if the condition is present in a row</li>
+<li>LIKE : true if a pattern is matched</li>
+<li>NOT : True if the operand is false, false otherwise</li>
+<li>OR :  True is either condition is true</li>
+<li>SOME : true is any of the conditions is true</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">color</span> <span class="o">=</span><span class="s2">&quot;yellow&quot;</span> <span class="n">AND</span> <span class="n">kcal</span> <span class="o">&lt;</span> <span class="mi">100</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
     </tr>
     <tr>
         <td>0</td>
@@ -330,6 +458,165 @@ Done.
         <td>15</td>
     </tr>
 </table>
+
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">color</span> <span class="o">=</span><span class="s2">&quot;yellow&quot;</span> <span class="n">OR</span> <span class="n">kcal</span> <span class="o">&gt;</span> <span class="mi">300</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>Banana</td>
+        <td>yellow</td>
+        <td>89</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Cranberry</td>
+        <td>red</td>
+        <td>308</td>
+    </tr>
+</table>
+
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">fruit</span> <span class="n">LIKE</span> <span class="s1">&#39;l%&#39;</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>lime</td>
+        <td>green</td>
+        <td>30</td>
+    </tr>
+</table>
+
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">NOT</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;yellow&quot;</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Orange</td>
+        <td>orange</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Apple</td>
+        <td>red</td>
+        <td>52</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>lime</td>
+        <td>green</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>plum</td>
+        <td>purple</td>
+        <td>28</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Cranberry</td>
+        <td>red</td>
+        <td>308</td>
+    </tr>
+</table>
+
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span>  <span class="n">kcal</span> <span class="n">BETWEEN</span> <span class="mi">40</span> <span class="n">AND</span> <span class="mi">100</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>Banana</td>
+        <td>yellow</td>
+        <td>89</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Orange</td>
+        <td>orange</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Apple</td>
+        <td>red</td>
+        <td>52</td>
+    </tr>
+</table>
+
+<h2>Bitwise operators</h2>
+<p>Some bitwise operators exist in SQL. They will not be demonstrated here. They are the following :</p>
+<ul>
+<li>AND : &amp;</li>
+<li>OR : |</li>
+<li>XOR : ^</li>
+<li>NOT : ~</li>
+</ul>
 </div>
     <aside>
     <div class="bug-reporting__panel">
