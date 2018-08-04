@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Reloading fstab - Linux</title>
+    <title>Getting stock market data - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Bash" />
+    <meta name="tags" content="Web Scraping" />
 
 
 </head>
@@ -112,23 +112,262 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Reloading fstab
+      Getting stock market data
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-01-03T14:16:00+01:00">
-            03 janvier 2018
+        <time class="published" datetime="2018-08-04T22:14:00+02:00">
+            04 août 2018
         </time>
     </li>
-    <li>Linux</li>
-    <li>Bash</li>
+    <li>Python</li>
+    <li>Web Scraping</li>
 </ol>
 </header>
 <div class='article_content'>
-<h3>Reload fstab</h3>
-<p>The fstab file, generally located at /etc/fstab lists the differents partitions and where to load them on the filesystem. If you edit this file, the changes won't be automounted. You either have to reboot your system of use the following command as root </p>
-<div class="highlight"><pre><span></span> mount -a
+<h1>Getting stock market data with pandas</h1>
+<p>Start by importing the packages. We will need pandas and the pandas_datareader.</p>
+<div class="highlight"><pre><span></span><span class="c1"># Import modules</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas_datareader</span> <span class="kn">import</span> <span class="n">data</span>
 </pre></div>
+
+
+<p>Datareader allows you to import data from the internet. I have found that Quandl and robinhood works the best as a source for stockmarket data.</p>
+<p>Note that if you want an other type of data (e.g. GDP, inflation, etc.) other sources exist.</p>
+<div class="highlight"><pre><span></span><span class="c1">#import stock from robinhood</span>
+<span class="n">aapl_robinhood</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;robinhood&#39;</span><span class="p">,</span> <span class="s1">&#39;1980-01-01&#39;</span><span class="p">)</span>
+<span class="n">aapl_robinhood</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>close_price</th>
+      <th>high_price</th>
+      <th>interpolated</th>
+      <th>low_price</th>
+      <th>open_price</th>
+      <th>session</th>
+      <th>volume</th>
+    </tr>
+    <tr>
+      <th>symbol</th>
+      <th>begins_at</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">AAPL</th>
+      <th>2017-08-04</th>
+      <td>153.996200</td>
+      <td>154.990700</td>
+      <td>False</td>
+      <td>153.306900</td>
+      <td>153.681100</td>
+      <td>reg</td>
+      <td>20559852</td>
+    </tr>
+    <tr>
+      <th>2017-08-07</th>
+      <td>156.379100</td>
+      <td>156.487400</td>
+      <td>False</td>
+      <td>154.272000</td>
+      <td>154.655900</td>
+      <td>reg</td>
+      <td>21870321</td>
+    </tr>
+    <tr>
+      <th>2017-08-08</th>
+      <td>157.629700</td>
+      <td>159.352900</td>
+      <td>False</td>
+      <td>155.847400</td>
+      <td>156.172300</td>
+      <td>reg</td>
+      <td>36205896</td>
+    </tr>
+    <tr>
+      <th>2017-08-09</th>
+      <td>158.594700</td>
+      <td>158.801500</td>
+      <td>False</td>
+      <td>156.674500</td>
+      <td>156.822200</td>
+      <td>reg</td>
+      <td>26131530</td>
+    </tr>
+    <tr>
+      <th>2017-08-10</th>
+      <td>153.543100</td>
+      <td>158.169600</td>
+      <td>False</td>
+      <td>152.861000</td>
+      <td>158.070700</td>
+      <td>reg</td>
+      <td>40804273</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="highlight"><pre><span></span><span class="c1">#import stock from quandl</span>
+<span class="n">aapl_quandl</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;quandl&#39;</span><span class="p">,</span> <span class="s1">&#39;1980-01-01&#39;</span><span class="p">)</span>
+<span class="n">aapl_quandl</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Volume</th>
+      <th>ExDividend</th>
+      <th>SplitRatio</th>
+      <th>AdjOpen</th>
+      <th>AdjHigh</th>
+      <th>AdjLow</th>
+      <th>AdjClose</th>
+      <th>AdjVolume</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2018-03-27</th>
+      <td>173.68</td>
+      <td>175.15</td>
+      <td>166.92</td>
+      <td>168.340</td>
+      <td>38962839.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>173.68</td>
+      <td>175.15</td>
+      <td>166.92</td>
+      <td>168.340</td>
+      <td>38962839.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-26</th>
+      <td>168.07</td>
+      <td>173.10</td>
+      <td>166.44</td>
+      <td>172.770</td>
+      <td>36272617.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>168.07</td>
+      <td>173.10</td>
+      <td>166.44</td>
+      <td>172.770</td>
+      <td>36272617.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-23</th>
+      <td>168.39</td>
+      <td>169.92</td>
+      <td>164.94</td>
+      <td>164.940</td>
+      <td>40248954.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>168.39</td>
+      <td>169.92</td>
+      <td>164.94</td>
+      <td>164.940</td>
+      <td>40248954.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-22</th>
+      <td>170.00</td>
+      <td>172.68</td>
+      <td>168.60</td>
+      <td>168.845</td>
+      <td>41051076.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>170.00</td>
+      <td>172.68</td>
+      <td>168.60</td>
+      <td>168.845</td>
+      <td>41051076.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-21</th>
+      <td>175.04</td>
+      <td>175.09</td>
+      <td>171.26</td>
+      <td>171.270</td>
+      <td>35247358.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>175.04</td>
+      <td>175.09</td>
+      <td>171.26</td>
+      <td>171.270</td>
+      <td>35247358.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
     <aside>
     <div class="bug-reporting__panel">
