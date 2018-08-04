@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Setting up the notebook for plotting with matplotlib - Python</title>
+    <title>Filter content of a TABLE - SQL</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Data Visualization" />
+    <meta name="tags" content="Basics" />
 
 
 </head>
@@ -112,51 +112,226 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Setting up the notebook for plotting with matplotlib
+      Filter content of a TABLE
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-02T15:57:00+02:00">
-            02 août 2018
+        <time class="published" datetime="2018-08-04T16:35:00+02:00">
+            04 août 2018
         </time>
     </li>
-    <li>Python</li>
-    <li>Data Visualization</li>
+    <li>SQL</li>
+    <li>Basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<h1>Importing Matplotlib</h1>
-<p>First we need to import pyplot, a collection of command style functions that make matplotlib work like MATLAB. Let's, as well, use the magic command %matplotlib inline in order to display the figures in the notebook</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
-
-<span class="c1"># this doubles image size, but we&#39;ll do it manually below</span>
-<span class="c1"># %config InlineBackend.figure_format = &#39;retina&#39;</span>
+<h1>Filter content of a TABLE in SQL</h1>
+<p>In this example, we will display the content of a table but we will filter out the results.
+Since we are working in the notebook, we will load the sql extension in order to manipulate the database.
+The database mydatabase.db is a SQLite database already created before the example.</p>
+<div class="highlight"><pre><span></span><span class="c1">#load the extension</span>
+<span class="o">%</span><span class="n">load_ext</span> <span class="n">sql</span> 
+<span class="c1">#connect to the database</span>
+<span class="o">%</span><span class="n">sql</span> <span class="n">sqlite</span><span class="p">:</span><span class="o">///</span><span class="n">mydatabase</span><span class="o">.</span><span class="n">db</span> 
 </pre></div>
 
 
-<p>The following parameters are recommended for matplotlib, they will make matplotlib output a better quality image </p>
-<div class="highlight"><pre><span></span><span class="c1"># %load snippets/matplot_setup.py</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;savefig.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">163</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.autolayout&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">12</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.labelsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.titlesize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;lines.linewidth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.0</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;lines.markersize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;legend.fontsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.usetex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span> <span class="c1"># True activates latex output in fonts!</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;serif&quot;</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.serif&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;cm&quot;</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.latex.preamble&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">usepackage{subdepth}, </span><span class="se">\\</span><span class="s2">usepackage{type1cm}&quot;</span>
+<div class="highlight"><pre><span></span>&#39;Connected: @mydatabase.db&#39;
 </pre></div>
 
 
-<p>You can change the second line in order to fit your display. 163 dpi corresponds to a Dell Ultra HD 4k P2715Q. You can check your screen's dpi count at http://dpi.lv/</p>
+<h2>Filter content  matching exactly a condition</h2>
+<p>We want to extract all the entries in a dataframe that match a certain condition, in order to do so, we will use the following command : </p>
+<p>SELECT * FROM TABLE WHERE column="condition"</p>
+<p>In our example, we will filter all the entries in the tutyfrutty table whose color is yellow</p>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;yellow&quot;</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>Banana</td>
+        <td>yellow</td>
+        <td>89</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+</table>
+
+<h2>Complex conditions</h2>
+<p>You can build more complex conditions by using the keywords OR and AND</p>
+<p>In the following example, we will filter all entries that are either yellow or red </p>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;yellow&quot;</span> <span class="n">OR</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>Banana</td>
+        <td>yellow</td>
+        <td>89</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Apple</td>
+        <td>red</td>
+        <td>52</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Cranberry</td>
+        <td>red</td>
+        <td>308</td>
+    </tr>
+</table>
+
+<p>Note : when combining multiple conditions with AND and OR, be careful to use parentesis where needed</p>
+<h2>Conditions matching a pattern</h2>
+<p>You can also use the LIKE keyword in order to find all entries that match a certain pattern. In our example, we want to find all fruits begining with a "l". In order to do so, we will use the LIKE keyword and the wildcard "%" meaning any string</p>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">fruit</span> <span class="n">LIKE</span> <span class="s2">&quot;l%&quot;</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>lime</td>
+        <td>green</td>
+        <td>30</td>
+    </tr>
+</table>
+
+<h2>Numerical conditions</h2>
+<p>When we are working with numerical data, we can use the GREATER THAN &gt; and SMALLER THAN &lt; operators  </p>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">kcal</span> <span class="o">&lt;</span> <span class="mi">47</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>lime</td>
+        <td>green</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>plum</td>
+        <td>purple</td>
+        <td>28</td>
+    </tr>
+</table>
+
+<p>If we want the condition to be inclusive we can use the operator &lt;= (alternatively &gt;=)</p>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">kcal</span> <span class="o">&lt;=</span> <span class="mi">47</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Orange</td>
+        <td>orange</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>lime</td>
+        <td>green</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>plum</td>
+        <td>purple</td>
+        <td>28</td>
+    </tr>
+</table>
 </div>
     <aside>
     <div class="bug-reporting__panel">
