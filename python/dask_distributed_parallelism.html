@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Data Science for Political and Social Phenomena">
+    <meta name="author" content="Guillaume Redoulès">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>Running multiple calls to a function un parallel with Dask distributed - Python</title>
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="../theme/js/jquery.min.js"><\/script>')
+    </script>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../theme/css/bootstrap.css" />
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" type="text/css" href="../theme/css/ie10-viewport-bug-workaround.css" />
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="../theme/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../theme/css/notebooks.css" />
+    <link href='https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto:400,500,700' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+        
+
+    <meta name="tags" content="Other" />
+
+
+</head>
+
+<body>
+
+    <div class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="..">Guillaume Redoulès</a>
+            </div>
+            <div class="navbar-collapse collapse" id="searchbar">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../pages/about.html">About Guillaume</a></li>
+                            <li><a href="https://github.com/redoules">GitHub</a></li>
+                            <li><a href="https://www.linkedin.com/in/guillaume-redoul%C3%A8s-33923860/">LinkedIn</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Science<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="..#Blog">Blog</a></li>
+                            <li><a href="..#Python">Python</a></li>
+                            <li><a href="..#Bash">Bash</a></li>
+                            <li><a href="..#SQL">SQL</a></li>
+                            <li><a href="..#Mathematics">Mathematics</a></li>
+                            <li><a href="..#Machine_Learning">Machine Learning</a></li>
+                            <li><a href="..#Projects">Projects</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://github.com/redoules/redoules.github.io">Notes (Github)</a></li>
+                        </ul>
+                    </li>
+
+                    <!--<li class="dropdown">
+                        <a href="../feeds/blog.rss.xml">Blog RSS</a>
+                    </li>-->
+
+
+                </ul>
+
+                <form class="navbar-form" action="../search.html" onsubmit="return validateForm(this.elements['q'].value);">
+                    <div class="form-group" style="display:inline;">
+                        <div class="input-group" style="display:table;">
+                            <span class="input-group-addon" style="width:1%;"><span class="glyphicon glyphicon-search"></span></span>
+                            <input class="form-control search-query" name="q" id="tipue_search_input" placeholder="e.g. scikit KNN, pandas merge" required autocomplete="off" type="text">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+
+
+
+    <!-- end of header section -->
+    <div class="container">
+<!-- <div class="alert alert-warning" role="alert">
+    Did you find this page useful? Please do me a quick favor and <a href="#" class="alert-link">endorse me for data science on LinkedIn</a>.
+</div> -->
+<section id="content" class="body">
+    <header>
+    <h1>
+      Running multiple calls to a function un parallel with Dask distributed
+    </h1>
+<ol class="breadcrumb">
+    <li>
+        <time class="published" datetime="2018-08-12T08:25:00+02:00">
+            12 août 2018
+        </time>
+    </li>
+    <li>Python</li>
+    <li>Other</li>
+</ol>
+</header>
+<div class='article_content'>
+<h1>Running multiple calls to a function un parallel with Dask distributed</h1>
+<p>Dask.distributed is a lightweight library for distributed computing in Python. It allows to create a compute graph. Dask distributed is architectured around 3 parts :</p>
+<ul>
+<li>the dask-scheduler</li>
+<li>the dask-worker(s)</li>
+<li>the dask client</li>
+</ul>
+<h2>Dask architecture</h2>
+<p>The Dask scheduler is a centrally managed, distributed, dynamic task scheduler. It recieves tasks from a/multiple client(s) and spread them across one or multiple dask-worker(s).</p>
+<p>Dask-scheduler is an event based asynchronous dynamic scheduler, meaning that mutliple clients can submit a list of task to be executed on multiple workers. Internally, the task are represented as a directed acyclic graph. Both new clients and new workers can be connected or disconnected during the execution of the task graph.</p>
+<p>Tasks can be submited with the function </p>
+<div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+
+
+<p>or by using objects from the dask library such as dask.dataframe, dask.bag or dask.array</p>
+<h2>Setup</h2>
+<p>In this example, we will use a distributed scheduler on a single machine with multiple workers and a single client. 
+<img alt="Architecture" src="../images/dask_distributed_parallelism/dask_setup.svg"></p>
+<p>We will use the client to submit some tasks to the scheduler. The scheduler will then dispatch those tasks to the workers. The process can be monitored in real time through a web application. For this example, all the computations will be run on a local computer. However dask can scale to a large HPC cluster. </p>
+<p>First we have to launch the dask-scheduler; from the command line, input </p>
+<div class="highlight"><pre><span></span>dask-scheduler
+</pre></div>
+
+
+<p><img alt="launch_scheduler" src="../images/dask_distributed_parallelism/dask-scheduler.png"></p>
+<p>Next, you can load the web dashboard. In order to do so, the scheduler returns the number of the port you have to connect to in the line starting with "bokeh at :". The default port is 8787. Since we are running all the programs on the same computer, we just have to login to </p>
+<p>http://127.0.0.1:8787/status</p>
+<p><img alt="web_dashboard" src="../images/dask_distributed_parallelism/web.jpg"></p>
+<p>Finally, we have to launch the dask-worker(s). If you want to run the worker(s) on the same computer as the scheduler the type :</p>
+<div class="highlight"><pre><span></span>dask-worker <span class="m">127</span>.0.0.1:8786
+</pre></div>
+
+
+<p><img alt="launch_scheduler" src="../images/dask_distributed_parallelism/dask-worker.png"></p>
+<p>otherwise, make sure you are inputing the ip address of the computer hosting the dask-scheduler.</p>
+<p>You can launch as many workers as you want. In this example, we will run 3 workers on the local machine.</p>
+<h2>Use the dask workers within your python code</h2>
+<p>We will now see how to submit multiple calls to a fucntion in parallel on the dask-workers.
+Import the required libraries and define the function to be executed.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Client</span>
+
+
+<span class="c1">#function used to do parallel computing on</span>
+<span class="k">def</span> <span class="nf">compute_pi_MonteCarlo</span><span class="p">(</span><span class="n">Nb_Data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    computes the value of pi using the monte carlo method</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Radius</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">Nb_Data</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">Nb_Data</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">Radius</span><span class="p">,</span> <span class="n">Radius</span><span class="p">,</span> <span class="n">Nb_Data</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">Radius</span><span class="p">,</span> <span class="n">Radius</span><span class="p">,</span> <span class="n">Nb_Data</span><span class="p">)</span>
+    <span class="n">pi_mc</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">&lt;</span><span class="n">Radius</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">Nb_Data</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pi_mc</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">Nb_Data</span><span class="p">,</span> <span class="n">pi_mc</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span>
+</pre></div>
+
+
+<p>In order to connect to the scheduler, we create a client.</p>
+<div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s1">&#39;127.0.0.1:8786&#39;</span><span class="p">)</span>
+<span class="n">client</span>
+</pre></div>
+
+
+<table style="border: 2px solid white;">
+<tr>
+<td style="vertical-align: top; border: 0px solid white">
+<h3>Client</h3>
+<ul>
+  <li><b>Scheduler: </b>tcp://127.0.0.1:8786
+  <li><b>Dashboard: </b><a href='http://127.0.0.1:8787/status' target='_blank'>http://127.0.0.1:8787/status</a>
+</ul>
+</td>
+<td style="vertical-align: top; border: 0px solid white">
+<h3>Cluster</h3>
+<ul>
+  <li><b>Workers: </b>3</li>
+  <li><b>Cores: </b>12</li>
+  <li><b>Memory: </b>25.48 GB</li>
+</ul>
+</td>
+</tr>
+</table>
+
+<p>We submit tasks using the submit method </p>
+<div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">compute_pi_MonteCarlo</span><span class="p">,</span> <span class="n">Nb_Data</span><span class="p">)</span> 
+        <span class="k">for</span> <span class="n">Nb_Data</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)]</span>
+</pre></div>
+
+
+<p>If you look at 
+http://127.0.0.1:8787/status</p>
+<p>you will see the tasks beeing completed.</p>
+<p><img alt="progress" src="../images/dask_distributed_parallelism/progress.jpg"></p>
+<p>Once competed, gather the data:</p>
+<div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;number of points for MonteCarlo&quot;</span><span class="p">,</span> <span class="s2">&quot;value of pi&quot;</span><span class="p">,</span> <span class="s2">&quot;error (%)&quot;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>number of points for MonteCarlo</th>
+      <th>value of pi</th>
+      <th>error (%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1195</th>
+      <td>9697405</td>
+      <td>3.141296</td>
+      <td>0.009454</td>
+    </tr>
+    <tr>
+      <th>1196</th>
+      <td>9772184</td>
+      <td>3.141058</td>
+      <td>0.017008</td>
+    </tr>
+    <tr>
+      <th>1197</th>
+      <td>9847540</td>
+      <td>3.141616</td>
+      <td>0.000739</td>
+    </tr>
+    <tr>
+      <th>1198</th>
+      <td>9923477</td>
+      <td>3.141009</td>
+      <td>0.018574</td>
+    </tr>
+    <tr>
+      <th>1199</th>
+      <td>10000000</td>
+      <td>3.141032</td>
+      <td>0.017833</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>There, we have completed a simple example on how to use dask to run multiple functions in parallel.</p>
+<p>Full source code:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Client</span>
+
+
+<span class="c1">#function used to do parallel computing on</span>
+<span class="k">def</span> <span class="nf">compute_pi_MonteCarlo</span><span class="p">(</span><span class="n">Nb_Data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    computes the value of pi using the monte carlo method</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Radius</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">Nb_Data</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">Nb_Data</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">Radius</span><span class="p">,</span> <span class="n">Radius</span><span class="p">,</span> <span class="n">Nb_Data</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">Radius</span><span class="p">,</span> <span class="n">Radius</span><span class="p">,</span> <span class="n">Nb_Data</span><span class="p">)</span>
+    <span class="n">pi_mc</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">&lt;</span><span class="n">Radius</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">Nb_Data</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pi_mc</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">Nb_Data</span><span class="p">,</span> <span class="n">pi_mc</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span>
+<span class="c1">#connect to the scheduler</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s1">&#39;127.0.0.1:8786&#39;</span><span class="p">)</span>
+<span class="c1">#submit tasks</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">compute_pi_MonteCarlo</span><span class="p">,</span> <span class="n">Nb_Data</span><span class="p">)</span> 
+        <span class="k">for</span> <span class="n">Nb_Data</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)]</span>
+<span class="c1">#gather the results</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;number of points for MonteCarlo&quot;</span><span class="p">,</span> <span class="s2">&quot;value of pi&quot;</span><span class="p">,</span> <span class="s2">&quot;error (%)&quot;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>A word on the environement variables</h3>
+<p>On Windows, to make sure that you can run dask-scheduler and dask-worker from the command line, you have to add the location of the executable to your path.</p>
+<p><img alt="Windows environement variables" src="../images/dask_distributed_parallelism/variablesenv.png"></p>
+<p>On linux, you can append the location of the dask-worker and scheduler to the path variable with the command </p>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/path/to/dask
+</pre></div>
+</div>
+    <aside>
+    <div class="bug-reporting__panel">
+        <h3>Find an error or bug? Have a suggestion?</h3>
+        <p>Everything on this site is avaliable on GitHub. Head on over and <a href='https://github.com/redoules/redoules.github.io/issues/new'>submit an issue.</a> You can also message me directly by <a href='mailto:guillaume.redoules@gadz.org'>email</a>.</p>
+    </div>
+    </aside>
+</section>
+
+    </div>
+    <!-- start of footer section -->
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">
+                <center>This project contains 25 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <br/>
+                Copyright &copy; Guillaume Redoulès,
+                    <time datetime="2018">2018</time>.
+                </center>
+            </p>
+        </div>
+    </footer>
+
+    <!-- This jQuery line finds any span that contains code highlighting classes and then selects the parent <pre> tag and adds a border. This is done as a workaround to visually distinguish the code inputs and outputs -->
+    <script>
+        $( ".hll, .n, .c, .err, .k, .o, .cm, .cp, .c1, .cs, .gd, .ge, .gr, .gh, .gi, .go, .gp, .gs, .gu, .gt, .kc, .kd, .kn, .kp, .kr, .kt, .m, .s, .na, .nb, .nc, .no, .nd, .ni, .ne, .nf, .nl, .nn, .nt, .nv, .ow, .w, .mf, .mh, .mi, .mo, .sb, .sc, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss, .bp, .vc, .vg, .vi, .il" ).parent( "pre" ).css( "border", "1px solid #DEDEDE" );
+    </script>
+
+    
+    <!-- Load Google Analytics -->
+    <script>
+        /*
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-66582-32', 'auto');
+        ga('send', 'pageview');
+        */
+    </script>
+    <!-- End of Google Analytics -->
+
+    <!-- Bootstrap core JavaScript
+      ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../theme/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../theme/js/ie10-viewport-bug-workaround.js"></script>
+
+
+</body>
+
+</html>
