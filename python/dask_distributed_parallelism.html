@@ -153,7 +153,7 @@
 <p><img alt="launch_scheduler" src="../images/dask_distributed_parallelism/dask-scheduler.png"></p>
 <p>Next, you can load the web dashboard. In order to do so, the scheduler returns the number of the port you have to connect to in the line starting with "bokeh at :". The default port is 8787. Since we are running all the programs on the same computer, we just have to login to </p>
 <p>http://127.0.0.1:8787/status</p>
-<p><img alt="web_dashboard" src="../images/dask_distributed_parallelism/web.jpg"></p>
+<p><img alt="web_dashboard" src="../images/dask_distributed_parallelism/web.JPG"></p>
 <p>Finally, we have to launch the dask-worker(s). If you want to run the worker(s) on the same computer as the scheduler the type :</p>
 <div class="highlight"><pre><span></span>dask-worker <span class="m">127</span>.0.0.1:8786
 </pre></div>
@@ -220,7 +220,7 @@ Import the required libraries and define the function to be executed.</p>
 <p>If you look at 
 http://127.0.0.1:8787/status</p>
 <p>you will see the tasks beeing completed.</p>
-<p><img alt="progress" src="../images/dask_distributed_parallelism/progress.jpg"></p>
+<p><img alt="progress" src="../images/dask_distributed_parallelism/progress.JPG"></p>
 <p>Once competed, gather the data:</p>
 <div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
