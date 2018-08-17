@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Reading data from a sql database with pandas - Python</title>
+    <title>Check for free disk space - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Data Wrangling" />
+    <meta name="tags" content="Bash" />
 
 
 </head>
@@ -112,118 +112,47 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Reading data from a sql database with pandas
+      Check for free disk space
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-03T18:04:00+02:00">
-            03 août 2018
+        <time class="published" datetime="2018-08-17T10:54:00+02:00">
+            17 août 2018
         </time>
     </li>
-    <li>Python</li>
-    <li>Data Wrangling</li>
+    <li>Linux</li>
+    <li>Bash</li>
 </ol>
 </header>
 <div class='article_content'>
-<h1>Reading data from a sql database with pandas</h1>
-<p>When manipulating you data using pandas, it is sometimes useful to pull data from a database. </p>
-<p>In this tutorial, we will see how to querry a dataframe from a sqlite table. Note than it would also work with any other sql database a long as you change the connxion to the one that suits your needs.</p>
-<p>First let's import pandas and sqlite3</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">sqlite3</span>
-<span class="kn">from</span> <span class="nn">sqlite3</span> <span class="kn">import</span> <span class="n">Error</span>
+<h3>How do you check for free disk space on linux?</h3>
+<p>The <code>df</code> command will come handy for this task. Run the command with the following arguments</p>
+<div class="highlight"><pre><span></span>df -ah
 </pre></div>
 
 
-<p>We want to store the table tutyfrutty in our dataframe. To do so, we will query all the elements present in the tutyfrutty TABLE with the command :</p>
-<p>SELECT * FROM tutyfrutty</p>
-<div class="highlight"><pre><span></span><span class="n">db_file</span> <span class="o">=</span> <span class="s2">&quot;.</span><span class="se">\\</span><span class="s2">mydatabase.db&quot;</span>
-<span class="k">try</span> <span class="p">:</span>
-    <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM tutyfrutty&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
-        <span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">]</span> <span class="c1">#juste delete the index column that was stored in the table</span>
-<span class="k">except</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-
-<span class="n">df</span>
+<p>Will return in a human readable format for all drives a readout of all your filesystems</p>
+<div class="highlight"><pre><span></span>Filesystem      Size  Used Avail Use% Mounted on
+/dev/md0        2.4G  1.3G  1.1G  54% /
+none            348M  4.0K  348M   1% /dev
+none               0     0     0    - /dev/pts
+none               0     0     0    - /proc
+none               0     0     0    - /sys
+/tmp            350M  1.3M  349M   1% /tmp
+/run            350M  3.2M  347M   1% /run
+/dev/shm        350M   12K  350M   1% /dev/shm
+/proc/bus/usb      0     0     0    - /proc/bus/usb
+securityfs         0     0     0    - /sys/kernel/security
+/dev/md3        1.8T  372G  1.5T  21% /volume2
+/dev/vg1000/lv  1.8T  1.5T  340G  82% /volume1
+/dev/sdq1       7.4G  3.8G  3.5G  52% /volumeUSB3/usbshare3-1
+/dev/sdr        294G  146G  134G  53% /volumeUSB2/usbshare
+none               0     0     0    - /proc/fs/nfsd
+none               0     0     0    - /config
 </pre></div>
 
 
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>fruit</th>
-      <th>color</th>
-      <th>kcal</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Banana</td>
-      <td>yellow</td>
-      <td>89</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Orange</td>
-      <td>orange</td>
-      <td>47</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Apple</td>
-      <td>red</td>
-      <td>52</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>lemon</td>
-      <td>yellow</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>lime</td>
-      <td>green</td>
-      <td>30</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>plum</td>
-      <td>purple</td>
-      <td>28</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Cranberry</td>
-      <td>red</td>
-      <td>308</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Cranberry</td>
-      <td>red</td>
-      <td>308</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+<p>The free disk space can be read in the <code>Avail</code> column</p>
 </div>
     <aside>
     <div class="bug-reporting__panel">
