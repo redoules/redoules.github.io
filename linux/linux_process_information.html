@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Sorting results - SQL</title>
+    <title>How to check Linux process information? - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Basics" />
+    <meta name="tags" content="Bash" />
 
 
 </head>
@@ -112,224 +112,52 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Sorting results
+      How to check Linux process information?
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-04T16:49:00+02:00">
-            04 août 2018
+        <time class="published" datetime="2018-08-17T11:14:00+02:00">
+            17 août 2018
         </time>
     </li>
-    <li>SQL</li>
-    <li>Basics</li>
+    <li>Linux</li>
+    <li>Bash</li>
 </ol>
 </header>
 <div class='article_content'>
-<h1>Sorting results in SQL</h1>
-<p>Sorting results can be achieved by using a modifier command at the end of the SQL querry</p>
-<div class="highlight"><pre><span></span><span class="c1">#load the extension</span>
-<span class="o">%</span><span class="n">load_ext</span> <span class="n">sql</span> 
-<span class="c1">#connect to the database</span>
-<span class="o">%</span><span class="n">sql</span> <span class="n">sqlite</span><span class="p">:</span><span class="o">///</span><span class="n">mydatabase</span><span class="o">.</span><span class="n">db</span> 
+<h3>How to check Linux process information (CPU usage, memory, user information, etc.)?</h3>
+<p>You need to use the <code>ps</code> command combined with the <code>grep</code> command. In the example, we want to check the information on the nginx process :</p>
+<div class="highlight"><pre><span></span>ps aux <span class="p">|</span> grep  nginx
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>&#39;Connected: @mydatabase.db&#39;
+<p>It would return the output :</p>
+<div class="highlight"><pre><span></span>root      9976  0.0  0.0  12272   108 ?        S&lt;s  Aug12   0:00 nginx: master process /usr/bin/nginx -g pid /run/nginx.pid; daemon on; master_process on;
+http     16780  0.0  0.0  12384   684 ?        S&lt;   Aug12   4:11 nginx: worker process
+http     16781  0.0  0.0  12556   708 ?        S&lt;   Aug12   0:24 nginx: worker process
+http     16782  0.0  0.1  12292   744 ?        S&lt;   Aug12   2:43 nginx: worker process
+http     16783  0.0  0.1  12276   872 ?        S&lt;   Aug12   0:24 nginx: worker process
+admin    17612  0.0  0.1   5120   864 pts/4    S+   11:22   0:00 grep --color=auto nginx
 </pre></div>
 
 
-<p>The results can be sorted with the command ORDER BY</p>
-<p>SELECT column-list FROM table_name [WHERE condition] [ORDER BY column1, column2, .. columnN] [ASC | DESC]</p>
-<p>Let's show an example where we extract the fruits that are either yellow or red</p>
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;yellow&quot;</span> <span class="n">OR</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span> 
-</pre></div>
-
-
-<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
-Done.
-</pre></div>
-
-
-<table>
-    <tr>
-        <th>index</th>
-        <th>fruit</th>
-        <th>color</th>
-        <th>kcal</th>
-    </tr>
-    <tr>
-        <td>0</td>
-        <td>Banana</td>
-        <td>yellow</td>
-        <td>89</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Apple</td>
-        <td>red</td>
-        <td>52</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>lemon</td>
-        <td>yellow</td>
-        <td>15</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>Cranberry</td>
-        <td>red</td>
-        <td>308</td>
-    </tr>
-</table>
-
-<h3>Ascending sort</h3>
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;yellow&quot;</span> <span class="n">OR</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span> <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">kcal</span> <span class="n">ASC</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
-Done.
-</pre></div>
-
-
-<table>
-    <tr>
-        <th>index</th>
-        <th>fruit</th>
-        <th>color</th>
-        <th>kcal</th>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>lemon</td>
-        <td>yellow</td>
-        <td>15</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Apple</td>
-        <td>red</td>
-        <td>52</td>
-    </tr>
-    <tr>
-        <td>0</td>
-        <td>Banana</td>
-        <td>yellow</td>
-        <td>89</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>Cranberry</td>
-        <td>red</td>
-        <td>308</td>
-    </tr>
-</table>
-
-<h3>descending sort</h3>
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;yellow&quot;</span> <span class="n">OR</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span> <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">kcal</span> <span class="n">DESC</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
-Done.
-</pre></div>
-
-
-<table>
-    <tr>
-        <th>index</th>
-        <th>fruit</th>
-        <th>color</th>
-        <th>kcal</th>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>Cranberry</td>
-        <td>red</td>
-        <td>308</td>
-    </tr>
-    <tr>
-        <td>0</td>
-        <td>Banana</td>
-        <td>yellow</td>
-        <td>89</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Apple</td>
-        <td>red</td>
-        <td>52</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>lemon</td>
-        <td>yellow</td>
-        <td>15</td>
-    </tr>
-</table>
-
-<h3>Sort by multiple columns</h3>
-<p>You can sort by more than one column. Just specify multiple columns in the ORDER BY keyword. In the example, we will sort alphabetically on the color column first and sort alphabetically on the fruit column</p>
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">color</span><span class="p">,</span> <span class="n">fruit</span> <span class="n">ASC</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
-Done.
-</pre></div>
-
-
-<table>
-    <tr>
-        <th>index</th>
-        <th>fruit</th>
-        <th>color</th>
-        <th>kcal</th>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>lime</td>
-        <td>green</td>
-        <td>30</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>Orange</td>
-        <td>orange</td>
-        <td>47</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>plum</td>
-        <td>purple</td>
-        <td>28</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Apple</td>
-        <td>red</td>
-        <td>52</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>Cranberry</td>
-        <td>red</td>
-        <td>308</td>
-    </tr>
-    <tr>
-        <td>0</td>
-        <td>Banana</td>
-        <td>yellow</td>
-        <td>89</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>lemon</td>
-        <td>yellow</td>
-        <td>15</td>
-    </tr>
-</table>
+<p>The columns have the following order :
+USER;PID;%CPU;%MEM;VSZ;RSS;TTY;STAT;START;TIME;COMMAND</p>
+<ul>
+<li>USER = user owning the process</li>
+<li>PID = process ID of the process</li>
+<li>%CPU = It is the CPU time used divided by the time the process has been running.</li>
+<li>%MEM = ratio of the process’s resident set size to the physical memory on the machine</li>
+<li>VSZ = virtual memory usage of entire process (in KiB)</li>
+<li>RSS = resident set size, the non-swapped physical memory that a task has used (in KiB)</li>
+<li>TTY = controlling tty (terminal)</li>
+<li>STAT = multi-character process state</li>
+<li>START = starting time or date of the process</li>
+<li>TIME = cumulative CPU time</li>
+<li>COMMAND = command with all its arguments</li>
+</ul>
+<h3>Interactive display</h3>
+<p>If you want an interactive display showing in real time the statistics of the running process you can use the <code>top</code> command. If <code>htop</code> is available on you system, use this instead.</p>
 </div>
     <aside>
     <div class="bug-reporting__panel">
