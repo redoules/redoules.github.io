@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Reloading fstab - Linux</title>
+    <title>Check your current ip address - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -112,12 +112,12 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Reloading fstab
+      Check your current ip address
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-01-03T14:16:00+01:00">
-            03 janvier 2018
+        <time class="published" datetime="2018-08-17T10:37:00+02:00">
+            17 août 2018
         </time>
     </li>
     <li>Linux</li>
@@ -125,10 +125,123 @@
 </ol>
 </header>
 <div class='article_content'>
-<h3>Reload fstab</h3>
-<p>The fstab file, generally located at /etc/fstab lists the differents partitions and where to load them on the filesystem. If you edit this file, the changes won't be automounted. You either have to reboot your system of use the following command as root </p>
-<div class="highlight"><pre><span></span> mount -a
+<h3>Check your current ip address</h3>
+<p>Run the command </p>
+<div class="highlight"><pre><span></span>ip addr show
 </pre></div>
+
+
+<p>and that will give you every information available</p>
+<div class="highlight"><pre><span></span>4: eth0: &lt;&gt; mtu 1500 group default qlen 1
+    link/ether 5c:51:4f:41:7a:b1
+    inet 169.254.33.33/16 brd 169.254.255.255 scope global dynamic
+       valid_lft forever preferred_lft forever
+    inet6 fe80::390a:f69e:1ba2:2121/64 scope global dynamic
+       valid_lft forever preferred_lft forever
+3: eth1: &lt;BROADCAST,MULTICAST,UP&gt; mtu 1500 group default qlen 1
+    link/ether 0a:00:27:00:00:03
+    inet 192.168.56.1/24 brd 192.168.56.255 scope global dynamic
+       valid_lft forever preferred_lft forever
+    inet6 fe80::84cd:374e:843f:f82f/64 scope global dynamic
+       valid_lft forever preferred_lft forever
+15: eth2: &lt;&gt; mtu 1500 group default qlen 1
+    link/ether 00:ff:d2:8a:19:c3
+    inet 169.254.40.62/16 brd 169.254.255.255 scope global dynamic
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f199:2ca0:7aff:283e/64 scope global dynamic
+       valid_lft forever preferred_lft forever
+1: lo: &lt;LOOPBACK,UP&gt; mtu 1500 group default qlen 1
+    link/loopback 00:00:00:00:00:00
+    inet 127.0.0.1/8 brd 127.255.255.255 scope global dynamic
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope global dynamic
+       valid_lft forever preferred_lft forever
+5: wifi0: &lt;BROADCAST,MULTICAST,UP&gt; mtu 1500 group default qlen 1
+    link/ieee802.11 5c:51:4f:41:7a:ad
+    inet 192.168.1.1/24 brd 192.168.1.255 scope global dynamic
+       valid_lft 42720sec preferred_lft 42720sec
+    inet6 fe80::395f:3594:1dc2:57e3/64 scope global dynamic
+       valid_lft forever preferred_lft forever
+21: wifi1: &lt;&gt; mtu 1500 group default qlen 1
+    link/ieee802.11 5c:51:4f:41:7a:ae
+    inet 169.254.12.77/16 brd 169.254.255.255 scope global dynamic
+       valid_lft forever preferred_lft forever
+    inet6 fe80::58d5:630:cbbd:c4d/64 scope global dynamic
+       valid_lft forever preferred_lft forever
+12: eth3: &lt;&gt; mtu 1472 group default qlen 1
+    link/ether 00:00:00:00:00:00:00:e0:00:00:00:00:00:00:00:00
+    inet6 fe80::100:7f:fffe/64 scope global dynamic
+       valid_lft forever preferred_lft forever
+10: eth4: &lt;BROADCAST,MULTICAST,UP&gt; mtu 1500 group default qlen 1
+    link/ether 22:b7:57:52:5f:ff
+    inet 192.168.42.106/24 brd 192.168.42.255 scope global dynamic
+       valid_lft 6659sec preferred_lft 6659sec
+    inet6 fe80::5110:eb6f:deb0:45c4/64 scope global dynamic
+       valid_lft forever preferred_lft forever
+</pre></div>
+
+
+<p>You can select only one interface</p>
+<div class="highlight"><pre><span></span>ip addr show eth0
+</pre></div>
+
+
+<p>and only the relevant information will be displayed</p>
+<div class="highlight"><pre><span></span>4: eth0: &lt;&gt; mtu 1500 group default qlen 1
+    link/ether 5c:51:4f:41:7a:b1
+    inet 169.254.33.33/16 brd 169.254.255.255 scope global dynamic
+       valid_lft forever preferred_lft forever
+    inet6 fe80::390a:f69e:1ba2:2121/64 scope global dynamic
+       valid_lft forever preferred_lft forever
+</pre></div>
+
+
+<h3>Check your current ip address the old way</h3>
+<p>The <code>ifconfig</code> command will return information regarding your network interfaces. Let's try it:</p>
+<div class="highlight"><pre><span></span>ifconfig
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>eth1      Link encap:Ethernet  HWaddr 0a:00:27:00:00:03
+          inet adr:192.168.56.1  Bcast:192.168.56.255  Masque:255.255.255.0
+          adr inet6: fe80::84cd:374e:843f:f82f/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          Packets reçus:0 erreurs:0 :0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0
+          Octets reçus:0 (0.0 B) Octets transmis:0 (0.0 B)
+
+eth4      Link encap:Ethernet  HWaddr 22:b7:57:52:5f:ff
+          inet adr:192.168.42.106  Bcast:192.168.42.255  Masque:255.255.255.0
+          adr inet6: fe80::5110:eb6f:deb0:45c4/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          Packets reçus:0 erreurs:0 :0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0
+          Octets reçus:0 (0.0 B) Octets transmis:0 (0.0 B)
+
+lo        Link encap:Boucle locale
+          inet adr:127.0.0.1  Masque:255.0.0.0
+          adr inet6: ::1/128 Scope:Global
+          UP LOOPBACK RUNNING  MTU:1500  Metric:1
+          Packets reçus:0 erreurs:0 :0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0
+          Octets reçus:0 (0.0 B) Octets transmis:0 (0.0 B)
+
+wifi0     Link encap:UNSPEC  HWaddr 5C-51-4F-41-7A-AD-00-00-00-00-00-00-00-00-00-00
+          inet adr:192.168.1.1  Bcast:192.168.1.255  Masque:255.255.255.0
+          adr inet6: fe80::395f:3594:1dc2:57e3/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          Packets reçus:0 erreurs:0 :0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0
+          Octets reçus:0 (0.0 B) Octets transmis:0 (0.0 B)
+</pre></div>
+
+
+<p>On the left column you have the list of network adapters. The <code>lo</code> is the local loopback, it is an interface that points to the localhost. Interfaces starting with <code>eth</code> refer to wired connections over ethernet (or sometimes USB in the case of a phone acting as an access point over USB). Interfaces starting with <code>wlan</code>or <code>wifi</code> refer to wireless connections.</p>
+<p>On the right column you have some information corresponding to the interface such as the IPv4, the IPv6, the mask, some statistics about the interface and so on.</p>
 </div>
     <aside>
     <div class="bug-reporting__panel">
