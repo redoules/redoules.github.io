@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Setting up the notebook for plotting with matplotlib - Python</title>
+    <title>Check the version of the kernel currently running - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Data Visualization" />
+    <meta name="tags" content="Bash" />
 
 
 </head>
@@ -112,51 +112,40 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Setting up the notebook for plotting with matplotlib
+      Check the version of the kernel currently running
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-02T15:57:00+02:00">
-            02 août 2018
+        <time class="published" datetime="2018-08-17T10:29:00+02:00">
+            17 août 2018
         </time>
     </li>
-    <li>Python</li>
-    <li>Data Visualization</li>
+    <li>Linux</li>
+    <li>Bash</li>
 </ol>
 </header>
 <div class='article_content'>
-<h1>Importing Matplotlib</h1>
-<p>First we need to import pyplot, a collection of command style functions that make matplotlib work like MATLAB. Let's, as well, use the magic command %matplotlib inline in order to display the figures in the notebook</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
-
-<span class="c1"># this doubles image size, but we&#39;ll do it manually below</span>
-<span class="c1"># %config InlineBackend.figure_format = &#39;retina&#39;</span>
+<h3>Check the version of the kernel currently running</h3>
+<p>The <code>uname</code> command will give you the version of the kernel. In order to get a more useful output, type</p>
+<div class="highlight"><pre><span></span>uname -a
 </pre></div>
 
 
-<p>The following parameters are recommended for matplotlib, they will make matplotlib output a better quality image </p>
-<div class="highlight"><pre><span></span><span class="c1"># %load snippets/matplot_setup.py</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;savefig.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">163</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.autolayout&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">12</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.labelsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.titlesize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;lines.linewidth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.0</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;lines.markersize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;legend.fontsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.usetex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span> <span class="c1"># True activates latex output in fonts!</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;serif&quot;</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.serif&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;cm&quot;</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.latex.preamble&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">usepackage{subdepth}, </span><span class="se">\\</span><span class="s2">usepackage{type1cm}&quot;</span>
+<p>This will return :
+<em> the hostname
+</em> os name
+<em> kernel release/version
+</em> architecture
+* etc.</p>
+<h3>variations</h3>
+<p>If you only want the kernel version you can type</p>
+<div class="highlight"><pre><span></span>uname -v
 </pre></div>
 
 
-<p>You can change the second line in order to fit your display. 163 dpi corresponds to a Dell Ultra HD 4k P2715Q. You can check your screen's dpi count at http://dpi.lv/</p>
+<p>if you only want the kernel release you can type</p>
+<div class="highlight"><pre><span></span>uname -r
+</pre></div>
 </div>
     <aside>
     <div class="bug-reporting__panel">
