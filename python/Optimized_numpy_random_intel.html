@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Synology NFS share - Linux</title>
+    <title>Optimized numpy random number generation on Intel CPU - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Synology" />
+    <meta name="tags" content="Other" />
 
 
 </head>
@@ -112,31 +112,56 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Synology NFS share
+      Optimized numpy random number generation on Intel CPU
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-01-03T19:09:00+01:00">
-            03 janvier 2018
+        <time class="published" datetime="2018-08-22T21:29:00+02:00">
+            22 août 2018
         </time>
     </li>
-    <li>Linux</li>
-    <li>Synology</li>
+    <li>Python</li>
+    <li>Other</li>
 </ol>
 </header>
 <div class='article_content'>
-<h3>Setting up a NFS share</h3>
-<p>login to your DSM admin account, open the "Control Panel" and go to "File Services"</p>
-<p><img alt="jpg" src="../images/share_nfs_share/1.jpg"></p>
-<p>Make sure NFS is enabled</p>
-<p><img alt="jpg" src="../images/share_nfs_share/2.jpg"></p>
-<p>Back in the control panel, go to "Shared Folder"</p>
-<p><img alt="jpg" src="../images/share_nfs_share/3.jpg"></p>
-<p>Select the folder you want to share and clic "Edit"</p>
-<p><img alt="jpg" src="../images/share_nfs_share/4.jpg"></p>
-<p>Go to the "NFS Permissions tab and clic "Create", add the ip of the device you want to mount the mapped drive on. </p>
-<p><img alt="jpg" src="../images/share_nfs_share/5.jpg"></p>
-<p>Make sure you copy the "Mount path"</p>
+<h2>Python Intel distribution</h2>
+<p>Make sure you have a python intel distribution. When you startup python you should see somethine like :</p>
+<div class="highlight"><pre><span></span>Python 3.6.2 |Intel Corporation| (default, Aug 15 2017, 11:34:02) [MSC v.1900 64 bit (AMD64)]
+Type &#39;copyright&#39;, &#39;credits&#39; or &#39;license&#39; for more information
+IPython 6.1.0 -- An enhanced Interactive Python. Type &#39;?&#39; for help.
+</pre></div>
+
+
+<p>If not, you can force the installation of the intel optimized python with :</p>
+<div class="highlight"><pre><span></span>conda update --all
+conda config --add channels intel
+conda install numpy --channel intel --override-channels
+</pre></div>
+
+
+<p>oh and by the way, make sure you a running an Intel CPU ;)</p>
+<h2>Comparing numpy.random with numpy.random_intel</h2>
+<p>Let's now test both the rand function with and without the Intel optimization</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">random</span><span class="p">,</span> <span class="n">random_intel</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>1.06 ms ± 91.5 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">np</span><span class="o">.</span><span class="n">random_intel</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>225 µs ± 3.46 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+</pre></div>
 </div>
     <aside>
     <div class="bug-reporting__panel">
