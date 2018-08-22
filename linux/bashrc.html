@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Check the size of a directory - Linux</title>
+    <title>What's inside my .bashrc ? - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -112,12 +112,12 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Check the size of a directory
+      What's inside my .bashrc ?
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-17T10:59:00+02:00">
-            17 août 2018
+        <time class="published" datetime="2018-08-22T22:22:00+02:00">
+            22 août 2018
         </time>
     </li>
     <li>Linux</li>
@@ -125,14 +125,64 @@
 </ol>
 </header>
 <div class='article_content'>
-<h3>How do you Check the size of a directory in linux?</h3>
-<p>The <code>du</code> command will come handy for this task. Let's say we want to know the size of the directory named <code>recommandations</code>, we would run the following command</p>
-<div class="highlight"><pre><span></span>du -sh recommendations
-</pre></div>
+<div class="highlight"><pre><span></span><span class="c1">############</span>
+<span class="c1"># Anaconda #</span>
+<span class="c1">############</span>
+
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/station/guillaume/anaconda3/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nb">alias</span> <span class="nv">python</span><span class="o">=</span><span class="s1">&#39;/station/guillaume/anaconda3/bin/python&#39;</span>
 
 
-<p>It would return the output :</p>
-<div class="highlight"><pre><span></span>9.9M    recommendations
+<span class="c1">#########</span>
+<span class="c1"># Alias #</span>
+<span class="c1">#########</span>
+
+
+
+<span class="nb">alias</span> <span class="nv">ding</span><span class="o">=</span><span class="s1">&#39;echo -e &quot;\a&quot;&#39;</span>
+<span class="nb">alias</span> <span class="nv">calc</span><span class="o">=</span><span class="s1">&#39;python -ic &quot;from __future__ import division; from math import *&quot;&#39;</span>
+<span class="nb">alias</span> <span class="nv">h</span><span class="o">=</span><span class="s2">&quot;history|grep &quot;</span>
+<span class="nb">alias</span> <span class="nv">f</span><span class="o">=</span><span class="s2">&quot;find . |grep &quot;</span>
+<span class="nb">alias</span> <span class="nv">p</span><span class="o">=</span><span class="s2">&quot;ps aux |grep &quot;</span>
+<span class="nb">alias</span> <span class="nv">cdl</span><span class="o">=</span><span class="s2">&quot;cd /data/guillaume&quot;</span>
+<span class="nb">alias</span> <span class="nv">ls</span><span class="o">=</span><span class="s2">&quot;ls --color=auto&quot;</span>
+<span class="nb">alias</span> <span class="nv">ll</span><span class="o">=</span><span class="s2">&quot;ls -hal&quot;</span>
+<span class="nb">alias</span> <span class="nv">sv</span><span class="o">=</span><span class="s2">&quot;ssh compute_cluster&quot;</span>
+<span class="nb">alias</span> <span class="nv">ms</span><span class="o">=</span><span class="s2">&quot;ls&quot;</span> 
+
+
+
+<span class="c1">##########################</span>
+<span class="c1"># bashrc personnalisation#</span>
+<span class="c1">##########################</span>
+
+<span class="nv">force_color_prompt</span><span class="o">=</span>yes
+<span class="nb">export</span> <span class="nv">EDITOR</span><span class="o">=</span>nano
+<span class="nb">export</span> <span class="nv">BROWSER</span><span class="o">=</span><span class="s2">&quot;firefox &#39;%s&#39; &amp;&quot;</span>
+<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;</span><span class="nv">$force_color_prompt</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="k">if</span> <span class="o">[</span> -x /usr/bin/tput <span class="o">]</span> <span class="o">&amp;&amp;</span> tput setaf <span class="m">1</span> &gt;<span class="p">&amp;</span>/dev/null<span class="p">;</span> <span class="k">then</span>
+        <span class="c1"># We have color support; assume it&#39;s compliant with Ecma-48</span>
+        <span class="c1"># (ISO/IEC-6429). (Lack of such support is extremely rare, and such</span>
+        <span class="c1"># a case would tend to support setf rather than setaf.)</span>
+        <span class="nv">color_prompt</span><span class="o">=</span>yes
+    <span class="k">else</span>
+        <span class="nv">color_prompt</span><span class="o">=</span>
+    <span class="k">fi</span>
+<span class="k">fi</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$color_prompt</span><span class="s2">&quot;</span> <span class="o">=</span> yes <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="c1">#\h : hostname</span>
+    <span class="c1">#\u : user</span>
+    <span class="c1">#\w : current working directory</span>
+    <span class="c1">#\d : date</span>
+    <span class="c1">#\t : time</span>
+
+    <span class="nv">yellow</span><span class="o">=</span><span class="m">226</span>
+    <span class="nv">green</span><span class="o">=</span><span class="m">83</span>
+    <span class="nv">pink</span><span class="o">=</span><span class="m">198</span>
+    <span class="nv">blue</span><span class="o">=</span><span class="m">34</span>
+
+   <span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;\[\033[38;5;22m\]\u\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;163m\]@\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;22m\]\h\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;162m\]:\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;172m\]{\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;39m\]\w\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;172m\]}\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;162m\]&gt;\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]&quot;</span>
 </pre></div>
 </div>
     <aside>
