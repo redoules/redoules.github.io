@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Efficient extraction of eigenvalues from a list of tensors - Python</title>
+    <title>Running the notebook on a remote server - Jupyter</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Algorithms" />
+    <meta name="tags" content="Basics" />
 
 
 </head>
@@ -112,120 +112,90 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Efficient extraction of eigenvalues from a list of tensors
+      Running the notebook on a remote server
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-22T22:04:00+02:00">
-            22 août 2018
+        <time class="published" datetime="2018-08-15T11:07:00+02:00">
+            15 août 2018
         </time>
     </li>
-    <li>Python</li>
-    <li>Algorithms</li>
+    <li>Jupyter</li>
+    <li>Basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>When you manipulate FEM results you generally have either a:
-<em> scalar field,
-</em> vector field,
-* tensor field.</p>
-<p>With tensorial results, it is often useful to extract the eigenvalues in order to find the principal values.</p>
-<p>I have found that it is easier to store the components of the tensors in a 6 column pandas dataframe (because of the symmetric property of stress and strain tensors)</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="n">node</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1003</span><span class="p">,</span> <span class="mi">1004</span><span class="p">]</span> <span class="c1">#when dealing with FEM results you should remember at which element/node the result is computed (in the example, let&#39;s assume that we look at node from 1001 to 1004)</span>
-<span class="n">tensor1</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#eigen : 1</span>
-<span class="n">tensor2</span><span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#eigen : 5.58443, -1.77931, -0.805118</span>
-<span class="n">tensor3</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#eigen : 8.85036, 4.46542, -1.31577</span>
-<span class="n">tensor4</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#eigen : 1, 2, 3</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">tensor1</span><span class="p">,</span> <span class="n">tensor2</span><span class="p">,</span> <span class="n">tensor3</span><span class="p">,</span> <span class="n">tensor4</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;XX&quot;</span><span class="p">,</span><span class="s2">&quot;YY&quot;</span><span class="p">,</span><span class="s2">&quot;ZZ&quot;</span><span class="p">,</span><span class="s2">&quot;XY&quot;</span><span class="p">,</span><span class="s2">&quot;XZ&quot;</span><span class="p">,</span><span class="s2">&quot;YZ&quot;</span><span class="p">])</span>
-<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">node</span>
-<span class="n">df</span>
+<h2>Jupyter hub</h2>
+<p>With JupyterHub you can create a multi-user Hub which spawns, manages, and proxies multiple instances of the single-user Jupyter notebook server.</p>
+<p>Project Jupyter created JupyterHub to support many users. The Hub can offer notebook servers to a class of students, a corporate data science workgroup, a scientific research project, or a high performance computing group.</p>
+<p>However, if you are the only one using the server and you just want a simple way to run the notebook on your server and access it through the web interface on a light client without having to install and configure the jupyter hub, you can do the following.</p>
+<h2>Problem with jupyter notebook</h2>
+<p>On your server, run the command </p>
+<div class="highlight"><pre><span></span>jupyter-notebook
 </pre></div>
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<p>you should get something like :</p>
+<div class="highlight"><pre><span></span>[I 11:18:44.514 NotebookApp] Serving notebooks from local directory: /volume2/homes/admin
+[I 11:18:44.515 NotebookApp] 0 active kernels
+[I 11:18:44.516 NotebookApp] The Jupyter Notebook is running at: http://localhost:8888/?token=357587e3269b0f20f2b7e1918492890ae7573ac7ef1d2023
+[I 11:18:44.516 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[W 11:18:44.519 NotebookApp] No web browser found: could not locate runnable browser.
+[C 11:18:44.520 NotebookApp]
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>XX</th>
-      <th>YY</th>
-      <th>ZZ</th>
-      <th>XY</th>
-      <th>XZ</th>
-      <th>YZ</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1001</th>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1002</th>
-      <td>4</td>
-      <td>-1</td>
-      <td>0</td>
-      <td>2</td>
-      <td>2</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1003</th>
-      <td>1</td>
-      <td>6</td>
-      <td>5</td>
-      <td>3</td>
-      <td>3</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1004</th>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<p>If you want to extract the eigenvalues of a tensor with numpy you have to pass a n by n ndarray to the eigenvalue function. In order to avoid having to loop over each node, this oneliner is highly optimized and will help you invert a large number of tensors efficiently.</p>
-<p>The steps are basically, create a list of n by n values (here n=3) in the right order =&gt; reshape it to a list of tensors =&gt; pass it to the eigenvals function</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:8888/?token=357587e3269b0f20f2b7e1918492890ae7573ac7ef1d2023
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="n">eigenvals</span> <span class="o">=</span> <span class="n">LA</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;XX&quot;</span><span class="p">,</span><span class="s2">&quot;XY&quot;</span><span class="p">,</span><span class="s2">&quot;XZ&quot;</span><span class="p">,</span><span class="s2">&quot;XY&quot;</span><span class="p">,</span><span class="s2">&quot;YY&quot;</span><span class="p">,</span><span class="s2">&quot;YZ&quot;</span><span class="p">,</span><span class="s2">&quot;XZ&quot;</span><span class="p">,</span><span class="s2">&quot;YZ&quot;</span><span class="p">,</span><span class="s2">&quot;ZZ&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-<span class="n">eigenvals</span>
+<p>and if you try to connect to your server ip (in my example : http://192.168.1.2:8888/?token=357587e3269b0f20f2b7e1918492890ae7573ac7ef1d2023) you will get an "ERR_CONNECTION_REFUSED" error. This is because, by default, Jupyter Notebook only accepts connections from localhost.</p>
+<h2>Allowing connexions from other sources</h2>
+<h3>From any IP</h3>
+<p>The simplest way to avoid the connection error is to allow the notebook to accept connections from any ip </p>
+<div class="highlight"><pre><span></span>jupyter-notebook --ip<span class="o">=</span>*
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>array([[ 1.        ,  1.        ,  1.        ],
-       [ 5.58442834, -0.80511809, -1.77931025],
-       [-1.31577211,  8.85035616,  4.46541595],
-       [ 1.        ,  2.        ,  3.        ]])
+<p>you will get something like </p>
+<div class="highlight"><pre><span></span>[W 11:26:45.285 NotebookApp] WARNING: The notebook server is listening on all IP addresses and not using encryption. This is not recommended.
+[I 11:26:45.342 NotebookApp] Serving notebooks from local directory: /volume2/homes/admin
+[I 11:26:45.342 NotebookApp] 0 active kernels
+[I 11:26:45.343 NotebookApp] The Jupyter Notebook is running at: http://[all ip addresses on your system]:8888/?token=52af33d628881824968b4031967e8541a27cc28b1720c199
+[I 11:26:45.343 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[W 11:26:45.346 NotebookApp] No web browser found: could not locate runnable browser.
+[C 11:26:45.347 NotebookApp]
+
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:8888/?token=52af33d628881824968b4031967e8541a27cc28b1720c199
+</pre></div>
+
+
+<p>and if you connect form a remote client (192.168.1.1 in my example), the following line will be added to the output :</p>
+<div class="highlight"><pre><span></span>[I 11:26:54.798 NotebookApp] 302 GET /?token=52af33d628881824968b4031967e8541a27cc28b1720c199 (192.168.1.1) 111.17ms
+</pre></div>
+
+
+<p>note that you should only do that if you are the only one using the server because the connection is not encypted.</p>
+<h3>From a specific IP</h3>
+<p>You can also, explicitly specify the ip of the client</p>
+<div class="highlight"><pre><span></span>jupyter-notebook --ip<span class="o">=</span><span class="m">192</span>.168.1.1
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>[I 11:44:58.104 NotebookApp] JupyterLab extension loaded from C:\Users\Guillaume\Miniconda3\lib\site-packages\jupyterlab
+[I 11:44:58.104 NotebookApp] JupyterLab application directory is C:\Users\Guillaume\Miniconda3\share\jupyter\lab
+[I 11:44:58.244 NotebookApp] Serving notebooks from local directory: C:\Users\Guillaume
+[I 11:44:58.245 NotebookApp] 0 active kernels
+[I 11:44:58.245 NotebookApp] The Jupyter Notebook is running at: http://192.168.1.1:8888/?token=503576dd8fa87d1f2c416df307e9b900e520b4942e317b32
+[I 11:44:58.245 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 11:44:58.258 NotebookApp]
+
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://192.168.1.1:8888/?token=503576dd8fa87d1f2c416df307e9b900e520b4942e317b32
+[I 11:44:59.083 NotebookApp] Accepting one-time-token-authenticated connection from 192.168.1.1
 </pre></div>
 </div>
     <aside>
