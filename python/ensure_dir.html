@@ -143,7 +143,7 @@
 </pre></div>
 
 
-<p>copy the ensure_dir function in your code. This function will handle the creation of the directory</p>
+<p>copy the ensure_dir function in your code. This function will handle the creation of the directory. Credit goes to <a href="https://stackoverflow.com/questions/273192/how-can-i-safely-create-a-nested-directory-in-python">Parand</a> posted on StackOverflow</p>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ensure_dir</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
     <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
