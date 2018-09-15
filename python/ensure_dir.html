@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Using Dask on infiniband - Python</title>
+    <title>Safely creating a folder if it doesn't exist - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Parallel" />
+    <meta name="tags" content="Basics" />
 
 
 </head>
@@ -112,27 +112,56 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Using Dask on infiniband
+      Safely creating a folder if it doesn't exist
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-29T23:38:00+02:00">
-            29 août 2018
+        <time class="published" datetime="2018-09-15T07:56:00+02:00">
+            15 septembre 2018
         </time>
     </li>
     <li>Python</li>
-    <li>Parallel</li>
+    <li>Basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>InfiniBand (abbreviated IB) is a computer-networking communications standard used in high-performance computing that features very high throughput and very low latency. It is used for data interconnect both among and within computers. InfiniBand is also used as either a direct or switched interconnect between servers and storage systems, as well as an interconnect between storage systems. (source Wikipedia).</p>
-<p>If you want to leverage this high speed network instead of the regular ethernet network, you have to specify to the scheduler that you want to used infiniband as your interface. Assuming that you Infiniband interface is <code>ib0</code>, you would call the scheduler like this :</p>
-<div class="highlight"><pre><span></span>dask-scheduler --interface ib0 --scheduler-file ./cluster.yaml
+<h2>Safely creating a folder if it doesn't exist</h2>
+<p>When you are writing to files in python, if the file doesn't exist it will be created. However, if you are trying to write a file in a directory that doesn't exist, an exception will be returned </p>
+<div class="highlight"><pre><span></span><span class="n">FileNotFoundError</span><span class="p">:</span> <span class="p">[</span><span class="n">Errno</span> <span class="mi">2</span><span class="p">]</span> <span class="n">No</span> <span class="n">such</span> <span class="nb">file</span> <span class="ow">or</span> <span class="n">directory</span><span class="p">:</span> <span class="s2">&quot;directory&quot;</span>
 </pre></div>
 
 
-<p>you would have to call the worker using the same interface :</p>
-<div class="highlight"><pre><span></span>dask-worker --interface ib0 --scheduler-file ./cluster.yaml
+<p>This article will teach you how to make sure the target directory exists. If it doesn't, the function will create that directory.</p>
+<p>First, let's import os and make sure that the "test_directory" doesn't exist</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span> 
+
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;.</span><span class="se">\\</span><span class="s2">test_directory&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>False
+</pre></div>
+
+
+<p>copy the ensure_dir function in your code. This function will handle the creation of the directory</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ensure_dir</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Let's now use the function and create a folder named "test_directory"</p>
+<div class="highlight"><pre><span></span><span class="n">ensure_dir</span><span class="p">(</span><span class="s2">&quot;.</span><span class="se">\\</span><span class="s2">test_directory&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>If we test for the existence of the directory, the exists function will now return True</p>
+<div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;.</span><span class="se">\\</span><span class="s2">test_directory&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>True
 </pre></div>
 </div>
     <aside>
