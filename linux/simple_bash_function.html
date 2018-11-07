@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Running the notebook on a remote server - Jupyter</title>
+    <title>Create a simple bash function - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Basics" />
+    <meta name="tags" content="Bash" />
 
 
 </head>
@@ -112,90 +112,87 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Running the notebook on a remote server
+      Create a simple bash function
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-15T11:07:00+02:00">
-            15 août 2018
+        <time class="published" datetime="2018-11-07T09:37:00+01:00">
+            07 novembre 2018
         </time>
     </li>
-    <li>Jupyter</li>
-    <li>Basics</li>
+    <li>Linux</li>
+    <li>Bash</li>
 </ol>
 </header>
 <div class='article_content'>
-<h2>Jupyter hub</h2>
-<p>With JupyterHub you can create a multi-user Hub which spawns, manages, and proxies multiple instances of the single-user Jupyter notebook server.</p>
-<p>Project Jupyter created JupyterHub to support many users. The Hub can offer notebook servers to a class of students, a corporate data science workgroup, a scientific research project, or a high performance computing group.</p>
-<p>However, if you are the only one using the server and you just want a simple way to run the notebook on your server and access it through the web interface on a light client without having to install and configure the jupyter hub, you can do the following.</p>
-<h2>Problem with jupyter notebook</h2>
-<p>On your server, run the command </p>
-<div class="highlight"><pre><span></span>jupyter-notebook
+<h2>A basic function</h2>
+<p>The synthaxe to define a function is :</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># Basic function</span>
+my_function <span class="o">()</span> <span class="o">{</span>
+<span class="nb">echo</span> Text displayed by my_function
+<span class="o">}</span>
+
+<span class="c1">#once defined, you can use it like so :</span>
+my_function
 </pre></div>
 
 
-<p>you should get something like :</p>
-<div class="highlight"><pre><span></span>[I 11:18:44.514 NotebookApp] Serving notebooks from local directory: /volume2/homes/admin
-[I 11:18:44.515 NotebookApp] 0 active kernels
-[I 11:18:44.516 NotebookApp] The Jupyter Notebook is running at: http://localhost:8888/?token=357587e3269b0f20f2b7e1918492890ae7573ac7ef1d2023
-[I 11:18:44.516 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[W 11:18:44.519 NotebookApp] No web browser found: could not locate runnable browser.
-[C 11:18:44.520 NotebookApp]
-
-    Copy/paste this URL into your browser when you connect for the first time,
-    to login with a token:
-        http://localhost:8888/?token=357587e3269b0f20f2b7e1918492890ae7573ac7ef1d2023
+<p>and it should return </p>
+<div class="highlight"><pre><span></span>user@bash : ./my_function.sh
+Text displayed by my_function
 </pre></div>
 
 
-<p>and if you try to connect to your server ip (in my example : http://192.168.1.2:8888/?token=357587e3269b0f20f2b7e1918492890ae7573ac7ef1d2023) you will get an "ERR_CONNECTION_REFUSED" error. This is because, by default, Jupyter Notebook only accepts connections from localhost.</p>
-<h2>Allowing connexions from other sources</h2>
-<h3>From any IP</h3>
-<p>The simplest way to avoid the connection error is to allow the notebook to accept connections from any ip </p>
-<div class="highlight"><pre><span></span>jupyter-notebook --ip<span class="o">=</span>*
+<h2>Function with arguments</h2>
+<p>When used, the arguments are specified directly after the function name. Whithin the function they are accessible this the $ symbol followed by the number of the arguement.</p>
+<p>Hence <code>$1</code> will take the value of the first arguement, <code>$2</code> will take the value of the second arguement and so on.</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># Passing arguments to a function</span>
+say_hello <span class="o">()</span> <span class="o">{</span>
+<span class="nb">echo</span> Hello <span class="nv">$1</span>
+<span class="o">}</span>
+say_hello Guillaume
 </pre></div>
 
 
-<p>you will get something like </p>
-<div class="highlight"><pre><span></span>[W 11:26:45.285 NotebookApp] WARNING: The notebook server is listening on all IP addresses and not using encryption. This is not recommended.
-[I 11:26:45.342 NotebookApp] Serving notebooks from local directory: /volume2/homes/admin
-[I 11:26:45.342 NotebookApp] 0 active kernels
-[I 11:26:45.343 NotebookApp] The Jupyter Notebook is running at: http://[all ip addresses on your system]:8888/?token=52af33d628881824968b4031967e8541a27cc28b1720c199
-[I 11:26:45.343 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[W 11:26:45.346 NotebookApp] No web browser found: could not locate runnable browser.
-[C 11:26:45.347 NotebookApp]
-
-    Copy/paste this URL into your browser when you connect for the first time,
-    to login with a token:
-        http://localhost:8888/?token=52af33d628881824968b4031967e8541a27cc28b1720c199
+<p>and it should return </p>
+<div class="highlight"><pre><span></span>user@bash : ./function_arguements.sh
+Hello Guillaume
 </pre></div>
 
 
-<p>and if you connect form a remote client (192.168.1.1 in my example), the following line will be added to the output :</p>
-<div class="highlight"><pre><span></span>[I 11:26:54.798 NotebookApp] 302 GET /?token=52af33d628881824968b4031967e8541a27cc28b1720c199 (192.168.1.1) 111.17ms
+<h2>Overriding Commands</h2>
+<p>Using the previous example, let's override the echo function in order to make it say hello. To do so, you just need to name the function with the same name as the command you want to replace. When you are calling the original function, make sure you are using the <code>builtin</code> keyword  </p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># Overriding a function</span>
+<span class="nb">echo</span> <span class="o">()</span> <span class="o">{</span>
+<span class="nb">builtin</span> <span class="nb">echo</span> Hello <span class="nv">$1</span>
+<span class="o">}</span>
+<span class="nb">echo</span> Guillaume
 </pre></div>
 
 
-<p>note that you should only do that if you are the only one using the server because the connection is not encypted.</p>
-<h3>From a specific IP</h3>
-<p>You can also, explicitly specify the ip of the client</p>
-<div class="highlight"><pre><span></span>jupyter-notebook --ip<span class="o">=</span><span class="m">192</span>.168.1.1
+<div class="highlight"><pre><span></span>user@bash : ./function_arguements.sh
+Hello Guillaume
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>[I 11:44:58.104 NotebookApp] JupyterLab extension loaded from C:\Users\Guillaume\Miniconda3\lib\site-packages\jupyterlab
-[I 11:44:58.104 NotebookApp] JupyterLab application directory is C:\Users\Guillaume\Miniconda3\share\jupyter\lab
-[I 11:44:58.244 NotebookApp] Serving notebooks from local directory: C:\Users\Guillaume
-[I 11:44:58.245 NotebookApp] 0 active kernels
-[I 11:44:58.245 NotebookApp] The Jupyter Notebook is running at: http://192.168.1.1:8888/?token=503576dd8fa87d1f2c416df307e9b900e520b4942e317b32
-[I 11:44:58.245 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[C 11:44:58.258 NotebookApp]
+<h2>Returning values</h2>
+<p>Use the keyword return to send back a value to the main program. The returned value will be stored in the <code>$?</code> variable</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># Retruning a value </span>
+secret_number <span class="o">()</span> <span class="o">{</span>
+<span class="k">return</span> <span class="m">126</span>
+<span class="o">}</span>
+secret_number
+<span class="nb">echo</span> The secret number is <span class="nv">$?</span>
+</pre></div>
 
-    Copy/paste this URL into your browser when you connect for the first time,
-    to login with a token:
-        http://192.168.1.1:8888/?token=503576dd8fa87d1f2c416df307e9b900e520b4942e317b32
-[I 11:44:59.083 NotebookApp] Accepting one-time-token-authenticated connection from 192.168.1.1
+
+<p>This code should return </p>
+<div class="highlight"><pre><span></span>user@bash : ./retrun_value.sh
+The secret number is 126
 </pre></div>
 </div>
     <aside>
