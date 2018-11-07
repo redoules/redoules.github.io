@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Moving average with pandas - Python</title>
+    <title>[10 Days of Statistics] Day 0 - Median, mean, mode and weighted mean - Blog</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Data Wrangling" />
+    <meta name="tags" content="Basics" />
 
 
 </head>
@@ -112,258 +112,62 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Moving average with pandas
+      [10 Days of Statistics] Day 0 - Median, mean, mode and weighted mean
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-04T17:41:00+02:00">
-            04 août 2018
+        <time class="published" datetime="2018-11-07T22:12:00+01:00">
+            07 novembre 2018
         </time>
     </li>
-    <li>Python</li>
-    <li>Data Wrangling</li>
+    <li>Blog</li>
+    <li>Basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<div class="highlight"><pre><span></span><span class="c1"># Import modules</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pandas_datareader</span> <span class="kn">import</span> <span class="n">data</span><span class="p">,</span> <span class="n">wb</span>
+<h2>A reminder</h2>
+<h3>The median</h3>
+<p>The median is the value separating the higher half from the lower half of a data sample. For a data set, it may be thought of as the middle value. 
+For a continuous probability distribution, the median is the value such that a number is equally likely to fall above or below it. </p>
+<h3>The mean</h3>
+<p>The arithmetic mean (or simply mean) of a sample is the sum of the sampled values divided by the number of items.</p>
+<h3>The mode</h3>
+<p>The mode of a set of data values is the value that appears most often. It is the value x at which its probability mass function takes its maximum value. In other words, it is the value that is most likely to be sampled. </p>
+<h2>Implementation in python without using the scientific libraries</h2>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">median</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span><span class="p">[(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)])</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">mode</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">dico</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="n">data</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="p">))}</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="c1">#import packages</span>
-
-<span class="kn">from</span> <span class="nn">pandas_datareader</span> <span class="kn">import</span> <span class="n">data</span>
-
-<span class="n">aapl</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;quandl&#39;</span><span class="p">,</span> <span class="s1">&#39;1980-01-01&#39;</span><span class="p">)</span>
-<span class="n">aapl</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">64630</span><span class="p">,</span><span class="mi">11735</span><span class="p">,</span><span class="mi">14216</span><span class="p">,</span><span class="mi">99233</span><span class="p">,</span><span class="mi">14470</span><span class="p">,</span><span class="mi">4978</span><span class="p">,</span><span class="mi">73429</span><span class="p">,</span><span class="mi">38120</span><span class="p">,</span><span class="mi">51135</span><span class="p">,</span><span class="mi">67060</span><span class="p">,</span> <span class="mi">4978</span><span class="p">,</span> <span class="mi">73429</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Sample : {L}</span><span class="se">\n</span><span class="s2">Mean : {mean(L)}, Median : {median(L)}, Mode : {mode(L)}&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Open</th>
-      <th>High</th>
-      <th>Low</th>
-      <th>Close</th>
-      <th>Volume</th>
-      <th>ExDividend</th>
-      <th>SplitRatio</th>
-      <th>AdjOpen</th>
-      <th>AdjHigh</th>
-      <th>AdjLow</th>
-      <th>AdjClose</th>
-      <th>AdjVolume</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2018-03-27</th>
-      <td>173.68</td>
-      <td>175.15</td>
-      <td>166.92</td>
-      <td>168.340</td>
-      <td>38962839.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>173.68</td>
-      <td>175.15</td>
-      <td>166.92</td>
-      <td>168.340</td>
-      <td>38962839.0</td>
-    </tr>
-    <tr>
-      <th>2018-03-26</th>
-      <td>168.07</td>
-      <td>173.10</td>
-      <td>166.44</td>
-      <td>172.770</td>
-      <td>36272617.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>168.07</td>
-      <td>173.10</td>
-      <td>166.44</td>
-      <td>172.770</td>
-      <td>36272617.0</td>
-    </tr>
-    <tr>
-      <th>2018-03-23</th>
-      <td>168.39</td>
-      <td>169.92</td>
-      <td>164.94</td>
-      <td>164.940</td>
-      <td>40248954.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>168.39</td>
-      <td>169.92</td>
-      <td>164.94</td>
-      <td>164.940</td>
-      <td>40248954.0</td>
-    </tr>
-    <tr>
-      <th>2018-03-22</th>
-      <td>170.00</td>
-      <td>172.68</td>
-      <td>168.60</td>
-      <td>168.845</td>
-      <td>41051076.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>170.00</td>
-      <td>172.68</td>
-      <td>168.60</td>
-      <td>168.845</td>
-      <td>41051076.0</td>
-    </tr>
-    <tr>
-      <th>2018-03-21</th>
-      <td>175.04</td>
-      <td>175.09</td>
-      <td>171.26</td>
-      <td>171.270</td>
-      <td>35247358.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>175.04</td>
-      <td>175.09</td>
-      <td>171.26</td>
-      <td>171.270</td>
-      <td>35247358.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<p>In order to computer the moving average, we will use the rolling function.</p>
-<div class="highlight"><pre><span></span><span class="c1">#120 days moving average</span>
-<span class="n">moving_averages</span> <span class="o">=</span> <span class="n">aapl</span><span class="p">[[</span><span class="s2">&quot;Open&quot;</span> <span class="p">,</span><span class="s2">&quot;High&quot;</span> <span class="p">,</span><span class="s2">&quot;Low&quot;</span><span class="p">,</span><span class="s2">&quot;Close&quot;</span> <span class="p">,</span><span class="s2">&quot;Volume&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="n">moving_averages</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+<div class="highlight"><pre><span></span>Sample : [64630, 11735, 14216, 99233, 14470, 4978, 73429, 38120, 51135, 67060, 4978, 73429]
+Mean : 43117.75, Median : 44627.5, Mode : 4978
 </pre></div>
 
 
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Open</th>
-      <th>High</th>
-      <th>Low</th>
-      <th>Close</th>
-      <th>Volume</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1980-12-18</th>
-      <td>28.457667</td>
-      <td>28.551917</td>
-      <td>28.385000</td>
-      <td>28.385000</td>
-      <td>139495.000000</td>
-    </tr>
-    <tr>
-      <th>1980-12-17</th>
-      <td>28.410750</td>
-      <td>28.502917</td>
-      <td>28.338083</td>
-      <td>28.338083</td>
-      <td>141772.500000</td>
-    </tr>
-    <tr>
-      <th>1980-12-16</th>
-      <td>28.362833</td>
-      <td>28.453917</td>
-      <td>28.289167</td>
-      <td>28.289167</td>
-      <td>141256.666667</td>
-    </tr>
-    <tr>
-      <th>1980-12-15</th>
-      <td>28.335750</td>
-      <td>28.426833</td>
-      <td>28.262083</td>
-      <td>28.262083</td>
-      <td>144321.666667</td>
-    </tr>
-    <tr>
-      <th>1980-12-12</th>
-      <td>28.310750</td>
-      <td>28.402833</td>
-      <td>28.238167</td>
-      <td>28.238167</td>
-      <td>159625.000000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-
-
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aapl</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">aapl</span><span class="o">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Open price&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">moving_averages</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">moving_averages</span><span class="o">.</span><span class="n">Open</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;120 MA Open price&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<h2>The weighted average</h2>
+<p>The weighted arithmetic mean is similar to an ordinary arithmetic mean (the most common type of average), except that instead of each of the data points contributing equally to the final average, some data points contribute more than others.</p>
+<div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">sum_X</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="o">*</span><span class="n">w</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">w</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">weights</span><span class="p">)])</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="n">sum_X</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">)),</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 
 
-<p><img alt="png" src="../images/MovingAvg/output_6_0.png"></p>
+<div class="highlight"><pre><span></span>32.0
+</pre></div>
 </div>
     <aside>
     <div class="bug-reporting__panel">
