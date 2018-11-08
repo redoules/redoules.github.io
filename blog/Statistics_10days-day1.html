@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Day 0 - Median, mean, mode and weighted mean - Blog</title>
+    <title>Day 1 - Quartiles, Interquartile Range and standard deviation - Blog</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -112,12 +112,12 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Day 0 - Median, mean, mode and weighted mean
+      Day 1 - Quartiles, Interquartile Range and standard deviation
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-07T22:12:00+01:00">
-            07 novembre 2018
+        <time class="published" datetime="2018-11-08T22:22:00+01:00">
+            08 novembre 2018
         </time>
     </li>
     <li>Blog</li>
@@ -125,15 +125,10 @@
 </ol>
 </header>
 <div class='article_content'>
-<h2>A reminder</h2>
-<h3>The median</h3>
-<p>The median is the value separating the higher half from the lower half of a data sample. For a data set, it may be thought of as the middle value. 
-For a continuous probability distribution, the median is the value such that a number is equally likely to fall above or below it. </p>
-<h3>The mean</h3>
-<p>The arithmetic mean (or simply mean) of a sample is the sum of the sampled values divided by the number of items.</p>
-<h3>The mode</h3>
-<p>The mode of a set of data values is the value that appears most often. It is the value x at which its probability mass function takes its maximum value. In other words, it is the value that is most likely to be sampled. </p>
-<h2>Implementation in python without using the scientific libraries</h2>
+<h2>Quartile</h2>
+<h3>Definition</h3>
+<p>A quartile is a type of quantile. The first quartile (Q1) is defined as the middle number between the smallest number and the median of the data set. The second quartile (Q2) is the median of the data. The third quartile (Q3) is the middle value between the median and the highest value of the data set. </p>
+<h3>Implementation in python without using the scientific libraries</h3>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">median</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
     <span class="n">l</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -141,35 +136,74 @@ For a continuous probability distribution, the median is the value such that a n
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">l</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span>
 
-<span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">mode</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="n">dico</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="n">data</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="p">))}</span>
-    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">quartiles</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="c1"># check the input is not empty</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">l</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">StatsError</span><span class="p">(</span><span class="s1">&#39;no data points passed&#39;</span><span class="p">)</span>
+    <span class="c1"># 1. order the data set</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="c1"># 2. divide the data set in two halves</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">Q2</span> <span class="o">=</span> <span class="n">median</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="c1"># even</span>
+        <span class="n">Q1</span> <span class="o">=</span> <span class="n">median</span><span class="p">(</span><span class="n">l</span><span class="p">[:</span><span class="n">mid</span><span class="p">])</span>
+        <span class="n">Q3</span> <span class="o">=</span> <span class="n">median</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">mid</span><span class="p">:])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># odd</span>
+        <span class="n">Q1</span> <span class="o">=</span> <span class="n">median</span><span class="p">(</span><span class="n">l</span><span class="p">[:</span><span class="n">mid</span><span class="p">])</span>  <span class="c1"># same as even</span>
+        <span class="n">Q3</span> <span class="o">=</span> <span class="n">median</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">Q1</span><span class="p">,</span> <span class="n">Q2</span><span class="p">,</span> <span class="n">Q3</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">64630</span><span class="p">,</span><span class="mi">11735</span><span class="p">,</span><span class="mi">14216</span><span class="p">,</span><span class="mi">99233</span><span class="p">,</span><span class="mi">14470</span><span class="p">,</span><span class="mi">4978</span><span class="p">,</span><span class="mi">73429</span><span class="p">,</span><span class="mi">38120</span><span class="p">,</span><span class="mi">51135</span><span class="p">,</span><span class="mi">67060</span><span class="p">,</span> <span class="mi">4978</span><span class="p">,</span> <span class="mi">73429</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Sample : {L}</span><span class="se">\n</span><span class="s2">Mean : {mean(L)}, Median : {median(L)}, Mode : {mode(L)}&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">18</span><span class="p">]</span>
+<span class="n">Q1</span><span class="p">,</span> <span class="n">Q2</span><span class="p">,</span> <span class="n">Q3</span> <span class="o">=</span> <span class="n">quartiles</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Sample : {L}</span><span class="se">\n</span><span class="s2">Q1 : {Q1}, Q2 : {Q2}, Q3 : {Q3}&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>Sample : [64630, 11735, 14216, 99233, 14470, 4978, 73429, 38120, 51135, 67060, 4978, 73429]
-Mean : 43117.75, Median : 44627.5, Mode : 4978
+<div class="highlight"><pre><span></span>Sample : [3, 7, 8, 5, 12, 14, 21, 13, 18]
+Q1 : 6.0, Q2 : 12, Q3 : 16.0
 </pre></div>
 
 
-<h2>The weighted average</h2>
-<p>The weighted arithmetic mean is similar to an ordinary arithmetic mean (the most common type of average), except that instead of each of the data points contributing equally to the final average, some data points contribute more than others.</p>
-<div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">20</span><span class="p">]</span>
-<span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
-<span class="n">sum_X</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="o">*</span><span class="n">w</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">w</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">weights</span><span class="p">)])</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="n">sum_X</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">)),</span><span class="mi">1</span><span class="p">))</span>
+<h2>Interquartile Range</h2>
+<h3>Definition</h3>
+<p>The interquartile range of an array is the difference between its first (Q1) and third (Q3) quartiles. Hence the interquartile range is Q3-Q1</p>
+<h3>Implementation in python without using the scientific libraries</h3>
+<div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Interquatile range : {Q3-Q1}&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>32.0
+<div class="highlight"><pre><span></span>Interquatile range : 10.0
+</pre></div>
+
+
+<h2>Standard deviation</h2>
+<h3>Definition</h3>
+<p>The standard deviation (σ) is a measure that is used to quantify the amount of variation or dispersion of a set of data values. A low standard deviation indicates that the data points tend to be close to the mean (also called the expected value) of the set, while a high standard deviation indicates that the data points are spread out over a wider range of values. </p>
+<p>The standard deviation can be computed with the formula:</p>
+<p><img alt="Standard deviation" src="../images/stat_challenge/day1/ecart_type.png"></p>
+<p>where µ is the mean :</p>
+<p><img alt="Mean" src="../images/stat_challenge/day1/moyenne.png"></p>
+<h3>Implementation in python without using the scientific libraries</h3>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span> 
+<span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">20</span><span class="p">]</span>
+
+<span class="n">mean</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">]</span>
+
+<span class="n">std</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+    <span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;The distribution {X} has a standard deviation of {std}&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>The distribution [400.0, 100.0, 0.0, 400.0, 100.0] has a standard deviation of 14.142135623730951
 </pre></div>
 </div>
     <aside>
