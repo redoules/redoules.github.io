@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Optimized numpy random number generation on Intel CPU - Python</title>
+    <title>Geometric distribution - Mathematics</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Other" />
+    <meta name="tags" content="Statistics" />
 
 
 </head>
@@ -112,56 +112,113 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Optimized numpy random number generation on Intel CPU
+      Geometric distribution
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-22T21:29:00+02:00">
-            22 août 2018
+        <time class="published" datetime="2018-11-11T21:19:00+01:00">
+            11 novembre 2018
         </time>
     </li>
-    <li>Python</li>
-    <li>Other</li>
+    <li>Mathematics</li>
+    <li>Statistics</li>
 </ol>
 </header>
 <div class='article_content'>
-<h2>Python Intel distribution</h2>
-<p>Make sure you have a python intel distribution. When you startup python you should see somethine like :</p>
-<div class="highlight"><pre><span></span>Python 3.6.2 |Intel Corporation| (default, Aug 15 2017, 11:34:02) [MSC v.1900 64 bit (AMD64)]
-Type &#39;copyright&#39;, &#39;credits&#39; or &#39;license&#39; for more information
-IPython 6.1.0 -- An enhanced Interactive Python. Type &#39;?&#39; for help.
-</pre></div>
+<h2>Negative Binomial Experiment</h2>
+<p>A negative binomial experiment is a statistical experiment that has the following properties:</p>
+<ul>
+<li>The experiment consists of n repeated trials.</li>
+<li>The trials are independent.</li>
+<li>The outcome of each trial is either success (s) or failure (f).</li>
+<li><span class="math">\(P(s)\)</span> is the same for every trial.</li>
+<li>The experiment continues until x successes are observed</li>
+</ul>
+<p>If <span class="math">\(X\)</span> is the number of experiments until the <span class="math">\(x^{th}\)</span> success occures, then <span class="math">\(X\)</span> is a discrete random variable called a negative binomial</p>
+<h2>Negative Binomial Distribution</h2>
+<p>Consider the following probability mass function:
+</p>
+<div class="math">$$b^*(x,n,p) = {\binom{n-1}{x-1}}p^xq^{n-x}$$</div>
+<p>
+The function above is negative binomial and has the following properties:</p>
+<ul>
+<li>The number of successes to be observed  is <span class="math">\(x\)</span>.</li>
+<li>The total number of trials is <span class="math">\(n\)</span>.</li>
+<li>The probability of success of 1 trial is <span class="math">\(p\)</span>.</li>
+<li>The probability of failure of 1 trial <span class="math">\(q\)</span>, where <span class="math">\(q=1-p\)</span>.</li>
+<li><span class="math">\(b^*(x,n,p)\)</span> is the <em>negative binomial probability</em>, meaning the probability of having exactly <span class="math">\(x-1\)</span> successes out of <span class="math">\(n-1\)</span> trials and having <span class="math">\(x\)</span> successes after <span class="math">\(n\)</span> trials.</li>
+</ul>
+<h2>Geometric Distribution</h2>
+<p>The geometric distribution is a special case of the negative binomial distribution that deals with the number of Bernoulli trials required to get a success (i.e., counting the number of failures before the first success). Recall that <span class="math">\(X\)</span> is the number of successes in <span class="math">\(n\)</span> independent Bernoulli trials, so for each <span class="math">\(i\)</span> (where $1\leq i\leq n):</p>
+<p>$ X_i = </p>
+<div class="math">\begin{cases} 
+      1 if the i^{th} trial is a success \\
+      0 otherwise x 
+   \end{cases}</div>
+<p>
+$</p>
+<p>The geometric distribution is a negative binomial distribution where the number of successes is 1. We express this with the following formula:</p>
+<div class="math">$$g(n,p)=q^{n-1}p$$</div>
+<h3>Example</h3>
+<p>Bob is a high school basketball player. He is a 70% free throw shooter, meaning his probability of making a free throw is 0.7. What is the probability that Bob makes his first free throw on his fifth shot?</p>
+<p>For this experiment n=5, p=0.7 and q=0.3
+So :
+</p>
+<div class="math">$$g(n=5, p=0.7)=0.3^4 0.7=0.00567$$</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
 
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
 
-<p>If not, you can force the installation of the intel optimized python with :</p>
-<div class="highlight"><pre><span></span>conda update --all
-conda config --add channels intel
-conda install numpy --channel intel --override-channels
-</pre></div>
-
-
-<p>oh and by the way, make sure you a running an Intel CPU ;)</p>
-<h2>Comparing numpy.random with numpy.random_intel</h2>
-<p>Let's now test both the rand function with and without the Intel optimization</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">random</span><span class="p">,</span> <span class="n">random_intel</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>1.06 ms ± 91.5 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">np</span><span class="o">.</span><span class="n">random_intel</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>225 µs ± 3.46 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-</pre></div>
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}</script>
 </div>
     <aside>
     <div class="bug-reporting__panel">

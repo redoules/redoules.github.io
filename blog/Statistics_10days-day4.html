@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Conditional Probability - Mathematics</title>
+    <title>Day 4 - Binomial and geometric distributions - Blog</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Statistics" />
+    <meta name="tags" content="Basics" />
 
 
 </head>
@@ -112,23 +112,137 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Conditional Probability
+      Day 4 - Binomial and geometric distributions
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-10T12:32:00+01:00">
-            10 novembre 2018
+        <time class="published" datetime="2018-11-11T10:19:00+01:00">
+            11 novembre 2018
         </time>
     </li>
-    <li>Mathematics</li>
-    <li>Statistics</li>
+    <li>Blog</li>
+    <li>Basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>This is defined as the probability of an event occurring, assuming that one or more other events have already occurred. Two events, A
-and B are considered to be independent if event A has no effect on the probability of event B (i.e. P(B|A)=P(A)). </p>
-<p>If events A and B are not independent, then we must consider the probability that both events occur. This can be referred to as the intersection of events A and B, defined as P(A∩B) = P(B|A)P(A). We can then use this definition to find the conditional probability by dividing the probability of the intersection of the two events (A∩B) by the probability of the event that is assumed to have already occurred (event A):</p>
-<div class="math">$$ P(B|A)=\frac{P(A\cap B)}{P(A)}$$</div>
+<h2>Binomial distribution</h2>
+<h3>Problem 1</h3>
+<p>The ratio of boys to girls for babies born in Russia is <span class="math">\(r=\frac{N_b}{N_g}=1.09\)</span>. If there is 1 child born per birth, what proportion of Russian families with exactly 6 children will have at least 3 boys?</p>
+<h3>Mathematical explanation</h3>
+<p>Let's first compute the probability of having a boy :</p>
+<div class="math">$$p_b=\frac{N_b}{N_b+N_g}$$</div>
+<p>where: 
+<em> <span class="math">\(N_b\)</span> is the number of boys 
+</em> <span class="math">\(N_g\)</span> is the number of girls 
+* <span class="math">\(r=\frac{N_b}{N_g}\)</span></p>
+<div class="math">$$p_b=\frac{1}{1+\frac{1}{r}}$$</div>
+<div class="math">$$p_b=\frac{r}{r+1}$$</div>
+<div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.09</span>
+<span class="n">p_b</span><span class="o">=</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;The probability of having a boy is p={p_b:3f}&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>The probability of having a boy is p=0.521531
+</pre></div>
+
+
+<p>The probability of getting 3 boys in 6 children is given by :
+</p>
+<div class="math">$$b(x=3, n=6, p=p_b)$$</div>
+<p>In order to compute the proportion of Russian families with exactly 6 children will have at 3 least boys we need to compute the cumulative probability distribution </p>
+<div class="math">$$b(x\geq 3, n=6, p=p_b) = \sum_{i=3}^{6} b(x\geq i, n=6, p=p_b)$$</div>
+<h3>Let's code it !</h3>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">bi_dist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">x</span><span class="p">)))</span><span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">**</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">p_b</span><span class="p">,</span> <span class="mi">6</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">):</span>
+    <span class="n">b</span> <span class="o">+=</span> <span class="n">bi_dist</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>   
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;probability of getting at least 3 boys in a family with exactly 6 children : {b:.3f}&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>probability of getting at least 3 boys in a family with exactly 6 children : 0.696
+</pre></div>
+
+
+<h3>Problem 2</h3>
+<p>A manufacturer of metal pistons finds that, 12% on average, of the pistons they manufacture are rejected because they are incorrectly sized. What is the probability that a batch of 10 pistons will contain:
+<em> No more than 2 rejects?
+</em> At least 2 rejects?</p>
+<h3>Mathematical explanation</h3>
+<p>On average 12% of the pistons are rejected, this means that a piston has a probability of <span class="math">\(p_{rejected}=0.12\)</span> to be rejected.</p>
+<p>The probability of getting less than 2 faulty pistons in a batch is :
+</p>
+<div class="math">$$p(rejet&lt;2) = b(x\leq 2, n= 10, p=p_{rejected})$$</div>
+<div class="math">$$p(rejet&lt;2) = \sum_{i=0}^{2} b(x\leq i, n=10, p=p_{rejected})$$</div>
+<div class="highlight"><pre><span></span><span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">b</span> <span class="o">+=</span> <span class="n">bi_dist</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>   
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;The probability of getting less than 2 faulty pistons in a batch is : {b:.3f}&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>The probability of getting less than 2 faulty pistons in a batch is : 0.891
+</pre></div>
+
+
+<p>The probability that a batch of 10 pistons will contain at least 2 rejects : 
+</p>
+<div class="math">$$p(rejet&lt;2) = b(x\geq 2, n= 10, p=p_{rejected})$$</div>
+<div class="math">$$p(rejet&lt;2) = \sum_{i=2}^{10} b(x\geq i, n=10, p=p_{rejected})$$</div>
+<div class="highlight"><pre><span></span><span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+    <span class="n">b</span> <span class="o">+=</span> <span class="n">bi_dist</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>   
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;The probability of getting at least 2 faulty pistons in a batch is : {b:.3f}&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>The probability of getting at least 2 faulty pistons in a batch is : 0.342
+</pre></div>
+
+
+<h2>Geometric distribution</h2>
+<h3>Problem 1</h3>
+<p>The probability that a machine produces a defective product is <span class="math">\(\frac{1}{3}\)</span>. What is the probability that the first defect is found during the fith inspection?</p>
+<h3>Mathematical explanation</h3>
+<p>In this case, we will use a geometric distribution to evaluate the probability :
+<em> <span class="math">\(n=5\)</span>
+</em> <span class="math">\(p=\frac{1}{3}\)</span></p>
+<p>Hence, the probability that the first defect is found during the fith inspection is <span class="math">\(g(n=5,p=1/3)\)</span></p>
+<div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;The probability that the first defect is found during the fith inspection is {round(((1-p)**(n-1)) * p, 3)}&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>The probability that the first defect is found during the fith inspection is 0.038
+</pre></div>
+
+
+<h3>Problem 2</h3>
+<p>The probability that a machine produces a defective product is <span class="math">\(\frac{1}{3}\)</span>. What is the probability that the first defect is found during the first 5 inspections?</p>
+<h3>Mathematical explanation</h3>
+<p>In this problem, we need to compute the cumulative distribution function
+</p>
+<div class="math">$$p(x \leq5) = \sum_{i=1}^{5} g(n=i,p=1/3)$$</div>
+<div class="highlight"><pre><span></span><span class="n">p_x5</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span>
+<span class="n">n</span><span class="o">=</span><span class="mi">5</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">p_x5</span><span class="o">+=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;The probability that the first defect is found during the first 5 inspection is {round(p_x5, 3)}&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>The probability that the first defect is found during the first 5 inspection is 0.868
+</pre></div>
+
+
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",

@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Conditional Probability - Mathematics</title>
+    <title>Binomial distribution - Mathematics</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -112,12 +112,12 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Conditional Probability
+      Binomial distribution
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-10T12:32:00+01:00">
-            10 novembre 2018
+        <time class="published" datetime="2018-11-11T11:19:00+01:00">
+            11 novembre 2018
         </time>
     </li>
     <li>Mathematics</li>
@@ -125,10 +125,69 @@
 </ol>
 </header>
 <div class='article_content'>
-<p>This is defined as the probability of an event occurring, assuming that one or more other events have already occurred. Two events, A
-and B are considered to be independent if event A has no effect on the probability of event B (i.e. P(B|A)=P(A)). </p>
-<p>If events A and B are not independent, then we must consider the probability that both events occur. This can be referred to as the intersection of events A and B, defined as P(A∩B) = P(B|A)P(A). We can then use this definition to find the conditional probability by dividing the probability of the intersection of the two events (A∩B) by the probability of the event that is assumed to have already occurred (event A):</p>
-<div class="math">$$ P(B|A)=\frac{P(A\cap B)}{P(A)}$$</div>
+<h2>Binomial Experiment</h2>
+<p>A binomial experiment (or Bernoulli trial) is a statistical experiment that has the following properties:</p>
+<ul>
+<li>The experiment consists of n repeated trials.</li>
+<li>The trials are independent.</li>
+<li>The outcome of each trial is either success (s) or failure (f).</li>
+</ul>
+<h2>Binomial Distribution</h2>
+<p>We define a binomial process to be a binomial experiment meeting the following conditions:</p>
+<ul>
+<li>The number of successes is <span class="math">\(x\)</span>.</li>
+<li>The total number of trials is <span class="math">\(n\)</span>.</li>
+<li>The probability of success of 1 trial is <span class="math">\(p\)</span>.</li>
+<li>The probability of failure of 1 trial <span class="math">\(q\)</span>, where <span class="math">\(q=1-p\)</span>.</li>
+<li><span class="math">\(b(x,n,p)\)</span> is the <em>binomial probability</em>, meaning the probability of having exactly <span class="math">\(x\)</span> successes out of <span class="math">\(n\)</span> trials.</li>
+</ul>
+<p>The binomial random variable is the number of successes, <span class="math">\(x\)</span>, out of <span class="math">\(n\)</span> trials.</p>
+<p>The binomial distribution is the probability distribution for the binomial random variable, given by the following probability mass function:</p>
+<div class="math">$$b(x,n,p) = \frac{n!}{x!(n-x)!}p^xq^{n-x}$$</div>
+<p>Python code for the Binomial distribution</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">bi_dist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">x</span><span class="p">)))</span><span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">**</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Using numpy </p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1">#number of coin toss</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1">#probability</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1">#number of samples</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Using the stats module from scipy</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">binom</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1">#number of coin toss</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1">#probability</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1">#number of samples</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">binom</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">samples</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>Cumulative probabilities</h2>
+<p>A cumulative probability refers to the probability that the value of a random variable falls within a specified range. Frequently, cumulative probabilities refer to the probability that a random variable is less than or equal to a specified value. </p>
+<p>A fair coin is tossed 10 times. </p>
+<h3>Probability of getting 5 heads</h3>
+<p>The probability of getting heads is: 
+</p>
+<div class="math">$$b(x=5, n=10, p=0.5)=0.246$$</div>
+<h3>Probability of getting at least 5 heads</h3>
+<p>The probability of getting at least heads is: </p>
+<div class="math">$$b(x\geq 5, n=10, p=0.5)= \sum_{r=5}^{10} b(x=r, n=10, p=0.5)$$</div>
+<div class="math">$$b(x\geq 5, n=10, p=0.5)= 0.623$$</div>
+<h3>Probability of getting at most 5 heads</h3>
+<p>The probability of getting at most heads is: </p>
+<div class="math">$$b(x\leq 5, n=10, p=0.5)= \sum_{r=0}^{5} b(x=r, n=10, p=0.5)$$</div>
+<div class="math">$$b(x\leq 5, n=10, p=0.5)= 0.623$$</div>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
