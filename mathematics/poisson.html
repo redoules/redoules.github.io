@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Installing bitcoind on raspberry pi - Cryptocurrencies</title>
+    <title>Poisson Distribution - Mathematics</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Bitcoin" />
+    <meta name="tags" content="Statistics" />
 
 
 </head>
@@ -112,166 +112,102 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Installing bitcoind on raspberry pi
+      Poisson Distribution
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-01-03T16:51:00+01:00">
-            03 janvier 2018
+        <time class="published" datetime="2018-11-12T09:02:00+01:00">
+            12 novembre 2018
         </time>
     </li>
-    <li>Cryptocurrencies</li>
-    <li>Bitcoin</li>
+    <li>Mathematics</li>
+    <li>Statistics</li>
 </ol>
 </header>
 <div class='article_content'>
-<h3>Installing bitcoind on linux</h3>
-<p>Running a full bitcoin node helps the bitcoin network to accept, validate and relay transactions. If you want to volunteer some spare computing and bandwidth resources to run a full node and allow Bitcoin to continue to grow you can grab an inexpensive and power efficient raspberry pi and turn it into a full node.</p>
-<p>There are plenty of tutorials on the Internet explaining how to install a bitcoin full node; this tutorial won't go over setting up a raspberry pi and using ssh.</p>
-<p>In order to store the full blockchain we will mount a network drive and tell bitcoind to use this mapped drive as the data directory.</p>
-<h4>Download the bitcoin client</h4>
-<p>Go to <a href="https://bitcoin.org/en/download">https://bitcoin.org/en/download</a></p>
-<p><img alt="png" src="../images/Installing_bitcoind_on_raspberry_pi/1.png"></p>
-<p>Copy the URL for the ARM 32 bit version and download it onto your raspberry pi. </p>
-<div class="highlight"><pre><span></span>wget https://bitcoin.org/bin/bitcoin-core-0.15.1/bitcoin-0.15.1-arm-linux-gnueabihf.tar.gz
-</pre></div>
+<h2>Poisson Experiment</h2>
+<p>Poisson experiment is a statistical experiment that has the following properties: 
+<em> The outcome of each trial is either success or failure.
+</em> The average number of successes (<span class="math">\(\lambda\)</span>) that occurs in a specified region is known.
+<em> The probability that a success will occur is proportional to the size of the region.
+</em> The probability that a success will occur in an extremely small region is virtually zero. </p>
+<h2>Poisson Distribution</h2>
+<p>A Poisson random variable is the number of successes that result from a Poisson experiment. The probability distribution of a Poisson random variable is called a Poisson distribution:</p>
+<div class="math">$$P(k,\lambda)=\frac{\lambda^ke^{-\lambda}}{k!}$$</div>
+<p>where :
+<em> <span class="math">\(\lambda\)</span> is the average number of successes that occur in a specified region.
+</em> <span class="math">\(k\)</span> is the actual number of successes that occur in a specified region.
+* <span class="math">\(P(k,\lambda)\)</span> is the Poisson probability, which is the probability of getting exactly <span class="math">\(k\)</span> successes when the average number of successes is <span class="math">\(\lambda\)</span>. </p>
+<h2>Example</h2>
+<p>The average number of goals in the soccer world cup is 2.5. The probability that 4 goals are scored is then:
+</p>
+<div class="math">$$p(\lambda=2.5,k=4)=\frac{2.5^4e^{-2.5}}{4!}=0.133$$</div>
+<h2>Expectation for the Poisson distribution</h2>
+<p>Consider some Poisson random variable, <span class="math">\(X\)</span>. Let <span class="math">\(E[X]\)</span> be the expectation of <span class="math">\(X\)</span>. Find the value of <span class="math">\(E[X^2]\)</span>. </p>
+<p>Let <span class="math">\(Var(X)\)</span> be the variance of <span class="math">\(X\)</span>. Recall that if a random variable has a Poisson distribution, then: 
+<em> <span class="math">\(E[X]=\lambda\)</span>
+</em> <span class="math">\(Var[X]=\lambda\)</span></p>
+<p>Now, we'll use the following property of expectation and variance for any random variable, <span class="math">\(X\)</span>:
+</p>
+<div class="math">$$Var(X)=E[X^2]-(E[X])^2$$</div>
+<div class="math">$$E[X^2]=Var(X)+(E[X])^2$$</div>
+<p>So, for any random variable  having a Poisson distribution, the above result can be rewritten as:
+</p>
+<div class="math">$$E[X^2]=\lambda + \lambda^2$$</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
 
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
 
-<p>Locate the downloaded file and extract it using the arguement xzf</p>
-<div class="highlight"><pre><span></span>tar xzf bitcoin-0.15.1-arm-linux-gnueabihf.tar.gz
-</pre></div>
-
-
-<p>a new directory <em>bitcoin-0.15.1</em> will be created, it contrains the files we need to install the software</p>
-<h4>Install the bitcoin client</h4>
-<p>We will install the content by copying the binaries located in the bin folder into /usr/local/bin by using the install command.
-You must use sudo because it will write data to a system directory</p>
-<div class="highlight"><pre><span></span>sudo install -m <span class="m">0755</span> -o root -g root -t /usr/local/bin bitcoin-0.15.1/bin/*
-</pre></div>
-
-
-<p>Launch the bitcoin core client by running </p>
-<div class="highlight"><pre><span></span>bitcoind -daemon
-</pre></div>
-
-
-<h3>Configuration of the node</h3>
-<h4>Start your node at boot</h4>
-<p>Starting you node automatically at boot time is a good idea because it doesn't require a manual action from the user. The simplest way to achive this is to create a cronjob. </p>
-<p>Run the following command </p>
-<div class="highlight"><pre><span></span>crontab -e
-</pre></div>
-
-
-<p>Select the text editor of your choice, then add the following line at the end of the file</p>
-<div class="highlight"><pre><span></span>@reboot bitcoind -daemon
-</pre></div>
-
-
-<p>Save the file and exit; the updated crontab file will be installed for you.</p>
-<h4>Full Node</h4>
-<p>If you can afford to download and store all the blockchain, you can run a full node. At the time of writing, the blockchain is 150Go (<a href="https://blockchain.info/fr/charts/blocks-size">https://blockchain.info/fr/charts/blocks-size</a>). Tree ways to store this are :
-<em> use a microSD with 256Go or more
-</em> add a thumbdrive or an external drive to your raspberry pi
-* mount a network drive from a NAS</p>
-<p>If you have purchased a big SD card then you can leave the default location for the blockchain data (~/.bitcoin/).
-Otherwise, you will have to change the datadir location to where your drive is mounted (in my case I have mounted it to /mnt)</p>
-<p>In order to configure your bitcoin client, edit/create the file bitcoin.conf located in ~/.bitcoin/</p>
-<div class="highlight"><pre><span></span>nano ~/.bitcoin/bitcoin.conf
-</pre></div>
-
-
-<p>copy the following text</p>
-<div class="highlight"><pre><span></span># From redoules.github.io
-
-# This config should be placed in following path:
-# ~/.bitcoin/bitcoin.conf
-
-# [core]
-# Specify a non-default location to store blockchain and other data.
-datadir=/mnt
-# Set database cache size in megabytes; machines sync faster with a larger cache. Recommend setting as high as possible based upon mach$
-dbcache=100
-# Keep at most &lt;n&gt; unconnectable transactions in memory.
-maxorphantx=10
-# Keep the transaction memory pool below &lt;n&gt; megabytess.
-maxmempool=50
-
-# [network]
-# Maintain at most N connections to peers.
-maxconnections=40
-# Tries to keep outbound traffic under the given target (in MiB per 24h), 0 = no limit.
-maxuploadtarget=5000
-</pre></div>
-
-
-<p>Check <a href="https://jlopp.github.io/bitcoin-core-config-generator">https://jlopp.github.io/bitcoin-core-config-generator</a> it is a handy site to edit the bitcoin.conf file</p>
-<h4>Pruning node</h4>
-<p>If you don't want to store the entire blockchain you can run a pruning node which reduces storage requirements by enabling pruning (deleting) of old blocks. </p>
-<p>Let's say you want to allocated at most 5Go to the blockchain, then specify prune=5000 into your bitcoin.conf file. Edit/create the file bitcoin.conf located in ~/.bitcoin/</p>
-<div class="highlight"><pre><span></span>nano ~/.bitcoin/bitcoin.conf
-</pre></div>
-
-
-<p>copy the following text</p>
-<div class="highlight"><pre><span></span># From redoules.github.io
-
-# This config should be placed in following path:
-# ~/.bitcoin/bitcoin.conf
-
-# [core]
-# Set database cache size in megabytes; machines sync faster with a larger cache. Recommend setting as high as possible based upon mach$
-dbcache=100
-# Keep at most &lt;n&gt; unconnectable transactions in memory.
-maxorphantx=10
-# Keep the transaction memory pool below &lt;n&gt; megabytess.
-maxmempool=50
-# Reduce storage requirements by only storing most recent N MiB of block. This mode is incompatible with -txindex and -rescan. WARNING: Reverting this setting requires re-downloading the entire blockchain. (default: 0 = disable pruning blocks, 1 = allow manual pruning via RPC, greater than 550 = automatically prune blocks to stay under target size in MiB).
-prune=5000
-
-# [network]
-# Maintain at most N connections to peers.
-maxconnections=40
-# Tries to keep outbound traffic under the given target (in MiB per 24h), 0 = no limit.
-maxuploadtarget=5000
-</pre></div>
-
-
-<h3>Checking if your node is public</h3>
-<p>one of the best way to help the bitcoin network is to allow your node to be visible and to propagate block to other nodes.</p>
-<p>The bitcoin protocole uses port 8333, other clients should be able to share information with your client.</p>
-<p>Run </p>
-<div class="highlight"><pre><span></span>ifconfig
-</pre></div>
-
-
-<p>and check if you have an ipv6 adresse (look for adr inet6:)</p>
-<h4>IPV6</h4>
-<p>Get the global ipv6 adresse of your raspberry pi</p>
-<div class="highlight"><pre><span></span>          Link encap:Ethernet  HWaddr xx:xx:xx:xx:xx:xx
-          inet adr:192.168.1.x  Bcast:192.168.1.255  Masque:255.255.255.0
-          adr inet6: xxxx::xxxx:xxxx:xxxx:xxxx/64 Scope:Lien
-          adr inet6: xxxx:xxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/64 Scope:Global
-          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:42681744 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:38447218 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 lg file transmission:1000
-          RX bytes:3044414780 (2.8 GiB)  TX bytes:2599878680 (2.4 GiB)
-</pre></div>
-
-
-<p>it is located between adr inet4 and Scope:Global</p>
-<div class="highlight"><pre><span></span>adr inet6: xxxx:xxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/64 Scope:Global
-</pre></div>
-
-
-<p>Copy this adresse and past it into the search field on <a href="https://bitnodes.earn.com/">https://bitnodes.earn.com/</a></p>
-<p><img alt="jpg" src="../images/Installing_bitcoind_on_raspberry_pi/2.jpg"></p>
-<p>If your node is visible, it will appear on the website</p>
-<p><img alt="jpg" src="../images/Installing_bitcoind_on_raspberry_pi/3.jpg"></p>
-<h4>IPV4</h4>
-<p>If you don't have an ipv6 adresse, you will have to open port 8333 on your router and redirect it to the internal IP of your raspberry pi.</p>
-<p>It is not detailed here because the configuration depends on your router.</p>
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}</script>
 </div>
     <aside>
     <div class="bug-reporting__panel">
