@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Poisson Distribution - Mathematics</title>
+    <title>Day 6 - The Central Limit Theorem - Blog</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Statistics" />
+    <meta name="tags" content="Basics" />
 
 
 </head>
@@ -112,48 +112,96 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Poisson Distribution
+      Day 6 - The Central Limit Theorem
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-12T09:02:00+01:00">
-            12 novembre 2018
+        <time class="published" datetime="2018-11-13T22:15:00+01:00">
+            13 novembre 2018
         </time>
     </li>
-    <li>Mathematics</li>
-    <li>Statistics</li>
+    <li>Blog</li>
+    <li>Basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<h2>Poisson Experiment</h2>
-<p>Poisson experiment is a statistical experiment that has the following properties: 
-<em> The outcome of each trial is either success or failure.
-</em> The average number of successes (<span class="math">\(\lambda\)</span>) that occurs in a specified region is known.
-<em> The probability that a success will occur is proportional to the size of the region.
-</em> The probability that a success will occur in an extremely small region is virtually zero. </p>
-<h2>Poisson Distribution</h2>
-<p>A Poisson random variable is the number of successes that result from a Poisson experiment. The probability distribution of a Poisson random variable is called a Poisson distribution:</p>
-<div class="math">$$P(k,\lambda)=\frac{\lambda^ke^{-\lambda}}{k!}$$</div>
-<p>where :
-<em> <span class="math">\(\lambda\)</span> is the average number of successes that occur in a specified region.
-</em> <span class="math">\(k\)</span> is the actual number of successes that occur in a specified region.
-* <span class="math">\(P(k,\lambda)\)</span> is the Poisson probability, which is the probability of getting exactly <span class="math">\(k\)</span> successes when the average number of successes is <span class="math">\(\lambda\)</span>. </p>
-<h2>Example</h2>
-<p>The average number of goals in the soccer world cup is 2.5. The probability that 4 goals are scored is then:
+<h2>Problem 1</h2>
+<p>A large elevator can transport a maximum of <span class="math">\(9800\)</span> kg. Suppose a load of cargo containing <span class="math">\(49\)</span> boxes must be transported via the elevator. The box weight of this type of cargo follows a distribution with a mean of <span class="math">\(\mu=205\)</span> kg and a standard deviation of <span class="math">\(\sigma=15\)</span> kg. Based on this information, what is the probability that all boxes can be safely loaded into the freight elevator and transported?</p>
+<h3>Mathematical explanation</h3>
+<p>This problem can be tackled with the central limit theorem. Since the number of boxes is "large", the sum of the weight approaches normal distribution with :
+<em> <span class="math">\(\mu' = n\mu\)</span>
+</em> <span class="math">\(\sigma'=\sigma\sqrt{n}\)</span></p>
+<p>If we want to know the probability of the sum of the mass of all boxes to be under a certain weight, we can compute the cumulative density function :
 </p>
-<div class="math">$$p(\lambda=2.5,k=4)=\frac{2.5^4e^{-2.5}}{4!}=0.133$$</div>
-<h2>Expectation for the Poisson distribution</h2>
-<p>Consider some Poisson random variable, <span class="math">\(X\)</span>. Let <span class="math">\(E[X]\)</span> be the expectation of <span class="math">\(X\)</span>. Find the value of <span class="math">\(E[X^2]\)</span>. </p>
-<p>Let <span class="math">\(Var(X)\)</span> be the variance of <span class="math">\(X\)</span>. Recall that if a random variable has a Poisson distribution, then: 
-<em> <span class="math">\(E[X]=\lambda\)</span>
-</em> <span class="math">\(Var[X]=\lambda\)</span></p>
-<p>Now, we'll use the following property of expectation and variance for any random variable, <span class="math">\(X\)</span>:
+<div class="math">$$P(x&lt;9800) = F_X(9800)$$</div>
+<div class="highlight"><pre><span></span><span class="n">max_load</span> <span class="o">=</span> <span class="mi">9800</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">49</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mi">205</span>
+<span class="n">st_dev</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">cumulative</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mean</span><span class="p">,</span><span class="n">sd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">math</span><span class="o">.</span><span class="n">erf</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">mean</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">sd</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">))))</span>
+
+
+<span class="n">mu_group</span> <span class="o">=</span> <span class="n">n</span><span class="o">*</span><span class="n">mu</span>
+<span class="n">st_dev_group</span> <span class="o">=</span> <span class="n">st_dev</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Probability that all the boxes can be lifted by the elevator : {cumulative(max_load, mu_group, st_dev_group)}&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>Probability that all the boxes can be lifted by the elevator : 0.009815328628645315
+</pre></div>
+
+
+<h2>Problem 2</h2>
+<p>The number of tickets purchased by each student for the University X vs. University Y football game follows a distribution that has a mean of <span class="math">\(\mu=2.4\)</span> and a standard deviation of <span class="math">\(\sigma=2.0\)</span>.</p>
+<p>A few hours before the game starts, <span class="math">\(100\)</span> eager students line up to purchase last-minute tickets. If there are only <span class="math">\(250\)</span> tickets left, what is the probability that all students will be able to purchase tickets?</p>
+<h3>Mathematical explanation</h3>
+<p>We want to know if the sum of all the purchases will exceed the total supply of tickets. Since each student buy follows a Normal distribution and that the number of students is relatively high, the probability that all the students will be able to buy a ticket can be computed by applying the central limit theorem.
+The total number of tickets bought follows a normal distribution of mean <span class="math">\(\mu'=n*\mu\)</span> and of standard deviation <span class="math">\(\sigma'=\sigma\sqrt{n}\)</span></p>
+<div class="highlight"><pre><span></span><span class="n">ticket_supply</span> <span class="o">=</span> <span class="mi">250</span>
+<span class="n">n_students</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mf">2.4</span>
+<span class="n">st_dev</span> <span class="o">=</span> <span class="mi">2</span>
+
+
+<span class="n">mu_group</span> <span class="o">=</span> <span class="n">n_students</span><span class="o">*</span><span class="n">mu</span>
+<span class="n">st_dev_group</span> <span class="o">=</span> <span class="n">st_dev</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n_students</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Probability that all the students can purchase tickets : {cumulative(ticket_supply, mu_group, st_dev_group)}&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>Probability that all the students can purchase tickets : 0.691462461274013
+</pre></div>
+
+
+<h2>Problem 3</h2>
+<p>You have a sample of <span class="math">\(100\)</span> values from a population with mean <span class="math">\(\mu=500\)</span> and with standard deviation <span class="math">\(\sigma=80\)</span>. Compute the interval that covers the middle <span class="math">\(95%\)</span> of the distribution of the sample mean; in other words, compute <span class="math">\(A\)</span> and <span class="math">\(B\)</span> such that <span class="math">\(P(A&lt;x&lt;B)=0.95\)</span>. Use the value of <span class="math">\(z=1.96\)</span>. Note that is the z-score.</p>
+<h3>Mathematical explanation</h3>
+<p>The margin of error can be computed with :
 </p>
-<div class="math">$$Var(X)=E[X^2]-(E[X])^2$$</div>
-<div class="math">$$E[X^2]=Var(X)+(E[X])^2$$</div>
-<p>So, for any random variable  having a Poisson distribution, the above result can be rewritten as:
-</p>
-<div class="math">$$E[X^2]=\lambda + \lambda^2$$</div>
+<div class="math">$$MoE = \frac{z-\sigma}{\sqrt{n}}$$</div>
+<p>Knowing this, we can figure out what values for x paint the exact middle of the distribution for 0.95 probability, that means theres a 0.0025 leftover on both sides to make the total of 1.</p>
+<div class="highlight"><pre><span></span><span class="n">zScore</span> <span class="o">=</span> <span class="mf">1.96</span>
+<span class="n">std</span> <span class="o">=</span> <span class="mi">80</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="mi">500</span>
+
+<span class="n">marginOfError</span> <span class="o">=</span> <span class="n">zScore</span> <span class="o">*</span> <span class="n">std</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;A =&quot;</span><span class="p">,</span><span class="n">mean</span><span class="o">-</span> <span class="n">marginOfError</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;B =&quot;</span><span class="p">,</span><span class="n">mean</span> <span class="o">+</span> <span class="n">marginOfError</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>A = 484.32
+B = 515.68
+</pre></div>
+
+
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
