@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Optimized numpy random number generation on Intel CPU - Python</title>
+    <title>Pearson correlation coefficient - Mathematics</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Other" />
+    <meta name="tags" content="Statistics" />
 
 
 </head>
@@ -112,56 +112,86 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Optimized numpy random number generation on Intel CPU
+      Pearson correlation coefficient
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-22T21:29:00+02:00">
-            22 août 2018
+        <time class="published" datetime="2018-11-14T21:21:00+01:00">
+            14 novembre 2018
         </time>
     </li>
-    <li>Python</li>
-    <li>Other</li>
+    <li>Mathematics</li>
+    <li>Statistics</li>
 </ol>
 </header>
 <div class='article_content'>
-<h2>Python Intel distribution</h2>
-<p>Make sure you have a python intel distribution. When you startup python you should see somethine like :</p>
-<div class="highlight"><pre><span></span>Python 3.6.2 |Intel Corporation| (default, Aug 15 2017, 11:34:02) [MSC v.1900 64 bit (AMD64)]
-Type &#39;copyright&#39;, &#39;credits&#39; or &#39;license&#39; for more information
-IPython 6.1.0 -- An enhanced Interactive Python. Type &#39;?&#39; for help.
-</pre></div>
+<h2>Covariance</h2>
+<p>This is a measure of how two random variables change together, or the strength of their correlation.</p>
+<p>Consider two random variables, <span class="math">\(X\)</span> and <span class="math">\(Y\)</span>, each with <span class="math">\(n\)</span> values (i.e., <span class="math">\(x_1\)</span>, <span class="math">\(x_2\)</span>, <span class="math">\(...\)</span>, <span class="math">\(x_n\)</span> and <span class="math">\(y_1\)</span>, <span class="math">\(y_2\)</span>, <span class="math">\(...\)</span>, <span class="math">\(y_n\)</span>). The covariance of <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> can be found using either of the following equivalent formulas: </p>
+<div class="math">$$cov(X,Y)=\frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})\cdot(y_i-\bar{y})$$</div>
+<p>or </p>
+<div class="math">$$cov(X,Y)=\frac{1}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n}\frac{1}{2}(x_i-x_j)\cdot(y_i-y_j))$$</div>
+<div class="math">$$cov(X,Y)=\frac{1}{n^2}\sum_{i}\sum_{j\gt i}^{n}(x_i-x_j)\cdot(y_i-y_j)$$</div>
+<p>where, <span class="math">\(\bar{x}\)</span> is the mean of <span class="math">\(X\)</span> (or <span class="math">\(\mu_X\)</span>) and <span class="math">\(\bar{y}\)</span> is the mean of <span class="math">\(Y\)</span> (or <span class="math">\(\mu_Y\)</span>)</p>
+<h2>Pearson correlation coefficient</h2>
+<p>The pearson correlation coefficient, <span class="math">\(\rho_{X,Y}\)</span>, is given by : </p>
+<div class="math">$$\rho_{X,Y}=\frac{cov(X,Y)}{\sigma_X\sigma_Y}=\frac{\sum_{i}(x_i-\bar{x})(y_i-\bar{y})}{n\sigma_X\sigma_Y}$$</div>
+<p>Here, <span class="math">\(\sigma_X\)</span> is the standard deviation of <span class="math">\(X\)</span> and <span class="math">\(\sigma_Y\)</span> is the standard deviation of <span class="math">\(Y\)</span>. You may also see <span class="math">\(\rho_{X,Y}\)</span> written as <span class="math">\(r_{X,Y}\)</span>.</p>
+<p>The pearson correlation coefficient is a measure of the linear correlation between two variables X and Y.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
 
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
 
-<p>If not, you can force the installation of the intel optimized python with :</p>
-<div class="highlight"><pre><span></span>conda update --all
-conda config --add channels intel
-conda install numpy --channel intel --override-channels
-</pre></div>
-
-
-<p>oh and by the way, make sure you a running an Intel CPU ;)</p>
-<h2>Comparing numpy.random with numpy.random_intel</h2>
-<p>Let's now test both the rand function with and without the Intel optimization</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">random</span><span class="p">,</span> <span class="n">random_intel</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>1.06 ms ± 91.5 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">np</span><span class="o">.</span><span class="n">random_intel</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>225 µs ± 3.46 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-</pre></div>
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}</script>
 </div>
     <aside>
     <div class="bug-reporting__panel">
