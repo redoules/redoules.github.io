@@ -127,12 +127,14 @@
 <div class='article_content'>
 <h2>Least Square Regression Line</h2>
 <h2>Problem</h2>
-<p>A group of five students enrolls in Statistics immediately after taking a Math aptitude test. Each student's Math aptitude test score, <span class="math">\(x\)</span>, and Statistics course grade, <span class="math">\(y\)</span>, can be expressed as the following list <span class="math">\((x,y)\)</span> of points: 
-<em> <span class="math">\((95, 85)\)</span>
-</em> <span class="math">\((85, 95)\)</span>
-<em> <span class="math">\((80, 70)\)</span>
-</em> <span class="math">\((70, 65)\)</span>
-* <span class="math">\((60, 70)\)</span></p>
+<p>A group of five students enrolls in Statistics immediately after taking a Math aptitude test. Each student's Math aptitude test score, <span class="math">\(x\)</span>, and Statistics course grade, <span class="math">\(y\)</span>, can be expressed as the following list <span class="math">\((x,y)\)</span> of points: </p>
+<ul>
+<li><span class="math">\((95, 85)\)</span></li>
+<li><span class="math">\((85, 95)\)</span></li>
+<li><span class="math">\((80, 70)\)</span></li>
+<li><span class="math">\((70, 65)\)</span></li>
+<li><span class="math">\((60, 70)\)</span></li>
+</ul>
 <p>If a student scored an 80 on the Math aptitude test, what grade would we expect them to achieve in Statistics? Determine the equation of the best-fit line using the least squares method, then compute and print the value of <span class="math">\(y\)</span> when <span class="math">\(x=80\)</span>.</p>
 <div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="mi">95</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
 <span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">85</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">70</span><span class="p">]</span>
@@ -186,10 +188,12 @@ $$</div>
 \right.
 $$</div>
 <p>so <span class="math">\(b_1=-\frac{3}{4}\)</span> and <span class="math">\(b_2=-\frac{3}{4}\)</span></p>
-<p>When we apply the Pearson's coefficient formula : 
-<em> let <span class="math">\(p\)</span> be the pearson coefficient
-</em> let <span class="math">\(\sigma_X\)</span> be the standard deviation of <span class="math">\(x\)</span>
-* let <span class="math">\(\sigma_Y\)</span> be the standard deviation of <span class="math">\(y\)</span></p>
+<p>When we apply the Pearson's coefficient formula : </p>
+<ul>
+<li>let <span class="math">\(p\)</span> be the pearson coefficient</li>
+<li>let <span class="math">\(\sigma_X\)</span> be the standard deviation of <span class="math">\(x\)</span></li>
+<li>let <span class="math">\(\sigma_Y\)</span> be the standard deviation of <span class="math">\(y\)</span></li>
+</ul>
 <p>We hence have </p>
 <div class="math">$$
 \left\{\begin{array}{ r @{{}={}} r  &gt;{{}}c&lt;{{}} r  &gt;{{}}c&lt;{{}}  r }

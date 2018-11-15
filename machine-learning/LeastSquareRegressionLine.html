@@ -128,18 +128,22 @@
 <h2>Linear Regression</h2>
 <p>If our data shows a linear relationship between <span class="math">\(X\)</span> and <span class="math">\(Y\)</span>, then the straight line which best describes the relationship is the regression line. The regression line is given by <span class="math">\(\hat{Y}\)</span>=a+bX$. </p>
 <h3>Finding the value of b</h3>
-<p>The value of <span class="math">\(b\)</span> can be calculated using either of the following formulae:
-<em> <span class="math">\(b=\frac{n\sum(x_iy_i)-(\sum x_i)(\sum y_i)}{n\sum(x_i^2)-(\sum x_i)^2}\)</span>
-</em> <span class="math">\(b=\rho\frac{\sigma_Y}{\sigma_X}\)</span>, where <span class="math">\(\rho\)</span> is the Pearson correlation coefficient, <span class="math">\(\sigma_X\)</span></p>
+<p>The value of <span class="math">\(b\)</span> can be calculated using either of the following formulae:</p>
+<ul>
+<li><span class="math">\(b=\frac{n\sum(x_iy_i)-(\sum x_i)(\sum y_i)}{n\sum(x_i^2)-(\sum x_i)^2}\)</span></li>
+<li><span class="math">\(b=\rho\frac{\sigma_Y}{\sigma_X}\)</span>, where <span class="math">\(\rho\)</span> is the Pearson correlation coefficient, <span class="math">\(\sigma_X\)</span></li>
+</ul>
 <h3>Finding the value of a</h3>
 <p><span class="math">\(a=\bar{y}-b\cdot\bar{x}\)</span>, where <span class="math">\(\bar{x}\)</span> is the mean of <span class="math">\(X\)</span> and <span class="math">\(\bar{y}\)</span> is the mean of <span class="math">\(Y\)</span>.</p>
 <h2>Coefficient of determination (<span class="math">\(R^2\)</span>)</h2>
 <p>The coefficient of determination can be computer with :
 <span class="math">\(R^2 = \frac{SSR}{SST}=1-\frac{SSE}{SST}\)</span>
-Where :
-<em> <span class="math">\(SST\)</span> is the total Sum of Squares : <span class="math">\(SST=\sum (y_i-\bar{y})^2\)</span>
-</em> <span class="math">\(SSR\)</span> is the regression Sum of Squares : <span class="math">\(SSR=\sum (\hat{y_i}-\bar{y})^2\)</span>
-* <span class="math">\(SSE\)</span> is the error Sum of Squares : <span class="math">\(SSE=\sum (\hat{y_i}-y)^2\)</span></p>
+Where :</p>
+<ul>
+<li><span class="math">\(SST\)</span> is the total Sum of Squares : <span class="math">\(SST=\sum (y_i-\bar{y})^2\)</span></li>
+<li><span class="math">\(SSR\)</span> is the regression Sum of Squares : <span class="math">\(SSR=\sum (\hat{y_i}-\bar{y})^2\)</span></li>
+<li><span class="math">\(SSE\)</span> is the error Sum of Squares : <span class="math">\(SSE=\sum (\hat{y_i}-y)^2\)</span></li>
+</ul>
 <p>If <span class="math">\(SSE\)</span> is small, we can assume that our fit is good. </p>
 <h2>Linear Regression in Python</h2>
 <p>We can use the fit function in the sklearn.linear_model.LinearRegression class.</p>
