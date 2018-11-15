@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Normal Distribution - Mathematics</title>
+    <title>Day 8 - Least Square Regression Line - Blog</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Statistics" />
+    <meta name="tags" content="Basics" />
 
 
 </head>
@@ -112,47 +112,99 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Normal Distribution
+      Day 8 - Least Square Regression Line
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-12T10:21:00+01:00">
-            12 novembre 2018
+        <time class="published" datetime="2018-11-15T20:22:00+01:00">
+            15 novembre 2018
         </time>
     </li>
-    <li>Mathematics</li>
-    <li>Statistics</li>
+    <li>Blog</li>
+    <li>Basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<h2>Normal Distribution</h2>
-<p>The probability density of normal distribution is:
+<h2>Least Square Regression Line</h2>
+<h2>Problem</h2>
+<p>A group of five students enrolls in Statistics immediately after taking a Math aptitude test. Each student's Math aptitude test score, <span class="math">\(x\)</span>, and Statistics course grade, <span class="math">\(y\)</span>, can be expressed as the following list <span class="math">\((x,y)\)</span> of points: 
+<em> <span class="math">\((95, 85)\)</span>
+</em> <span class="math">\((85, 95)\)</span>
+<em> <span class="math">\((80, 70)\)</span>
+</em> <span class="math">\((70, 65)\)</span>
+* <span class="math">\((60, 70)\)</span></p>
+<p>If a student scored an 80 on the Math aptitude test, what grade would we expect them to achieve in Statistics? Determine the equation of the best-fit line using the least squares method, then compute and print the value of <span class="math">\(y\)</span> when <span class="math">\(x=80\)</span>.</p>
+<div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="mi">95</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">85</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">70</span><span class="p">]</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">cov</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">x_mean</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">y_mean</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="nb">sum</span><span class="p">([(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">x_mean</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">y_mean</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span>
+
+<span class="k">def</span> <span class="nf">stdv</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">mu_x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">sum</span><span class="p">([(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mu_x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">])</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+
+<span class="k">def</span> <span class="nf">pearson_1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">std_x</span> <span class="o">=</span> <span class="n">stdv</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">std_y</span> <span class="o">=</span> <span class="n">stdv</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">Y</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">std_x</span><span class="o">*</span><span class="n">std_y</span><span class="p">)</span>
+
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">pearson_1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">stdv</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="n">stdv</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span><span class="o">/</span><span class="n">n</span> <span class="o">-</span> <span class="n">b</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;If a student scored 80 on the math test, he would most likely score a {round(a+80*b,3)} in statistics&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>If a student scored 80 on the math test, he would most likely score a 78.288 in statistics
+</pre></div>
+
+
+<h2>Pearson correlation coefficient</h2>
+<h3>Problem</h3>
+<p>The regression line of <span class="math">\(y\)</span> on <span class="math">\(x\)</span> is <span class="math">\(3x+4y+8=0\)</span>, and the regression line of <span class="math">\(x\)</span> on <span class="math">\(y\)</span> is <span class="math">\(4x+3y+7=0\)</span>. What is the value of the Pearson correlation coefficient?</p>
+<h3>Mathematical explanation</h3>
+<p>The initial equation system is :
 </p>
-<div class="math">$$\mathcal{N}(\mu,\sigma^2)=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$</div>
-<p>where,
-<em> <span class="math">\(\mu\)</span> is the mean (or expectation) of the distribution. It is also equal to median and mode of the distribution.
-</em> <span class="math">\(\sigma^2\)</span> is the variance.
-* <span class="math">\(\sigma\)</span> is the standard deviation. </p>
-<h2>Standard Normal Distribution</h2>
-<p>If <span class="math">\(\mu=0\)</span> and <span class="math">\(\sigma=1\)</span>, then the normal distribution is known as standard normal distribution:
+<div class="math">$$
+\left\{\begin{array}{ r @{{}={}} r  &gt;{{}}c&lt;{{}} r  &gt;{{}}c&lt;{{}}  r }
+ 3x+4y+8=0 &amp; (1)\\
+ 4x+3y+7=0 &amp; (2)\\
+\end{array}
+\right.
+$$</div>
+<p>So we can rewrite the 2 lines this way :
 </p>
-<div class="math">$$\phi(x)=\frac{e^{-\frac{x^2}{2}}}{\sigma\sqrt{2\pi}}$$</div>
-<p>Every normal distribution can be represented as standard normal distribution:</p>
-<div class="math">$$\mathcal{N}(\mu,\sigma^2)=\frac{1}{\sigma}\phi(\frac{x-\mu}{\sigma})$$</div>
-<h2>Cumulative Probability</h2>
-<p>Consider a real-valued random variable, <span class="math">\(X\)</span>. The cumulative distribution function of <span class="math">\(X\)</span> (or just the distribution function of <span class="math">\(X\)</span>) evaluated at <span class="math">\(x\)</span> is the probability that <span class="math">\(X\)</span> will take a value less than or equal to <span class="math">\(x\)</span>:</p>
-<div class="math">$$F_X(x)=P(X\leq x)$$</div>
-<p>
-also,
+<div class="math">$$
+\left\{\begin{array}{ r @{{}={}} r  &gt;{{}}c&lt;{{}} r  &gt;{{}}c&lt;{{}}  r }
+ y=-2+(\frac{-3}{4})x &amp; (1)\\
+ x=-\frac{7}{4}+(-\frac{3}{4})y &amp; (2)\\
+\end{array}
+\right.
+$$</div>
+<p>so <span class="math">\(b_1=-\frac{3}{4}\)</span> and <span class="math">\(b_2=-\frac{3}{4}\)</span></p>
+<p>When we apply the Pearson's coefficient formula : 
+<em> let <span class="math">\(p\)</span> be the pearson coefficient
+</em> let <span class="math">\(\sigma_X\)</span> be the standard deviation of <span class="math">\(x\)</span>
+* let <span class="math">\(\sigma_Y\)</span> be the standard deviation of <span class="math">\(y\)</span></p>
+<p>We hence have </p>
+<div class="math">$$
+\left\{\begin{array}{ r @{{}={}} r  &gt;{{}}c&lt;{{}} r  &gt;{{}}c&lt;{{}}  r }
+ p=b_1\left(\frac{\sigma_X}{\sigma_Y}\right) &amp; (1)\\
+ p=b_2\left(\frac{\sigma_Y}{\sigma_X}\right) &amp; (2)\\
+\end{array}
+\right.
+$$</div>
+<p>by multiplying theses 2 equations together we get 
 </p>
-<div class="math">$$P(a\leq X\leq b)=P(a\lt X\lt b)=F_X(b)-F_X(a)$$</div>
-<p>the cumulative distribution function for a function with normal distribution is:
-</p>
-<div class="math">$$\Phi(x)=\frac{1}{2}\left(1+erf\left(\frac{x-\mu}{\sigma\sqrt{2}}\right)\right)$$</div>
-<p>
-where <span class="math">\(erf\)</span> is the error function:
-</p>
-<div class="math">$$erf(z)=\frac{2}{\sqrt{\pi}}\int_0^ze^{-x^2}dx$$</div>
+<div class="math">$$p^2=b_1\cdot b_2$$</div>
+<div class="math">$$p^2=\left(-\frac{3}{4}\right)\left(-\frac{3}{4}\right)$$</div>
+<div class="math">$$p^2=\left(-\frac{9}{16}\right)$$</div>
+<p>finally we get <span class="math">\(p=\left(-\frac{3}{4}\right)\)</span> or <span class="math">\(p=\left(\frac{3}{4}\right)\)</span></p>
+<p>Since <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> are negatively correlated we have <span class="math">\(p=\left(-\frac{3}{4}\right)\)</span></p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",

@@ -146,12 +146,12 @@
 <span class="k">def</span> <span class="nf">stdv</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">mu_x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="nb">sum</span><span class="p">([(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mu_x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">])</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
 
-<span class="k">def</span> <span class="nf">spearman_1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">pearson_1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="n">std_x</span> <span class="o">=</span> <span class="n">stdv</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
     <span class="n">std_y</span> <span class="o">=</span> <span class="n">stdv</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">Y</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">std_x</span><span class="o">*</span><span class="n">std_y</span><span class="p">)</span>
 
-<span class="n">spearman_1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+<span class="n">pearson_1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
 </pre></div>
 
 
@@ -162,7 +162,7 @@
 <h3>Python implementation</h3>
 <p>Using the formula</p>
 <div class="math">$$\rho_{X,Y}=\frac{\sum_{i}(x_i-\bar{x})(y_i-\bar{y})}{n\sigma_X\sigma_Y}$$</div>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">spearman_2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pearson_2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
     <span class="n">std_x</span> <span class="o">=</span> <span class="n">stdv</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
     <span class="n">std_y</span> <span class="o">=</span> <span class="n">stdv</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">Y</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
     <span class="n">x_mean</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
@@ -170,7 +170,7 @@
 
     <span class="k">return</span> <span class="nb">sum</span><span class="p">([(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">x_mean</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">y_mean</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">std_x</span><span class="o">*</span><span class="n">std_y</span><span class="p">)</span>
 
-<span class="n">spearman_2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+<span class="n">pearson_2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
 </pre></div>
 
 
@@ -272,7 +272,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 63 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 65 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

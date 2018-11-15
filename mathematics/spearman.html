@@ -130,6 +130,11 @@
 <em> <span class="math">\(X=\{x_i, x_2, x_3, ..., x_n\}\)</span>
 </em> <span class="math">\(Y=\{y_i, y_2, y_3, ..., y_n\}\)</span></p>
 <p>if <span class="math">\(Rank_X\)</span> and <span class="math">\(Rank_Y\)</span> denote the respective ranks of each data point, then the Spearman's rank correlation coefficient, <span class="math">\(r_s\)</span>, is the Pearson correlation coefficient of <span class="math">\(Rank_X\)</span> and <span class="math">\(Rank_Y\)</span>.</p>
+<h2>What does it means?</h2>
+<p>The Spearman's rank correlation coefficientis is a nonparametric measure of rank correlation (statistical dependence between the rankings of two variables). It assesses how well the relationship between two variables can be described using a monotonic function. 
+The Spearman correlation between two variables is equal to the Pearson correlation between the rank values of those two variables; while Pearson's correlation assesses linear relationships, Spearman's correlation assesses monotonic relationships (whether linear or not). If there are no repeated data values, a perfect Spearman correlation of +1 or −1 occurs when each of the variables is a perfect monotone function of the other. </p>
+<p><img alt="Spearman" src="../images/spearman/Spearman_fig1.svg"></p>
+<p>A Spearman correlation of 1 results when the two variables being compared are monotonically related, even if their relationship is not linear. This means that all data-points with greater x-values than that of a given data-point will have greater y-values as well. In contrast, this does not give a perfect Pearson correlation.</p>
 <h2>Example</h2>
 <ul>
 <li><span class="math">\(X=\{0.2, 1.3, 0.2, 1.1, 1.4, 1.5\}\)</span></li>
@@ -218,7 +223,7 @@ $$</div>
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 63 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 65 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

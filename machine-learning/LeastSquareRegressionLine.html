@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Check for free disk space - Linux</title>
+    <title>Least Square Regression Line - Machine Learning</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Bash" />
+    <meta name="tags" content="linear" />
 
 
 </head>
@@ -112,47 +112,110 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Check for free disk space
+      Least Square Regression Line
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-17T10:54:00+02:00">
-            17 août 2018
+        <time class="published" datetime="2018-11-15T20:25:00+01:00">
+            15 novembre 2018
         </time>
     </li>
-    <li>Linux</li>
-    <li>Bash</li>
+    <li>Machine Learning</li>
+    <li>linear</li>
 </ol>
 </header>
 <div class='article_content'>
-<h3>How do you check for free disk space on linux?</h3>
-<p>The <code>df</code> command will come handy for this task. Run the command with the following arguments</p>
-<div class="highlight"><pre><span></span>df -ah
+<h2>Linear Regression</h2>
+<p>If our data shows a linear relationship between <span class="math">\(X\)</span> and <span class="math">\(Y\)</span>, then the straight line which best describes the relationship is the regression line. The regression line is given by <span class="math">\(\hat{Y}\)</span>=a+bX$. </p>
+<h3>Finding the value of b</h3>
+<p>The value of <span class="math">\(b\)</span> can be calculated using either of the following formulae:
+<em> <span class="math">\(b=\frac{n\sum(x_iy_i)-(\sum x_i)(\sum y_i)}{n\sum(x_i^2)-(\sum x_i)^2}\)</span>
+</em> <span class="math">\(b=\rho\frac{\sigma_Y}{\sigma_X}\)</span>, where <span class="math">\(\rho\)</span> is the Pearson correlation coefficient, <span class="math">\(\sigma_X\)</span></p>
+<h3>Finding the value of a</h3>
+<p><span class="math">\(a=\bar{y}-b\cdot\bar{x}\)</span>, where <span class="math">\(\bar{x}\)</span> is the mean of <span class="math">\(X\)</span> and <span class="math">\(\bar{y}\)</span> is the mean of <span class="math">\(Y\)</span>.</p>
+<h2>Coefficient of determination (<span class="math">\(R^2\)</span>)</h2>
+<p>The coefficient of determination can be computer with :
+<span class="math">\(R^2 = \frac{SSR}{SST}=1-\frac{SSE}{SST}\)</span>
+Where :
+<em> <span class="math">\(SST\)</span> is the total Sum of Squares : <span class="math">\(SST=\sum (y_i-\bar{y})^2\)</span>
+</em> <span class="math">\(SSR\)</span> is the regression Sum of Squares : <span class="math">\(SSR=\sum (\hat{y_i}-\bar{y})^2\)</span>
+* <span class="math">\(SSE\)</span> is the error Sum of Squares : <span class="math">\(SSE=\sum (\hat{y_i}-y)^2\)</span></p>
+<p>If <span class="math">\(SSE\)</span> is small, we can assume that our fit is good. </p>
+<h2>Linear Regression in Python</h2>
+<p>We can use the fit function in the sklearn.linear_model.LinearRegression class.</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">linear_model</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">xl</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">xl</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">lm</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;a = {lm.intercept_}&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;b = {lm.coef_[0]}&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Where Y=a+b*X&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<p>Will return in a human readable format for all drives a readout of all your filesystems</p>
-<div class="highlight"><pre><span></span>Filesystem      Size  Used Avail Use% Mounted on
-/dev/md0        2.4G  1.3G  1.1G  54% /
-none            348M  4.0K  348M   1% /dev
-none               0     0     0    - /dev/pts
-none               0     0     0    - /proc
-none               0     0     0    - /sys
-/tmp            350M  1.3M  349M   1% /tmp
-/run            350M  3.2M  347M   1% /run
-/dev/shm        350M   12K  350M   1% /dev/shm
-/proc/bus/usb      0     0     0    - /proc/bus/usb
-securityfs         0     0     0    - /sys/kernel/security
-/dev/md3        1.8T  372G  1.5T  21% /volume2
-/dev/vg1000/lv  1.8T  1.5T  340G  82% /volume1
-/dev/sdq1       7.4G  3.8G  3.5G  52% /volumeUSB3/usbshare3-1
-/dev/sdr        294G  146G  134G  53% /volumeUSB2/usbshare
-none               0     0     0    - /proc/fs/nfsd
-none               0     0     0    - /config
+<div class="highlight"><pre><span></span>a = 0.5999999999999996
+b = 0.8000000000000002
+Where Y=a+b*X
 </pre></div>
 
 
-<p>The free disk space can be read in the <code>Avail</code> column</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}</script>
 </div>
     <aside>
     <div class="bug-reporting__panel">
