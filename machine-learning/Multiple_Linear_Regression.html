@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Poisson Distribution - Mathematics</title>
+    <title>Multiple Linear Regression - Machine Learning</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Statistics" />
+    <meta name="tags" content="linear" />
 
 
 </head>
@@ -112,48 +112,76 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Poisson Distribution
+      Multiple Linear Regression
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-12T09:02:00+01:00">
-            12 novembre 2018
+        <time class="published" datetime="2018-11-16T20:25:00+01:00">
+            16 novembre 2018
         </time>
     </li>
-    <li>Mathematics</li>
-    <li>Statistics</li>
+    <li>Machine Learning</li>
+    <li>linear</li>
 </ol>
 </header>
 <div class='article_content'>
-<h2>Poisson Experiment</h2>
-<p>Poisson experiment is a statistical experiment that has the following properties: 
-<em> The outcome of each trial is either success or failure.
-</em> The average number of successes (<span class="math">\(\lambda\)</span>) that occurs in a specified region is known.
-<em> The probability that a success will occur is proportional to the size of the region.
-</em> The probability that a success will occur in an extremely small region is virtually zero. </p>
-<h2>Poisson Distribution</h2>
-<p>A Poisson random variable is the number of successes that result from a Poisson experiment. The probability distribution of a Poisson random variable is called a Poisson distribution:</p>
-<div class="math">$$P(k,\lambda)=\frac{\lambda^ke^{-\lambda}}{k!}$$</div>
-<p>where :
-<em> <span class="math">\(\lambda\)</span> is the average number of successes that occur in a specified region.
-</em> <span class="math">\(k\)</span> is the actual number of successes that occur in a specified region.
-* <span class="math">\(P(k,\lambda)\)</span> is the Poisson probability, which is the probability of getting exactly <span class="math">\(k\)</span> successes when the average number of successes is <span class="math">\(\lambda\)</span>. </p>
-<h2>Example</h2>
-<p>The average number of goals in the soccer world cup is 2.5. The probability that 4 goals are scored is then:
+<p>If <span class="math">\(Y\)</span> is linearly dependent only on <span class="math">\(X\)</span>, then we can use the ordinary least square regression line, <span class="math">\(\hat{Y}=a+bX\)</span>. </p>
+<p>However, if <span class="math">\(Y\)</span> shows linear dependency on <span class="math">\(m\)</span> variables <span class="math">\(X_1\)</span>, <span class="math">\(X_2\)</span>, ..., <span class="math">\(X_m\)</span>, then we need to find the values of <span class="math">\(a\)</span> and <span class="math">\(m\)</span> other constants (<span class="math">\(b_1\)</span>, <span class="math">\(b_2\)</span>, ..., <span class="math">\(b_m\)</span>). We can then write the regression equation as: </p>
+<div class="math">$$\hat{Y}=a+\sum_{i=1}^{m}b_iX_i$$</div>
+<h2>Matrix Form of the Regression Equation</h2>
+<p>Let's consider that <span class="math">\(Y\)</span> depends on two variables, <span class="math">\(X_1\)</span> and <span class="math">\(X_2\)</span>. We write the regression relation as <span class="math">\(\hat{Y}=a+b_1X_1+b_2X_2\)</span>. Consider the following matrix operation: </p>
+<div class="math">$$\begin{bmatrix}
+1 &amp; X_1 &amp; X_2\\
+\end{bmatrix}\cdot\begin{bmatrix}
+a \\
+b_1\\
+b_2\\
+\end{bmatrix}=a+b_1X_1+b_2X_2$$</div>
+<p>We define two matrices, <span class="math">\(X\)</span> and <span class="math">\(B\)</span> as:</p>
+<ul>
+<li><span class="math">\(X=<div class="math">\begin{bmatrix}1 &amp; X_1 &amp; X_2\\\end{bmatrix}</div>\)</span></li>
+<li><span class="math">\(B=<div class="math">\begin{bmatrix}a \\b_1\\b_2\\\end{bmatrix}</div>\)</span></li>
+</ul>
+<p>Now, we rewrite the regression relation as <span class="math">\(\hat{Y}=X\cdot B\)</span>. This transforms the regression relation into matrix form.</p>
+<h2>Generalized Matrix Form</h2>
+<p>We will consider that <span class="math">\(Y\)</span> shows a linear relationship with <span class="math">\(m\)</span> variables, <span class="math">\(X_1\)</span>, <span class="math">\(X_2\)</span>, ..., <span class="math">\(X_m\)</span>. Let's say that we made <span class="math">\(n\)</span> observations on different tuples <span class="math">\((x_1, x_2, ..., x_m)\)</span>:</p>
+<ul>
+<li><span class="math">\(y_1=a+b_1\cdot x_{1,1} + b_2\cdot x_{2,1} + ... + b_m\cdot x_{m,1}\)</span></li>
+<li><span class="math">\(y_2=a+b_2\cdot x_{1,2} + b_2\cdot x_{2,2} + ... + b_m\cdot x_{m,2}\)</span></li>
+<li><span class="math">\(...\)</span></li>
+<li><span class="math">\(y_n=a+b_n\cdot x_{1,n} + b_2\cdot x_{2,n} + ... + b_m\cdot x_{m,n}\)</span></li>
+</ul>
+<p>Now, we can find the matrices:</p>
+<div class="math">$$X=\begin{bmatrix}1 &amp; x_{1,1} &amp; x_{2,1} &amp; x_{3,1} &amp; ... &amp; x_{m,1} \\1 &amp; x_{1,2} &amp; x_{2,2} &amp; x_{3,2} &amp; ... &amp; x_{m,2} \\1 &amp; x_{1,3} &amp; x_{2,3} &amp; x_{3,3} &amp; ... &amp; x_{m,3} \\... &amp; ... &amp; ... &amp; ... &amp; ... &amp; ... \\1 &amp; x_{1,n} &amp; x_{2,n} &amp; x_{3,n} &amp; ... &amp; x_{m,n} \\\end{bmatrix}$$</div>
+<div class="math">$$Y=\begin{bmatrix}y_1 \\y_2\\y_3\\...\\y_n\\\end{bmatrix}$$</div>
+<h3>Finding the Matrix B</h3>
+<p>We know that <span class="math">\(Y=X\cdot B\)</span>
 </p>
-<div class="math">$$p(\lambda=2.5,k=4)=\frac{2.5^4e^{-2.5}}{4!}=0.133$$</div>
-<h2>Expectation for the Poisson distribution</h2>
-<p>Consider some Poisson random variable, <span class="math">\(X\)</span>. Let <span class="math">\(E[X]\)</span> be the expectation of <span class="math">\(X\)</span>. Find the value of <span class="math">\(E[X^2]\)</span>. </p>
-<p>Let <span class="math">\(Var(X)\)</span> be the variance of <span class="math">\(X\)</span>. Recall that if a random variable has a Poisson distribution, then: 
-<em> <span class="math">\(E[X]=\lambda\)</span>
-</em> <span class="math">\(Var[X]=\lambda\)</span></p>
-<p>Now, we'll use the following property of expectation and variance for any random variable, <span class="math">\(X\)</span>:
-</p>
-<div class="math">$$Var(X)=E[X^2]-(E[X])^2$$</div>
-<div class="math">$$E[X^2]=Var(X)+(E[X])^2$$</div>
-<p>So, for any random variable  having a Poisson distribution, the above result can be rewritten as:
-</p>
-<div class="math">$$E[X^2]=\lambda + \lambda^2$$</div>
+<div class="math">$$\Rightarrow X^T\cdot Y=X^T\cdot X \cdot B$$</div>
+<div class="math">$$\Rightarrow (X^T\cdot X)^{-1}\cdot X^T \cdot Y=I\cdot B$$</div>
+<div class="math">$$\Rightarrow B= (X^T\cdot X)^{-1}\cdot X^T \cdot Y$$</div>
+<h3>Finding the Value of Y</h3>
+<p>Suppose we want to find the value of for some tuple <span class="math">\(Y\)</span>, then <span class="math">\((x_1, x_2, ..., x_m)\)</span>,</p>
+<div class="math">$$Y=\begin{bmatrix}
+1 &amp; x_1  &amp; x_2 &amp; ... &amp; x_m\\
+\end{bmatrix}\cdot B$$</div>
+<h2>Multiple Regression in Python</h2>
+<p>We can use the fit function in the sklearn.linear_model.LinearRegression class.</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">linear_model</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span>
+<span class="n">lm</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">intercept_</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">coef_</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Linear regression coefficients between Y and X : a={a}, b_0={b[0]}, b_1={b[1]}&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>Linear regression coefficients between Y and X : a=51.953488372092984, b_0=6.65116279069768, b_1=-11.162790697674419
+</pre></div>
+
+
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",

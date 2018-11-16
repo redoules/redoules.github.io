@@ -5,7 +5,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>redoules.github.io/</loc>
-<lastmod>2018-11-15T22:07:32-00:00</lastmod>
+<lastmod>2018-11-16T23:34:59-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -13,6 +13,20 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>redoules.github.io/pages/about.html</loc>
 <lastmod>2017-11-02T08:13:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>redoules.github.io/blog/Statistics_10days-day9.html</loc>
+<lastmod>2018-11-16T20:31:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>redoules.github.io/machine-learning/Multiple_Linear_Regression.html</loc>
+<lastmod>2018-11-16T20:25:00+01:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
