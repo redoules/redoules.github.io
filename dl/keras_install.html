@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Sorting an array - Python</title>
+    <title>Install keras using conda - DL</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Basics" />
+    <meta name="tags" content="Basic" />
 
 
 </head>
@@ -112,71 +112,21 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Sorting an array
+      Install keras using conda
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-07T22:22:00+01:00">
-            07 novembre 2018
+        <time class="published" datetime="2018-11-28T22:47:00+01:00">
+            28 novembre 2018
         </time>
     </li>
-    <li>Python</li>
-    <li>Basics</li>
+    <li>DL</li>
+    <li>Basic</li>
 </ol>
 </header>
 <div class='article_content'>
-<h2>Using lists</h2>
-<p>Python provides an iterator to sort an array <a href="https://www.python.org/dev/peps/pep-0322/">sorted()</a></p>
-<p>you can use it this way :</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
-
-<span class="c1"># Random lists from [0-999] interval</span>
-<span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span> 
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Initial random list : {arr}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-
-<span class="n">reversed_arr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">arr</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Sorted list : {reversed_arr}&#39;</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>Initial random list : [277, 347, 976, 367, 604, 878, 148, 670, 229, 432]
-
-Sorted list : [148, 229, 277, 347, 367, 432, 604, 670, 878, 976]
-</pre></div>
-
-
-<p>it is also possible to use the sort function from the list object</p>
-<div class="highlight"><pre><span></span><span class="c1"># Random lists from [0-999] interval</span>
-<span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span> 
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Initial random list : {arr}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="n">arr</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Sorted list : {arr}&#39;</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>Initial random list : [727, 759, 68, 103, 23, 90, 258, 737, 791, 567]
-
-Sorted list : [23, 68, 90, 103, 258, 567, 727, 737, 759, 791]
-</pre></div>
-
-
-<h2>Using numpy</h2>
-<p>If you are using numpy you can sort an array by creating a view on the array:</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Initial random array : {arr}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-
-<span class="n">sorted_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Sorted array : {sorted_arr}&#39;</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>Initial random array : [0.40021786 0.13876208 0.19939047 0.46015169 0.43734158]
-
-Sorted array : [0.13876208 0.19939047 0.40021786 0.43734158 0.46015169]
+<p>Keras with the Tensorflow backend can be installed by running the following conda command </p>
+<div class="highlight"><pre><span></span>conda install -c conda-forge keras tensorflow
 </pre></div>
 </div>
     <aside>
