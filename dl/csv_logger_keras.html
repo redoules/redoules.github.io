@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Day 3 - Conditionnal probability - Blog</title>
+    <title>Logging the training progress in a CSV - DL</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Basics" />
+    <meta name="tags" content="basics" />
 
 
 </head>
@@ -112,136 +112,159 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Day 3 - Conditionnal probability
+      Logging the training progress in a CSV
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-10T11:24:00+01:00">
-            10 novembre 2018
+        <time class="published" datetime="2018-12-04T21:33:00+01:00">
+            04 décembre 2018
         </time>
     </li>
-    <li>Blog</li>
-    <li>Basics</li>
+    <li>DL</li>
+    <li>basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<h2>Conditionnal probability</h2>
-<h3>Problem</h3>
-<p>Suppose a family has 2 children, one of which is a boy. What is the probability that both children are boys?</p>
-<h3>Mathematical explanation</h3>
-<p>Let's look at the possible outcomes :
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }</p>
-<div class="highlight"><pre><span></span><span class="na">.dataframe</span> <span class="no">tbody</span> <span class="no">tr</span> <span class="no">th</span> <span class="err">{</span>
-    <span class="nl">vertical-align:</span> <span class="nf">top</span><span class="c">;</span>
-<span class="err">}</span>
-
-<span class="na">.dataframe</span> <span class="no">thead</span> <span class="no">th</span> <span class="err">{</span>
-    <span class="nl">text-align:</span> <span class="nf">right</span><span class="c">;</span>
-<span class="err">}</span>
+<p>Let's see how we can log the progress and various metrics during the training process to a csv file. 
+Let's first import some libraries</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">keras</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 </pre></div>
 
 
-<p></style>
-<table class="dataframe" border="1">
+<p>In this example, we will be using the fashion MNIST dataset to do some basic computer vision, where we will train a Keras neural network to classify items of clothing.</p>
+<p>In order to import the data we will be using the built in function in Keras : </p>
+<div class="highlight"><pre><span></span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fashion_mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+</pre></div>
+
+
+<p>The model is a very simple neural network consisting in 2 fully connected layers. The model loss function is chosen in order to have a multiclass classifier : "sparse_categorical_crossentropy"</p>
+<p>Let's define a simple feedforward network.</p>
+<div class="highlight"><pre><span></span><span class="c1">##get and preprocess the data</span>
+<span class="n">fashion_mnist</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fashion_mnist</span>
+<span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">),</span> <span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">fashion_mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="n">train_images</span> <span class="o">=</span> <span class="n">train_images</span> <span class="o">/</span> <span class="mf">255.0</span>
+<span class="n">test_images</span> <span class="o">=</span> <span class="n">test_images</span> <span class="o">/</span> <span class="mf">255.0</span>
+
+<span class="c1">## define the model </span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span>
+             <span class="n">loss</span> <span class="o">=</span> <span class="s2">&quot;sparse_categorical_crossentropy&quot;</span><span class="p">,</span>
+             <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span><span class="s1">&#39;mae&#39;</span><span class="p">])</span>
+</pre></div>
+
+
+<p>In order to stream to a csv file the epoch results and metrics, we define a CSV logger. It is a callback located in </p>
+<div class="highlight"><pre><span></span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span>
+</pre></div>
+
+
+<p>Let's first import it </p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="kn">import</span> <span class="n">CSVLogger</span>
+</pre></div>
+
+
+<p>We now need to define the callback by specifiying a file to be written to, the separator and whether to append to the file or erase it every time.</p>
+<p>The callback has to be added to the callbacks list in the fit method.</p>
+<div class="highlight"><pre><span></span><span class="n">csv_logger</span> <span class="o">=</span> <span class="n">CSVLogger</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;my_csv.csv&quot;</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">csv_logger</span><span class="p">])</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>Epoch 1/5
+60000/60000 [==============================] - 9s 148us/step - loss: 0.5020 - acc: 0.8234 - mean_absolute_error: 4.4200
+Epoch 2/5
+60000/60000 [==============================] - 8s 138us/step - loss: 0.3765 - acc: 0.8630 - mean_absolute_error: 4.4200
+Epoch 3/5
+60000/60000 [==============================] - 8s 129us/step - loss: 0.3371 - acc: 0.8789 - mean_absolute_error: 4.4200
+Epoch 4/5
+60000/60000 [==============================] - 8s 133us/step - loss: 0.3129 - acc: 0.8843 - mean_absolute_error: 4.4200
+Epoch 5/5
+60000/60000 [==============================] - 9s 151us/step - loss: 0.2952 - acc: 0.8916 - mean_absolute_error: 4.4200
+
+
+
+
+
+&amp;lt;keras.callbacks.History at 0x1582adc6780&amp;gt;
+</pre></div>
+
+
+<p>The results are stored in the my_csv.csv file and contain the epoch results </p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;my_csv.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>B</th>
-      <th>G</th>
+      <th>epoch</th>
+      <th>acc</th>
+      <th>loss</th>
+      <th>mean_absolute_error</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>B</th>
-      <td>BB</td>
-      <td>BG</td>
+      <th>0</th>
+      <td>0</td>
+      <td>0.823400</td>
+      <td>0.502013</td>
+      <td>4.42</td>
     </tr>
     <tr>
-      <th>G</th>
-      <td>GB</td>
-      <td>GG</td>
+      <th>1</th>
+      <td>1</td>
+      <td>0.863050</td>
+      <td>0.376516</td>
+      <td>4.42</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>0.878867</td>
+      <td>0.337097</td>
+      <td>4.42</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>0.884317</td>
+      <td>0.312893</td>
+      <td>4.42</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>0.891583</td>
+      <td>0.295157</td>
+      <td>4.42</td>
     </tr>
   </tbody>
 </table>
-</div></p>
-<p>We know that at least one of the children is a boy, so only "GG" is not possible. The event where the family has a new boy is then "BB". Hence the probability is :
-</p>
-<div class="math">$$\frac{BB}{BB+GB+BG}=\frac{1}{3}$$</div>
-<h2>Draw 2 cards from a deck</h2>
-<h3>Problem</h3>
-<p>You 2 draw cards from a standard 52-card deck without replacing them. What is the probability that both cards are of the same suit?</p>
-<h3>Mathematical explanation</h3>
-<p>There are 13 cards of each suit. Draw one card. It can be anything with probability of 1. Now there are 51 cards left and 12 of them are the same suit as the first card you drew. So the chance the second card matches the 1st is <span class="math">\(\frac{12}{51}\)</span>.</p>
-<h2>Drawing marbles</h2>
-<h3>Problem</h3>
-<p>A bag contains 3 red marbles and 4 blue marbles. Then, 2 marbles are drawn from the bag, at random, without replacement. If the first marble drawn is red, what is the probability that the second marble is blue?</p>
-<h3>Mathematical explanation</h3>
-<p>On the first draw, the probabilities are the following :
-we call B the event "a blue ball is drawn" and R the event "a red ball is drawn"
-<em> <span class="math">\(P(B)=\frac{4}{7}\)</span>
-</em> <span class="math">\(P(R)=\frac{3}{7}\)</span></p>
-<p>On the second draw, if a red ball has been drawn at first, the probabilities are :
-<em> <span class="math">\(P(B|R)=\frac{4}{6}\)</span>
-</em> <span class="math">\(P(R|R)=\frac{2}{6}\)</span></p>
-<p>Hence, the probability of drawing a blue ball if the first ball drawn was red is <span class="math">\(\frac{1}{3}\)</span></p>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width < 768) ? "left" : align;
-        indent = (screen.width < 768) ? "0em" : indent;
-        linebreak = (screen.width < 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}</script>
+</div>
 </div>
     <aside>
     <div class="bug-reporting__panel">
