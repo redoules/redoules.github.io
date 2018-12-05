@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Reading data from a sql database with pandas - Python</title>
+    <title>Get model input shape - DL</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Data Wrangling" />
+    <meta name="tags" content="basics" />
 
 
 </head>
@@ -112,117 +112,35 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Reading data from a sql database with pandas
+      Get model input shape
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-03T18:04:00+02:00">
-            03 août 2018
+        <time class="published" datetime="2018-12-05T21:16:00+01:00">
+            05 décembre 2018
         </time>
     </li>
-    <li>Python</li>
-    <li>Data Wrangling</li>
+    <li>DL</li>
+    <li>basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>When manipulating you data using pandas, it is sometimes useful to pull data from a database. </p>
-<p>In this tutorial, we will see how to querry a dataframe from a sqlite table. Note than it would also work with any other sql database a long as you change the connxion to the one that suits your needs.</p>
-<p>First let's import pandas and sqlite3</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">sqlite3</span>
-<span class="kn">from</span> <span class="nn">sqlite3</span> <span class="kn">import</span> <span class="n">Error</span>
+<p>Information on the model can be accessed by the <code>.input_shape</code> parameter of the model object</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">load_model</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;my_model.h5&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">input_shape</span>
 </pre></div>
 
 
-<p>We want to store the table tutyfrutty in our dataframe. To do so, we will query all the elements present in the tutyfrutty TABLE with the command :</p>
-<p>SELECT * FROM tutyfrutty</p>
-<div class="highlight"><pre><span></span><span class="n">db_file</span> <span class="o">=</span> <span class="s2">&quot;.</span><span class="se">\\</span><span class="s2">mydatabase.db&quot;</span>
-<span class="k">try</span> <span class="p">:</span>
-    <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM tutyfrutty&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
-        <span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">]</span> <span class="c1">#juste delete the index column that was stored in the table</span>
-<span class="k">except</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<div class="highlight"><pre><span></span>Using TensorFlow backend.
 
-<span class="n">df</span>
+
+
+
+
+(None, 28, 28)
 </pre></div>
-
-
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>fruit</th>
-      <th>color</th>
-      <th>kcal</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Banana</td>
-      <td>yellow</td>
-      <td>89</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Orange</td>
-      <td>orange</td>
-      <td>47</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Apple</td>
-      <td>red</td>
-      <td>52</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>lemon</td>
-      <td>yellow</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>lime</td>
-      <td>green</td>
-      <td>30</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>plum</td>
-      <td>purple</td>
-      <td>28</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Cranberry</td>
-      <td>red</td>
-      <td>308</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Cranberry</td>
-      <td>red</td>
-      <td>308</td>
-    </tr>
-  </tbody>
-</table>
-</div>
 </div>
     <aside>
     <div class="bug-reporting__panel">

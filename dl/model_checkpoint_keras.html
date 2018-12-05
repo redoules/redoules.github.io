@@ -173,14 +173,16 @@ Let's first import some libraries</p>
 </pre></div>
 
 
-<p>We now need to define the ModelCheckPoint callback, it takes 7 arguments :
-<em> filepath: string, path to save the model file. monitor: quantity to monitor
-</em> verbose: verbosity mode, 0 or 1
-<em> save_best_only: if <code>save_best_only=True</code>, the latest best model according to the quantity monitored will not be overwritten.
-</em> mode: one of {auto, min, max}
-<em> If <code>save_best_only=True</code>, the decision to overwrite the current save file is made based on either the maximization or the minimization of the monitored quantity.
-</em> save_weights_only: if True, then only the model's weights will be saved (<code>model.save_weights(filepath)</code>), else the full model is saved (<code>model.save(filepath)</code>).
-* period: Interval (number of epochs) between checkpoints.</p>
+<p>We now need to define the ModelCheckPoint callback, it takes 7 arguments :</p>
+<ul>
+<li>filepath: string, path to save the model file. monitor: quantity to monitor</li>
+<li>verbose: verbosity mode, 0 or 1</li>
+<li>save_best_only: if <code>save_best_only=True</code>, the latest best model according to the quantity monitored will not be overwritten.</li>
+<li>mode: one of {auto, min, max}</li>
+<li>If <code>save_best_only=True</code>, the decision to overwrite the current save file is made based on either the maximization or the minimization of the monitored quantity.</li>
+<li>save_weights_only: if True, then only the model's weights will be saved (<code>model.save_weights(filepath)</code>), else the full model is saved (<code>model.save(filepath)</code>).</li>
+<li>period: Interval (number of epochs) between checkpoints.</li>
+</ul>
 <p>The callback has to be added to the callbacks list in the fit method.</p>
 <div class="highlight"><pre><span></span><span class="n">save_to_hdf5</span> <span class="o">=</span> <span class="n">ModelCheckpoint</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;my_model.h5&quot;</span><span class="p">,</span>
                                <span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;acc&#39;</span><span class="p">,</span>
@@ -237,7 +239,7 @@ Epoch 5/5
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 72 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 75 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.
