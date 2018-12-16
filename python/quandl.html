@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Opening a SQLite database with python - Python</title>
+    <title>Downloading from quandl - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Basics" />
+    <meta name="tags" content="Web Scraping" />
 
 
 </head>
@@ -112,48 +112,117 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Opening a SQLite database with python
+      Downloading from quandl
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-03T18:18:00+02:00">
-            03 août 2018
+        <time class="published" datetime="2018-12-16T09:42:00+01:00">
+            16 décembre 2018
         </time>
     </li>
     <li>Python</li>
-    <li>Basics</li>
+    <li>Web Scraping</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>This short article show you how to connect to a SQLite database using python. We will use the with keyword in order to avoid having to close the database.</p>
-<p>In order to connect to the database, we will have to import sqlite3</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
-<span class="kn">from</span> <span class="nn">sqlite3</span> <span class="kn">import</span> <span class="n">Error</span>
+<p>In this example we will download the price of bitcoin from quandl</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">quandl</span>
+<span class="n">btc_price_data</span> <span class="o">=</span> <span class="n">quandl</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;BCHARTS/COINBASEEUR&quot;</span><span class="p">)</span>
+<span class="n">btc_price_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 
-<p>In python the with keyword is used when working with unmanaged resources (like file streams). </p>
-<p>The <a href="https://docs.python.org/3/whatsnew/2.6.html#pep-343-the-with-statement">python documentation</a> tells us that : </p>
-<p>The with statement clarifies code that previously would use try...finally blocks to ensure that clean-up code is executed. In this section, I’ll discuss the statement as it will commonly be used. In the next section, I’ll examine the implementation details and show how to write objects for use with this statement.</p>
-<p>The with statement is a control-flow structure whose basic structure is:</p>
-<div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">expression</span> <span class="p">[</span><span class="k">as</span> <span class="n">variable</span><span class="p">]:</span>
-        <span class="k">with</span><span class="o">-</span><span class="n">block</span>
-</pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-<p>The expression is evaluated, and it should result in an object that supports the context management protocol (that is, has <strong>enter</strong>() and <strong>exit</strong>() methods).</p>
-<div class="highlight"><pre><span></span><span class="n">db_file</span> <span class="o">=</span> <span class="s2">&quot;.</span><span class="se">\\</span><span class="s2">mydatabase.db&quot;</span>
-<span class="k">try</span> <span class="p">:</span>
-    <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Connected to the database&quot;</span><span class="p">)</span>
-        <span class="c1">#your code here</span>
-<span class="k">except</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>Connected to the database
-</pre></div>
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Volume (BTC)</th>
+      <th>Volume (Currency)</th>
+      <th>Weighted Price</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2015-05-11</th>
+      <td>215.85</td>
+      <td>219.15</td>
+      <td>214.67</td>
+      <td>217.83</td>
+      <td>145.863137</td>
+      <td>31656.416712</td>
+      <td>217.028218</td>
+    </tr>
+    <tr>
+      <th>2015-05-12</th>
+      <td>218.04</td>
+      <td>218.50</td>
+      <td>214.16</td>
+      <td>215.50</td>
+      <td>127.225520</td>
+      <td>27467.730961</td>
+      <td>215.897966</td>
+    </tr>
+    <tr>
+      <th>2015-05-13</th>
+      <td>216.43</td>
+      <td>217.45</td>
+      <td>208.53</td>
+      <td>208.88</td>
+      <td>111.808285</td>
+      <td>24014.796862</td>
+      <td>214.785486</td>
+    </tr>
+    <tr>
+      <th>2015-05-14</th>
+      <td>209.23</td>
+      <td>209.83</td>
+      <td>204.94</td>
+      <td>207.93</td>
+      <td>148.228400</td>
+      <td>30825.088327</td>
+      <td>207.956696</td>
+    </tr>
+    <tr>
+      <th>2015-05-15</th>
+      <td>207.95</td>
+      <td>209.51</td>
+      <td>207.62</td>
+      <td>208.55</td>
+      <td>127.718800</td>
+      <td>26586.847126</td>
+      <td>208.167060</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
     <aside>
     <div class="bug-reporting__panel">
