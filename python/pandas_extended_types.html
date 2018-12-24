@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Get model info and number of parameters - DL</title>
+    <title>Using pandas extended types - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="basics" />
+    <meta name="tags" content="Data Wrangling" />
 
 
 </head>
@@ -112,40 +112,60 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Get model info and number of parameters
+      Using pandas extended types
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-12-05T21:09:00+01:00">
-            05 décembre 2018
+        <time class="published" datetime="2018-12-24T17:28:00+01:00">
+            24 décembre 2018
         </time>
     </li>
-    <li>DL</li>
-    <li>basics</li>
+    <li>Python</li>
+    <li>Data Wrangling</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>Information on the model can be accessed by the <code>.summary()</code> method</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">load_model</span>
+<p>Historically, pandas is bound to numpy arrays and its limitations :
+<em> integer and bool types cannot store missing data, indeed, <code>np.nan</code> is of type <code>np.float</code>
+</em> non-numeric types such as categorical, datetime are not natively supported. </p>
+<p>Indeed, internally, pandas relies on numpy arrays to efficiently store and perform operations on the data.</p>
+<p>With the recent versions of pandas, it is possible to define custom types. In order to avoid having to extensively update the internal pandas code with each new extensions, it is now possible to define :
+<em> an extension type which describes the data type and can be registered for creation via a string (i.e. <code>...astype("example")</code>)
+</em> an extension array which is a class that handles the datatype. There is no real restriction on its construction though it must be convertible to a numpy array in order to make it work with the functions implemented in pandas. It is limited to one dimension.</p>
+<p>Some implementations are already implemented in pandas. For example, IntegerNA is a pandas extension that can handle missing integer data without casting to float (and loosing the precision).</p>
+<p><img alt="IntergerNA" src="../images/pandas_types_extend/intergerna.png"></p>
+<p>In order to use IntergerNA, you need to specify the type as "Int64" with a capital "i"</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;my_model.h5&quot;</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<span class="n">s_ext</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span><span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;Int64&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s_ext</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>_________________________________________________________________
-Layer (type)                 Output Shape              Param #   
-=================================================================
-flatten_2 (Flatten)          (None, 784)               0         
-_________________________________________________________________
-dense_3 (Dense)              (None, 128)               100480    
-_________________________________________________________________
-dense_4 (Dense)              (None, 10)                1290      
-=================================================================
-Total params: 101,770
-Trainable params: 101,770
-Non-trainable params: 0
-_________________________________________________________________
+<div class="highlight"><pre><span></span>0    1.0
+1    NaN
+2    2.0
+dtype: float64
+0    1.0
+1    NaN
+2    2.0
+dtype: Int64
+</pre></div>
+
+
+<p>It is possible to leverage this extension to avoid running out of memory. For instance, we can store data using the "UInt16" type, this will avoid having to cast to float64.</p>
+<p>Other uses might be handling special data types such as :
+<em> ip adresses (see cyberpandas)
+</em> gps locations
+* etc...</p>
+<p><strong>sources</strong> : 
+<em> https://pandas.pydata.org/pandas-docs/stable/extending.html
+</em> PyData LA 2018 Extending Pandas with Custom Types - Will Ayd
+<a href="https://youtu.be/xx7H5EkzQH0" title="Extending Pandas with Custom Types - Will Ayd"><img alt="Extending Pandas with Custom Types - Will Ayd" src="http://img.youtube.com/vi/xx7H5EkzQH0/0.jpg"></a></p>
+<div class="highlight"><pre><span></span>
 </pre></div>
 </div>
     <aside>
