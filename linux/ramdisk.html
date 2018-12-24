@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Random integer - Python</title>
+    <title>How to create a ramdisk? - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Basics" />
+    <meta name="tags" content="Bash" />
 
 
 </head>
@@ -112,36 +112,49 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Random integer
+      How to create a ramdisk?
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-12-03T22:17:00+01:00">
-            03 décembre 2018
+        <time class="published" datetime="2018-12-24T11:58:00+01:00">
+            24 décembre 2018
         </time>
     </li>
-    <li>Python</li>
-    <li>Basics</li>
+    <li>Linux</li>
+    <li>Bash</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>The random module comes with the randint function that returns a pseudo random number between 2 values :</p>
-<div class="highlight"><pre><span></span><span class="c1"># Return a random integer N such that a &lt;= N &lt;= b.</span>
-<span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<h2>Writing to a SSD</h2>
+<p>Let's first write 500Mo to a ssd with the command :</p>
+<div class="highlight"><pre><span></span>dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>test.iso <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span><span class="m">500</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="c1">#### import random</span>
-
-<span class="n">min_int</span> <span class="o">=</span> <span class="mi">126</span>
-<span class="n">max_int</span> <span class="o">=</span> <span class="mi">211</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;My pseudo random number between {min_int} and {max_int} : {random.randint(min_int, max_int)}&quot;</span><span class="p">)</span>
+<p>On my machine with a ssd I get the following results</p>
+<div class="highlight"><pre><span></span>500+0 records in
+500+0 records out
+524288000 bytes (524 MB, 500 MiB) copied, 10,153 s, 51,6 MB/s
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>My pseudo random number between 126 and 211 : 206
+<h2>Writing to a ramdisk</h2>
+<p>Let's now create a temporary ram disk and see how faster it is </p>
+<div class="highlight"><pre><span></span>mkdir /mnt/ram
+mount -t tmpfs tmpfs /mnt/ram -o <span class="nv">size</span><span class="o">=</span>600M
+<span class="nb">cd</span> /mnt/ram
+dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>test.iso <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span><span class="m">500</span>
 </pre></div>
+
+
+<p>The results yield a faster write time : </p>
+<div class="highlight"><pre><span></span>500+0 records in
+500+0 records out
+524288000 bytes (524 MB, 500 MiB) copied, 6,39849 s, 81,9 MB/s
+</pre></div>
+
+
+<p>on a machine with linux installed natively the results shoud be even faster.</p>
 </div>
     <aside>
     <div class="bug-reporting__panel">
