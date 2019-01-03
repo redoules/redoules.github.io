@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>List all files in a directory - Python</title>
+    <title>Parse variable from config file - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -112,12 +112,12 @@
 <section id="content" class="body">
     <header>
     <h1>
-      List all files in a directory
+      Parse variable from config file
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-09-14T22:11:00+02:00">
-            14 septembre 2018
+        <time class="published" datetime="2019-01-03T09:06:00+01:00">
+            03 janvier 2019
         </time>
     </li>
     <li>Python</li>
@@ -125,79 +125,35 @@
 </ol>
 </header>
 <div class='article_content'>
-<h2>Listing all the files in a directory</h2>
-<p>Let's start with the basics, the most staigthforward way to list all the files in a direcoty is to use a combinaison of the listdir function and isfile form os.path. You can use a list comprehension to store all the results in a list.</p>
-<div class="highlight"><pre><span></span><span class="n">mypath</span> <span class="o">=</span> <span class="s2">&quot;./test_directory/&quot;</span>
+<p>You can store variables in an ini file for later executions of the script instead of hardcoding the values in the script.  Here is the content of <code>config.ini</code> : </p>
+<div class="highlight"><pre><span></span>[section1]
+var_a:hello
+var_b:world
+[section2]
+myvariable: 42
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">isfile</span><span class="p">,</span> <span class="n">join</span>
-<span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="n">mypath</span><span class="p">)</span> <span class="k">if</span> <span class="n">isfile</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">mypath</span><span class="p">,</span> <span class="n">f</span><span class="p">))]</span>
+<p>Use the configparser library for an easy access and parsing of the file.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">configparser</span>
+
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;config.ini&quot;</span><span class="p">)</span>
+<span class="n">var_a</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;section1&quot;</span><span class="p">,</span> <span class="s2">&quot;var_a&quot;</span><span class="p">)</span>
+<span class="n">var_b</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;section1&quot;</span><span class="p">,</span> <span class="s2">&quot;var_b&quot;</span><span class="p">)</span>
+
+<span class="n">myvariable</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;section2&quot;</span><span class="p">,</span> <span class="s2">&quot;myvariable&quot;</span><span class="p">)</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="n">var_a</span><span class="p">,</span> <span class="n">var_b</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">myvariable</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>[&#39;logfile.log&#39;, &#39;myfile.txt&#39;, &#39;super_music.mp3&#39;, &#39;textfile.txt&#39;]
-</pre></div>
-
-
-<h2>Listing all the files of a certain type in a directory</h2>
-<p>similarly, if you want to filter only a certain kind of file based on its extension you can use the endswith method. In the following example, we will filter all the "txt" files contained in the directory</p>
-<div class="highlight"><pre><span></span><span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="n">mypath</span><span class="p">)</span>  <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="s2">&quot;txt&quot;</span><span class="p">)]</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>[&#39;myfile.txt&#39;, &#39;textfile.txt&#39;]
-</pre></div>
-
-
-<h2>Listing all the files matching a pattern in a directory</h2>
-<p>The glob module finds all the pathnames matching a specified pattern according to the rules used by the Unix shell. You can use the *, ?, and character ranges expressed with [] wildcards</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
-
-<span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.txt&quot;</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>[&#39;myfile.txt&#39;]
-</pre></div>
-
-
-<h2>Listing files recusively</h2>
-<p>If you want to list all files recursively you can select all the sub-directories using the "**" wildcard</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
-<span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">mypath</span> <span class="o">+</span> <span class="s1">&#39;/**/*.txt&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>[&#39;./test_directory\\myfile.txt&#39;,
- &#39;./test_directory\\textfile.txt&#39;,
- &#39;./test_directory\\subdir1\\file_hidden_in_a_sub_direcotry.txt&#39;]
-</pre></div>
-
-
-<h3>Using a regular expression</h3>
-<p>If you'd rather use a regular expression to select the files, the pathlib library provides the rglob function. </p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./test_directory/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">&quot;*.[tT][xX][tT]&quot;</span><span class="p">))</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>[WindowsPath(&#39;test_directory/myfile.txt&#39;),
- WindowsPath(&#39;test_directory/textfile.txt&#39;),
- WindowsPath(&#39;test_directory/subdir1/file_hidden_in_a_sub_direcotry.txt&#39;)]
-</pre></div>
-
-
-<p>Using regular expressions you can for example select multiple types of files. In the following example, we list all the files that finish either with "txt" or with "log".</p>
-<div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./test_directory/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">&quot;*.[tl][xo][tg]&quot;</span><span class="p">))</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>[WindowsPath(&#39;test_directory/logfile.log&#39;),
- WindowsPath(&#39;test_directory/myfile.txt&#39;),
- WindowsPath(&#39;test_directory/textfile.txt&#39;),
- WindowsPath(&#39;test_directory/subdir1/file_hidden_in_a_sub_direcotry.txt&#39;)]
+<div class="highlight"><pre><span></span>hello world
+42
 </pre></div>
 </div>
     <aside>
