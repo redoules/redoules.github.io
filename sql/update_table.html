@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Using Dask on infiniband - Python</title>
+    <title>Update a value in a TABLE - SQL</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Parallel" />
+    <meta name="tags" content="Basics" />
 
 
 </head>
@@ -112,28 +112,192 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Using Dask on infiniband
+      Update a value in a TABLE
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-29T23:38:00+02:00">
-            29 août 2018
+        <time class="published" datetime="2019-01-06T12:03:00+01:00">
+            06 janvier 2019
         </time>
     </li>
-    <li>Python</li>
-    <li>Parallel</li>
+    <li>SQL</li>
+    <li>Basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>InfiniBand (abbreviated IB) is a computer-networking communications standard used in high-performance computing that features very high throughput and very low latency. It is used for data interconnect both among and within computers. InfiniBand is also used as either a direct or switched interconnect between servers and storage systems, as well as an interconnect between storage systems. (source Wikipedia).</p>
-<p>If you want to leverage this high speed network instead of the regular ethernet network, you have to specify to the scheduler that you want to used infiniband as your interface. Assuming that you Infiniband interface is <code>ib0</code>, you would call the scheduler like this :</p>
-<div class="highlight"><pre><span></span>dask-scheduler --interface ib0 --scheduler-file ./cluster.yaml
+<p>In this very simple example we will see how to update a row in a sql database
+Since we are working in the notebook, we will load the sql extension in order to manipulate the database.
+The database mydatabase.db is a SQLite database already created before the example.</p>
+<div class="highlight"><pre><span></span><span class="c1">#load the extension</span>
+<span class="o">%</span><span class="n">load_ext</span> <span class="n">sql</span> 
+<span class="c1">#connect to the database</span>
+<span class="o">%</span><span class="n">sql</span> <span class="n">sqlite</span><span class="p">:</span><span class="o">///</span><span class="n">mydatabase</span><span class="o">.</span><span class="n">db</span> 
 </pre></div>
 
 
-<p>you would have to call the worker using the same interface :</p>
-<div class="highlight"><pre><span></span>dask-worker --interface ib0 --scheduler-file ./cluster.yaml
+<div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">sql</span> <span class="n">extension</span> <span class="n">is</span> <span class="n">already</span> <span class="n">loaded</span><span class="p">.</span> <span class="n">To</span> <span class="n">reload</span> <span class="n">it</span><span class="p">,</span> <span class="nl">use</span><span class="p">:</span>
+  <span class="nf">%reload_ext</span> <span class="n">sql</span>
+
+
+
+
+
+<span class="err">&#39;</span><span class="nl">Connected</span><span class="p">:</span> <span class="err">@</span><span class="n">mydatabase</span><span class="p">.</span><span class="n">db</span><span class="err">&#39;</span>
 </pre></div>
+
+
+<p>The content of the TABLE is the following</p>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>Banana</td>
+        <td>yellow</td>
+        <td>89</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Orange</td>
+        <td>orange</td>
+        <td>47</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Apple</td>
+        <td>red</td>
+        <td>52</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>lime</td>
+        <td>green</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>plum</td>
+        <td>purple</td>
+        <td>28</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Cranberry</td>
+        <td>red</td>
+        <td>308</td>
+    </tr>
+</table>
+
+<p>We want to update the kcal value for "Orange". We will use the <code>UPDATE</code> keyword in order to do so. We can use the index value in order to access the row and set a new value.</p>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">UPDATE</span> <span class="s2">&quot;tutyfrutty&quot;</span> <span class="n">SET</span> <span class="s2">&quot;kcal&quot;</span> <span class="o">=</span> <span class="mi">48</span> <span class="n">WHERE</span> <span class="s2">&quot;index&quot;</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span> <span class="n">WHERE</span> <span class="s2">&quot;index&quot;</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+1 rows affected.
+ * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Orange</td>
+        <td>orange</td>
+        <td>48</td>
+    </tr>
+</table>
+
+<p>The <code>WHERE</code> keyword can be used to specify mutilple rows. For instance, if we want to change the kcal value of all yellow fruits :</p>
+<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">sql</span> <span class="n">UPDATE</span> <span class="s2">&quot;tutyfrutty&quot;</span> <span class="n">SET</span> <span class="s2">&quot;kcal&quot;</span> <span class="o">=</span> <span class="mi">126</span> <span class="n">WHERE</span> <span class="s2">&quot;color&quot;</span> <span class="o">=</span> <span class="s2">&quot;yellow&quot;</span><span class="p">;</span>
+<span class="o">%</span><span class="n">sql</span> <span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">tutyfrutty</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span> * sqlite:///mydatabase.db
+2 rows affected.
+ * sqlite:///mydatabase.db
+Done.
+</pre></div>
+
+
+<table>
+    <tr>
+        <th>index</th>
+        <th>fruit</th>
+        <th>color</th>
+        <th>kcal</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>Banana</td>
+        <td>yellow</td>
+        <td>126</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Orange</td>
+        <td>orange</td>
+        <td>48</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Apple</td>
+        <td>red</td>
+        <td>52</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>lemon</td>
+        <td>yellow</td>
+        <td>126</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>lime</td>
+        <td>green</td>
+        <td>30</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>plum</td>
+        <td>purple</td>
+        <td>28</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Cranberry</td>
+        <td>red</td>
+        <td>308</td>
+    </tr>
+</table>
 </div>
     <aside>
     <div class="bug-reporting__panel">
