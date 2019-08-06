@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Updating all python package with anaconda - Python</title>
+    <title>Reverse column order in pandas - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Other" />
+    <meta name="tags" content="Data Wrangling" />
 
 
 </head>
@@ -112,31 +112,168 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Updating all python package with anaconda
+      Reverse column order in pandas
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2017-11-02T09:27:00+01:00">
-            02 novembre 2017
+        <time class="published" datetime="2019-08-03T08:45:00+02:00">
+            03 août 2019
         </time>
     </li>
     <li>Python</li>
-    <li>Other</li>
+    <li>Data Wrangling</li>
 </ol>
 </header>
 <div class='article_content'>
-<h2>Updating anaconda packages</h2>
-<p>All packages managed by conda can be updated with the following command :</p>
-<p>conda update --all</p>
-<h2>Updating other packages with pip</h2>
-<p>For the other packages, the pip package manager can be used. Unfortunately pip hasn't the same update all fonctionnality.</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pip</span>
-<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
-
-<span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">pip</span><span class="o">.</span><span class="n">get_installed_distributions</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;updating {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dist</span><span class="p">))</span>
-    <span class="n">call</span><span class="p">(</span><span class="s2">&quot;pip install --upgrade &quot;</span> <span class="o">+</span> <span class="n">dist</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="c1"># Import modules</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 </pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c1"># Example dataframe</span>
+
+<span class="n">raw_data</span>  <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;fruit&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Banana&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;lemon&#39;</span><span class="p">,</span> <span class="s2">&quot;lime&quot;</span><span class="p">,</span> <span class="s2">&quot;plum&quot;</span><span class="p">],</span> 
+        <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;purple&quot;</span><span class="p">],</span> 
+        <span class="s1">&#39;kcal&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">89</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">28</span><span class="p">]</span>
+    <span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fruit&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal&#39;</span><span class="p">])</span>
+<span class="n">df</span>
+</pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fruit</th>
+      <th>color</th>
+      <th>kcal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Banana</td>
+      <td>yellow</td>
+      <td>89</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Orange</td>
+      <td>orange</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Apple</td>
+      <td>red</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>lemon</td>
+      <td>yellow</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>lime</td>
+      <td>green</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>plum</td>
+      <td>purple</td>
+      <td>28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>The columns of a dataframe can be reversed by using the loc accessor and passing  <code>:,::-1</code>. The <code>:</code> before the <code>,</code> means select all rows and the <code>::-1</code> after the <code>,</code> means reverse the column order</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>kcal</th>
+      <th>color</th>
+      <th>fruit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>89</td>
+      <td>yellow</td>
+      <td>Banana</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>47</td>
+      <td>orange</td>
+      <td>Orange</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>52</td>
+      <td>red</td>
+      <td>Apple</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>15</td>
+      <td>yellow</td>
+      <td>lemon</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>30</td>
+      <td>green</td>
+      <td>lime</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>28</td>
+      <td>purple</td>
+      <td>plum</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
     <aside>
     <div class="bug-reporting__panel">

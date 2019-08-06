@@ -493,7 +493,7 @@ Confusion matrix, without normalization
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>{&#39;classifier__C&#39;: 5.0, &#39;vectorizer__ngram_range&#39;: (1, 1), &#39;vectorizer__preprocessor&#39;: &amp;lt;function mask_integers at 0x00000237491B67B8&amp;gt;, &#39;vectorizer__stop_words&#39;: &#39;english&#39;}
+<div class="highlight"><pre><span></span>{&#39;classifier__C&#39;: 5.0, &#39;vectorizer__ngram_range&#39;: (1, 1), &#39;vectorizer__preprocessor&#39;: &lt;function mask_integers at 0x00000237491B67B8&gt;, &#39;vectorizer__stop_words&#39;: &#39;english&#39;}
 0.711180124224
 Accuracy = 71.2%
 Confusion matrix, without normalization
@@ -506,16 +506,16 @@ Confusion matrix, without normalization
 
 ValueError                                Traceback (most recent call last)
 
-&amp;lt;ipython-input-9-3e0781e307fb&amp;gt; in &amp;lt;module&amp;gt;()
+&lt;ipython-input-9-3e0781e307fb&gt; in &lt;module&gt;()
      25 pipeline_performance(testing.label, predicted_labels)
      26 
----&amp;gt; 27 print_top_features(pipeline1, n_features=10)
+---&gt; 27 print_top_features(pipeline1, n_features=10)
 
 
 C:\Users\Guillaume\Documents\Code\recommandation\utils\plotting.py in print_top_features(pipeline, vectorizer_name, classifier_name, n_features)
      81 def print_top_features(pipeline, vectorizer_name=&#39;vectorizer&#39;, classifier_name=&#39;classifier&#39;, n_features=7):
      82     vocabulary = np.array(pipeline.named_steps[vectorizer_name].get_feature_names())
----&amp;gt; 83     coefs = pipeline.named_steps[classifier_name].coef_[0]
+---&gt; 83     coefs = pipeline.named_steps[classifier_name].coef_[0]
      84     top_feature_idx = np.argsort(coefs)
      85     top_features = vocabulary[top_feature_idx]
 
@@ -523,7 +523,7 @@ C:\Users\Guillaume\Documents\Code\recommandation\utils\plotting.py in print_top_
 C:\Users\Guillaume\Anaconda3\lib\site-packages\sklearn\svm\base.py in coef_(self)
     483     def coef_(self):
     484         if self.kernel != &#39;linear&#39;:
---&amp;gt; 485             raise ValueError(&#39;coef_ is only available when using a &#39;
+--&gt; 485             raise ValueError(&#39;coef_ is only available when using a &#39;
     486                              &#39;linear kernel&#39;)
     487
 
@@ -807,7 +807,7 @@ C:\Users\Guillaume\Anaconda3\lib\site-packages\sklearn\naive_bayes.py:801: Runti
   self.feature_log_prob_ = (np.log(smoothed_fc) -
 
 
-{&#39;classifier__alpha&#39;: 0.25, &#39;classifier__fit_prior&#39;: True, &#39;vectorizer__ngram_range&#39;: (1, 1), &#39;vectorizer__preprocessor&#39;: &amp;lt;function mask_integers at 0x00000237491B67B8&amp;gt;, &#39;vectorizer__stop_words&#39;: &#39;english&#39;}
+{&#39;classifier__alpha&#39;: 0.25, &#39;classifier__fit_prior&#39;: True, &#39;vectorizer__ngram_range&#39;: (1, 1), &#39;vectorizer__preprocessor&#39;: &lt;function mask_integers at 0x00000237491B67B8&gt;, &#39;vectorizer__stop_words&#39;: &#39;english&#39;}
 0.805900621118
 Accuracy = 78.1%
 Confusion matrix, without normalization
@@ -1002,7 +1002,7 @@ C:\Users\Guillaume\Anaconda3\lib\site-packages\sklearn\naive_bayes.py:699: Runti
   self.feature_log_prob_ = (np.log(smoothed_fc) -
 
 
-{&#39;classifier__alpha&#39;: 0.5, &#39;classifier__fit_prior&#39;: False, &#39;vectorizer__ngram_range&#39;: (1, 1), &#39;vectorizer__preprocessor&#39;: &amp;lt;function mask_integers at 0x00000237491B67B8&amp;gt;, &#39;vectorizer__stop_words&#39;: &#39;english&#39;}
+{&#39;classifier__alpha&#39;: 0.5, &#39;classifier__fit_prior&#39;: False, &#39;vectorizer__ngram_range&#39;: (1, 1), &#39;vectorizer__preprocessor&#39;: &lt;function mask_integers at 0x00000237491B67B8&gt;, &#39;vectorizer__stop_words&#39;: &#39;english&#39;}
 0.80900621118
 Accuracy = 79.1%
 Confusion matrix, without normalization
@@ -1033,7 +1033,7 @@ Top dislike features:
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 84 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 88 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

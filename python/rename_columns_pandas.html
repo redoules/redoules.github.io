@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Writing data to a sql database with pandas - Python</title>
+    <title>Rename columns in pandas - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -112,12 +112,12 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Writing data to a sql database with pandas
+      Rename columns in pandas
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-03T17:38:00+02:00">
-            03 août 2018
+        <time class="published" datetime="2019-08-03T08:11:00+02:00">
+            03 août 2019
         </time>
     </li>
     <li>Python</li>
@@ -125,14 +125,10 @@
 </ol>
 </header>
 <div class='article_content'>
-<p>When manipulating you data using pandas, it is sometimes useful to store a dataframe. 
-Pandas provides multiple ways to export dataframes. The most common consist in exporting to a csv, a pickle, to hdf or to excel. 
-However, exporting to a sql database can prove very useful. Indeed, having a well structured database is a great for storing all the data related to your analysis in one place.</p>
-<p>In this tutorial, we will see how to store a dataframe in a new table of a sqlite dataframe. Note than it would also work with any other sql database a long as you change the connxion to the one that suits your needs.</p>
-<p>First let's import pandas and sqlite3</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">sqlite3</span>
-<span class="kn">from</span> <span class="nn">sqlite3</span> <span class="kn">import</span> <span class="n">Error</span>
+<p>In this article, we will be renaming columns in a pandas dataframe. 
+First, let's import pandas and create an example dataframe</p>
+<div class="highlight"><pre><span></span><span class="c1"># Import modules</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 </pre></div>
 
 
@@ -149,17 +145,17 @@ However, exporting to a sql database can prove very useful. Indeed, having a wel
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -212,56 +208,37 @@ However, exporting to a sql database can prove very useful. Indeed, having a wel
 </table>
 </div>
 
-<p>Now that the DataFrame has been created, let's push it to the sqlite database called mydatabase.db in a new table called tutyfrutty</p>
-<div class="highlight"><pre><span></span><span class="n">db_file</span> <span class="o">=</span> <span class="s2">&quot;.</span><span class="se">\\</span><span class="s2">mydatabase.db&quot;</span>
-<span class="k">try</span> <span class="p">:</span>
-    <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s2">&quot;tutyfrutty&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
-<span class="k">except</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">ValueError</span> <span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The TABLE tutyfrutty already exists, read below to understand how to handle this case&quot;</span><span class="p">)</span>
-</pre></div>
-
-
-<p>Note that if the table tutyfrutty was already existing, the to_sql function will return a ValueError. </p>
-<p>This is where, the if_exists option comes into play. Let's look at the docstring of this function : </p>
-<div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">if_exists : {&#39;fail&#39;, &#39;replace&#39;, &#39;append&#39;}, default &#39;fail&#39;</span>
-<span class="sd">    - fail: If table exists, do nothing.</span>
-<span class="sd">    - replace: If table exists, drop it, recreate it, and insert data.</span>
-<span class="sd">    - append: If table exists, insert data. Create if does not exist.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-</pre></div>
-
-
-<p>Let's say, I want to update my dataframe with some new rows </p>
-<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Cranberry&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">308</span><span class="p">]</span>
+<p>The most flexible method for renaming columns in pandas is the rename method. It takes a dictornnary as an argument where :
+* the keys are the old names 
+* the values are the new names
+you also need to specify the axis.</p>
+<p>This method can be used to rename either one or multiple columns</p>
+<div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s2">&quot;fruit&quot;</span> <span class="p">:</span> <span class="s2">&quot;produce&quot;</span><span class="p">,</span> <span class="s2">&quot;kcal&quot;</span><span class="p">:</span> <span class="s2">&quot;energy&quot;</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
 <span class="n">df</span>
 </pre></div>
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>fruit</th>
+      <th>produce</th>
       <th>color</th>
-      <th>kcal</th>
+      <th>energy</th>
     </tr>
   </thead>
   <tbody>
@@ -301,30 +278,361 @@ However, exporting to a sql database can prove very useful. Indeed, having a wel
       <td>purple</td>
       <td>28</td>
     </tr>
+  </tbody>
+</table>
+</div>
+
+<p>If you want to rename all the columns at once, a common method is to rewrite the columns attribute of the dataframe</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;nice fruit&quot;</span><span class="p">,</span> <span class="s2">&quot;bright color&quot;</span><span class="p">,</span> <span class="s2">&quot;light kcal&quot;</span><span class="p">]</span>
+<span class="n">df</span>
+</pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>nice fruit</th>
+      <th>bright color</th>
+      <th>light kcal</th>
+    </tr>
+  </thead>
+  <tbody>
     <tr>
-      <th>7</th>
-      <td>Cranberry</td>
-      <td>red</td>
-      <td>308</td>
+      <th>0</th>
+      <td>Banana</td>
+      <td>yellow</td>
+      <td>89</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>Cranberry</td>
+      <th>1</th>
+      <td>Orange</td>
+      <td>orange</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Apple</td>
       <td>red</td>
-      <td>308</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>lemon</td>
+      <td>yellow</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>lime</td>
+      <td>green</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>plum</td>
+      <td>purple</td>
+      <td>28</td>
     </tr>
   </tbody>
 </table>
 </div>
 
-<p>I can now replace the table with the new values using the "replace" option</p>
-<div class="highlight"><pre><span></span><span class="n">db_file</span> <span class="o">=</span> <span class="s2">&quot;.</span><span class="se">\\</span><span class="s2">mydatabase.db&quot;</span>
-<span class="k">try</span> <span class="p">:</span>
-    <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s2">&quot;tutyfrutty&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s2">&quot;replace&quot;</span><span class="p">)</span>
-<span class="k">except</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<p>If the only thing you are doing is replacing a space with an underscore, an even better method is to use the str.replace method since you don't have to type all the column names</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="n">df</span>
 </pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>nice_fruit</th>
+      <th>bright_color</th>
+      <th>light_kcal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Banana</td>
+      <td>yellow</td>
+      <td>89</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Orange</td>
+      <td>orange</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Apple</td>
+      <td>red</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>lemon</td>
+      <td>yellow</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>lime</td>
+      <td>green</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>plum</td>
+      <td>purple</td>
+      <td>28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Similarly, you can use other str methods such as :
+* capitalize : in order to converts first character to capital letter
+* lower : in order to have lowercase column names
+* upper : in order to have uppercase column names
+* etc.</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+<span class="n">df</span>
+</pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Nice_fruit</th>
+      <th>Bright_color</th>
+      <th>Light_kcal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Banana</td>
+      <td>yellow</td>
+      <td>89</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Orange</td>
+      <td>orange</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Apple</td>
+      <td>red</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>lemon</td>
+      <td>yellow</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>lime</td>
+      <td>green</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>plum</td>
+      <td>purple</td>
+      <td>28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Finaly, if you only need to add a prefix or a suffix to the columns, you can use the add_prefix method</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">add_prefix</span><span class="p">(</span><span class="s2">&quot;pre_&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pre_Nice_fruit</th>
+      <th>pre_Bright_color</th>
+      <th>pre_Light_kcal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Banana</td>
+      <td>yellow</td>
+      <td>89</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Orange</td>
+      <td>orange</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Apple</td>
+      <td>red</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>lemon</td>
+      <td>yellow</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>lime</td>
+      <td>green</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>plum</td>
+      <td>purple</td>
+      <td>28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>or the add_suffix method</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">add_suffix</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Nice_fruit_post</th>
+      <th>Bright_color_post</th>
+      <th>Light_kcal_post</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Banana</td>
+      <td>yellow</td>
+      <td>89</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Orange</td>
+      <td>orange</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Apple</td>
+      <td>red</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>lemon</td>
+      <td>yellow</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>lime</td>
+      <td>green</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>plum</td>
+      <td>purple</td>
+      <td>28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
     <aside>
     <div class="bug-reporting__panel">

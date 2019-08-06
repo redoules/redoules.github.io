@@ -126,12 +126,12 @@
 </header>
 <div class='article_content'>
 <p>Historically, pandas is bound to numpy arrays and its limitations :
-<em> integer and bool types cannot store missing data, indeed, <code>np.nan</code> is of type <code>np.float</code>
-</em> non-numeric types such as categorical, datetime are not natively supported. </p>
+* integer and bool types cannot store missing data, indeed, <code>np.nan</code> is of type <code>np.float</code>
+* non-numeric types such as categorical, datetime are not natively supported. </p>
 <p>Indeed, internally, pandas relies on numpy arrays to efficiently store and perform operations on the data.</p>
 <p>With the recent versions of pandas, it is possible to define custom types. In order to avoid having to extensively update the internal pandas code with each new extensions, it is now possible to define :
-<em> an extension type which describes the data type and can be registered for creation via a string (i.e. <code>...astype("example")</code>)
-</em> an extension array which is a class that handles the datatype. There is no real restriction on its construction though it must be convertible to a numpy array in order to make it work with the functions implemented in pandas. It is limited to one dimension.</p>
+* an extension type which describes the data type and can be registered for creation via a string (i.e. <code>...astype("example")</code>)
+* an extension array which is a class that handles the datatype. There is no real restriction on its construction though it must be convertible to a numpy array in order to make it work with the functions implemented in pandas. It is limited to one dimension.</p>
 <p>Some implementations are already implemented in pandas. For example, IntegerNA is a pandas extension that can handle missing integer data without casting to float (and loosing the precision).</p>
 <p><img alt="IntergerNA" src="../images/pandas_types_extend/intergerna.png"></p>
 <p>In order to use IntergerNA, you need to specify the type as "Int64" with a capital "i"</p>
@@ -158,12 +158,12 @@ dtype: Int64
 
 <p>It is possible to leverage this extension to avoid running out of memory. For instance, we can store data using the "UInt16" type, this will avoid having to cast to float64.</p>
 <p>Other uses might be handling special data types such as :
-<em> ip adresses (see cyberpandas)
-</em> gps locations
+* ip adresses (see cyberpandas)
+* gps locations
 * etc...</p>
 <p><strong>sources</strong> : 
-<em> https://pandas.pydata.org/pandas-docs/stable/extending.html
-</em> PyData LA 2018 Extending Pandas with Custom Types - Will Ayd
+* https://pandas.pydata.org/pandas-docs/stable/extending.html
+* PyData LA 2018 Extending Pandas with Custom Types - Will Ayd
 <a href="https://youtu.be/xx7H5EkzQH0" title="Extending Pandas with Custom Types - Will Ayd"><img alt="Extending Pandas with Custom Types - Will Ayd" src="http://img.youtube.com/vi/xx7H5EkzQH0/0.jpg"></a></p>
 <div class="highlight"><pre><span></span>
 </pre></div>
@@ -181,7 +181,7 @@ dtype: Int64
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 84 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 88 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.
