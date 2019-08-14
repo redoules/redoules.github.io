@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Extracting unique values from a list or an array - Python</title>
+    <title>Liste all opened windows on Windows - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Basics" />
+    <meta name="tags" content="Other" />
 
 
 </head>
@@ -112,50 +112,96 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Extracting unique values from a list or an array
+      Liste all opened windows on Windows
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-07T22:29:00+01:00">
-            07 novembre 2018
+        <time class="published" datetime="2019-08-03T11:36:00+02:00">
+            03 août 2019
         </time>
     </li>
     <li>Python</li>
-    <li>Basics</li>
+    <li>Other</li>
 </ol>
 </header>
 <div class='article_content'>
-<h2>Using lists</h2>
-<p>An easy way to extract the unique values of a list in python is to convert the list to a set. A set is an unordered collection of items. Every element is unique (no duplicates) and must be immutable. </p>
-<div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Original List : {my_list}&quot;</span><span class="p">)</span>
+<p>You can use the function <code>get_all_windows</code> to get a dictonnary containing the titles of the opened windows as keys and the handles of those windows as values</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">win32gui</span>
 
-<span class="n">my_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
-<span class="n">my_new_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">my_set</span><span class="p">)</span> <span class="c1"># the set is converted back to a list with the list() function</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;List of unique numbers : {my_new_list}&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_all_windows</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns dict with window desc and hwnd,</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_MyCallback</span><span class="p">(</span> <span class="n">hwnd</span><span class="p">,</span> <span class="n">extra</span> <span class="p">):</span>
+        <span class="n">hwnds</span><span class="p">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">extra</span>
+        <span class="n">hwnds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hwnd</span><span class="p">)</span>
+        <span class="n">classes</span><span class="p">[</span><span class="n">win32gui</span><span class="o">.</span><span class="n">GetWindowText</span><span class="p">(</span><span class="n">hwnd</span><span class="p">)]</span> <span class="o">=</span> <span class="n">hwnd</span>
+    <span class="n">windows</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">win32gui</span><span class="o">.</span><span class="n">EnumWindows</span><span class="p">(</span><span class="n">_MyCallback</span><span class="p">,</span> <span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">classes</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">classes</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>Original List : [10, 20, 30, 40, 20, 50, 60, 40]
-List of unique numbers : [40, 10, 50, 20, 60, 30]
+<div class="highlight"><pre><span></span><span class="n">get_all_windows</span><span class="p">()</span>
 </pre></div>
 
 
-<h2>Using numpy</h2>
-<p>If you are using numpy you can extract the unique values of an array with the unique function builtin numpy:</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Initial numpy array : {arr}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-
-<span class="n">unique_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Numpy array with unique values : {unique_arr}&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span>{&#39;&#39;: 3802422,
+ &#39;Forcepad driver tray window&#39;: 65676,
+ &#39;Jauge de batterie&#39;: 131542,
+ &#39;Network Flyout&#39;: 131650,
+ &#39;Dashlane&#39;: 5570658,
+ &#39;Wox&#39;: 131770,
+ &#39;JupyterLab - Brave&#39;: 66990,
+ &#39;python&#39;: 4261478,
+ &#39;Visual Studio Code - Insiders&#39;: 329780,
+ &#39;Code - Insiders&#39;: 526478,
+ &#39;Documents&#39;: 526010,
+ &#39;Windows PowerShell&#39;: 198580,
+ &#39;Progression&#39;: 394934,
+ &#39;Microsoft Edge&#39;: 131586,
+ &#39;Microsoft Store&#39;: 197328,
+ &#39;QTrayIconMessageWindow&#39;: 327816,
+ &#39;Hidden Window&#39;: 459506,
+ &#39;.NET-BroadcastEventWindow.4.0.0.0.3e2c690.0&#39;: 131824,
+ &#39;SystemResourceNotifyWindow&#39;: 197346,
+ &#39;MediaContextNotificationWindow&#39;: 197344,
+ &#39;Resilio Sync 2.6.3&#39;: 262934,
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>Initial numpy array : [10 20 30 40 20 50 60 40]
+<p>}</p>
+<div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;List of all opened windows : &quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">get_all_windows</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span> 
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">* &quot;</span> <span class="o">+</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
 
-Numpy array with unique values : [10 20 30 40 50 60]
+
+<div class="highlight"><pre><span></span>List of all opened windows : 
+    * Forcepad driver tray window
+    * Jauge de batterie
+    * Network Flyout
+    * Dashlane
+    * Wox
+    * JupyterLab - Brave
+    * python
+    * Visual Studio Code - Insiders
+    * Code - Insiders
+    * Documents
+    * Windows PowerShell
+    * Progression
+    * Microsoft Edge
+    * Microsoft Store
+    * QTrayIconMessageWindow
+    * Hidden Window
+    * .NET-BroadcastEventWindow.4.0.0.0.3e2c690.0
+    * SystemResourceNotifyWindow
+    * MediaContextNotificationWindow
+    * Resilio Sync 2.6.3
 </pre></div>
 </div>
     <aside>
