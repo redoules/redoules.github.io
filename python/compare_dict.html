@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Optimized numpy random number generation on Intel CPU - Python</title>
+    <title>Get items in one dictionnary but not the other one - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -112,12 +112,12 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Optimized numpy random number generation on Intel CPU
+      Get items in one dictionnary but not the other one
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-08-22T21:29:00+02:00">
-            22 août 2018
+        <time class="published" datetime="2019-08-22T14:12:00+02:00">
+            22 août 2019
         </time>
     </li>
     <li>Python</li>
@@ -125,42 +125,31 @@
 </ol>
 </header>
 <div class='article_content'>
-<h2>Python Intel distribution</h2>
-<p>Make sure you have a python intel distribution. When you startup python you should see somethine like :</p>
-<div class="highlight"><pre><span></span>Python 3.6.2 |Intel Corporation| (default, Aug 15 2017, 11:34:02) [MSC v.1900 64 bit (AMD64)]
-Type &#39;copyright&#39;, &#39;credits&#39; or &#39;license&#39; for more information
-IPython 6.1.0 -- An enhanced Interactive Python. Type &#39;?&#39; for help.
+<p>Say we have two similar dictonnaries, we want to find all the items that are in the second dictonnary but not in the first one.</p>
+<div class="highlight"><pre><span></span><span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Banana&quot;</span><span class="p">:</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;Orange&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">}</span>
+<span class="n">dict2</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Banana&quot;</span><span class="p">:</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;Orange&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;Lemon&quot;</span><span class="p">:</span><span class="s2">&quot;yellow&quot;</span><span class="p">}</span>
 </pre></div>
 
 
-<p>If not, you can force the installation of the intel optimized python with :</p>
-<div class="highlight"><pre><span></span>conda update --all
-conda config --add channels intel
-conda install numpy --channel intel --override-channels
+<p>In the following code we find the difference of the keys and then rebuild a dict taking the corresponding values.</p>
+<div class="highlight"><pre><span></span><span class="n">difference</span> <span class="o">=</span> <span class="p">{</span> <span class="n">k</span> <span class="p">:</span> <span class="n">dict2</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">dict2</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">dict1</span><span class="p">)</span> <span class="p">}</span>
+<span class="n">difference</span>
 </pre></div>
 
 
-<p>oh and by the way, make sure you a running an Intel CPU ;)</p>
-<h2>Comparing numpy.random with numpy.random_intel</h2>
-<p>Let's now test both the rand function with and without the Intel optimization</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">random</span><span class="p">,</span> <span class="n">random_intel</span>
+<div class="highlight"><pre><span></span><span class="err">{</span><span class="s1">&#39;Lemon&#39;</span><span class="p">:</span> <span class="s1">&#39;yellow&#39;</span><span class="err">}</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
+<p>Be careful, this operation is not symetric. This means that if we want to find a value present in dict1 but not in dict2 this code won't work</p>
+<div class="highlight"><pre><span></span><span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Banana&quot;</span><span class="p">:</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;Orange&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;Lemon&quot;</span><span class="p">:</span><span class="s2">&quot;yellow&quot;</span><span class="p">}</span>
+<span class="n">dict2</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Banana&quot;</span><span class="p">:</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;Orange&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">}</span>
+<span class="n">difference</span> <span class="o">=</span> <span class="p">{</span> <span class="n">k</span> <span class="p">:</span> <span class="n">dict2</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">dict2</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">dict1</span><span class="p">)</span> <span class="p">}</span>
+<span class="n">difference</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="mi">1</span>.<span class="mi">06</span> <span class="nv">ms</span> ± <span class="mi">91</span>.<span class="mi">5</span> µ<span class="nv">s</span> <span class="nv">per</span> <span class="k">loop</span> <span class="ss">(</span><span class="nv">mean</span> ± <span class="nv">std</span>. <span class="nv">dev</span>. <span class="nv">of</span> <span class="mi">7</span> <span class="nv">runs</span>, <span class="mi">1000</span> <span class="nv">loops</span> <span class="nv">each</span><span class="ss">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">np</span><span class="o">.</span><span class="n">random_intel</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="mi">225</span> µ<span class="nv">s</span> ± <span class="mi">3</span>.<span class="mi">46</span> µ<span class="nv">s</span> <span class="nv">per</span> <span class="k">loop</span> <span class="ss">(</span><span class="nv">mean</span> ± <span class="nv">std</span>. <span class="nv">dev</span>. <span class="nv">of</span> <span class="mi">7</span> <span class="nv">runs</span>, <span class="mi">1000</span> <span class="nv">loops</span> <span class="nv">each</span><span class="ss">)</span>
+<div class="highlight"><pre><span></span><span class="err">{}</span>
 </pre></div>
 </div>
     <aside>

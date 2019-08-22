@@ -130,59 +130,59 @@
 * deleting
 * printing </p>
 <p>For this example we will learn how to remove the comments starting with the '#' sign and the blank lines for the following file :</p>
-<div class="highlight"><pre><span></span>## Header of input.csv
-#this file contains information I want to parse with a simple program. 
-#The header, the footer or any comment starting with a &quot;#&quot; will be removed
-#The blank lines will also be removed
+<div class="highlight"><pre><span></span>## <span class="nv">Header</span> <span class="nv">of</span> <span class="nv">input</span>.<span class="nv">csv</span>
+#<span class="nv">this</span> <span class="nv">file</span> <span class="nv">contains</span> <span class="nv">information</span> <span class="nv">I</span> <span class="nv">want</span> <span class="nv">to</span> <span class="nv">parse</span> <span class="nv">with</span> <span class="nv">a</span> <span class="nv">simple</span> <span class="nv">program</span>. 
+#<span class="nv">The</span> <span class="nv">header</span>, <span class="nv">the</span> <span class="nv">footer</span> <span class="nv">or</span> <span class="nv">any</span> <span class="nv">comment</span> <span class="nv">starting</span> <span class="nv">with</span> <span class="nv">a</span> <span class="s2">&quot;</span><span class="s">#</span><span class="s2">&quot;</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">removed</span>
+#<span class="nv">The</span> <span class="nv">blank</span> <span class="nv">lines</span> <span class="nv">will</span> <span class="nv">also</span> <span class="nv">be</span> <span class="nv">removed</span>
 
-#img,processed,defaut
-#bloc 1
-0,a0000.tif,,
-1,a0001.tif,True,&quot;(139, 63)(145, 91)&quot;
-2,a0002.tif,True,&quot;(93, 72)(24, 162)(31, 64)&quot;
-3,a0003.tif,,
-4,a0004.tif,,
-5,a0005.tif,,
-6,a0006.tif,,
-7,a0007.tif,,
-8,a0008.tif,,
-9,a0009.tif,True,&quot;(127, 80)(104, 60)(87, 63)(53, 78)(17, 126)&quot;
-10,a0010.tif,,
-11,a0011.tif,True,&quot;(39, 78)(84, 110)&quot; # a random comment passing by
-#end of bloc 1
-
-
-#bloc 2
-12,a0012.tif,,
-13,a0013.tif,,
-14,a0014.tif,,
-15,a0015.tif,True,&quot;(146, 65)(146, 89)(139, 146)(16, 68)&quot;
-16,a0016.tif,True,&quot;(51, 59)(77, 69)(145, 78)(139, 112)(97, 123)(17, 148)&quot;
-17,a0017.tif,,
-#end of bloc 2
-
-#bloc 3
-18,a0018.tif,,
-19,a0019.tif,,
-20,a0020.tif,True,&quot;(57, 99)(12, 113)(27, 139)(16, 158)&quot;
-21,a0021.tif,,
-22,a0022.tif,,
-23,a0023.tif,,
-24,a0024.tif,,
-25,a0025.tif,,
-26,a0026.tif,,
-#end of bloc 3
-
-27,a0027.tif,True,&quot;(11, 86)(29, 74)(92, 68)(109, 129)(132, 104)&quot;
-28,a0028.tif,,
-29,a0029.tif,True,&quot;(128, 58)&quot;
+#<span class="nv">img</span>,<span class="nv">processed</span>,<span class="nv">defaut</span>
+#<span class="nv">bloc</span> <span class="mi">1</span>
+<span class="mi">0</span>,<span class="nv">a0000</span>.<span class="nv">tif</span>,,
+<span class="mi">1</span>,<span class="nv">a0001</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(139, 63)(145, 91)</span><span class="s2">&quot;</span>
+<span class="mi">2</span>,<span class="nv">a0002</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(93, 72)(24, 162)(31, 64)</span><span class="s2">&quot;</span>
+<span class="mi">3</span>,<span class="nv">a0003</span>.<span class="nv">tif</span>,,
+<span class="mi">4</span>,<span class="nv">a0004</span>.<span class="nv">tif</span>,,
+<span class="mi">5</span>,<span class="nv">a0005</span>.<span class="nv">tif</span>,,
+<span class="mi">6</span>,<span class="nv">a0006</span>.<span class="nv">tif</span>,,
+<span class="mi">7</span>,<span class="nv">a0007</span>.<span class="nv">tif</span>,,
+<span class="mi">8</span>,<span class="nv">a0008</span>.<span class="nv">tif</span>,,
+<span class="mi">9</span>,<span class="nv">a0009</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(127, 80)(104, 60)(87, 63)(53, 78)(17, 126)</span><span class="s2">&quot;</span>
+<span class="mi">10</span>,<span class="nv">a0010</span>.<span class="nv">tif</span>,,
+<span class="mi">11</span>,<span class="nv">a0011</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(39, 78)(84, 110)</span><span class="s2">&quot;</span> # <span class="nv">a</span> <span class="k">random</span> <span class="nv">comment</span> <span class="nv">passing</span> <span class="nv">by</span>
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">1</span>
 
 
-30,a0030.tif,True,&quot;(133, 59)(99, 77)(111, 100)(115, 153)&quot;
-31,a0031.tif,True,&quot;(43, 154)(27, 177)&quot;
+#<span class="nv">bloc</span> <span class="mi">2</span>
+<span class="mi">12</span>,<span class="nv">a0012</span>.<span class="nv">tif</span>,,
+<span class="mi">13</span>,<span class="nv">a0013</span>.<span class="nv">tif</span>,,
+<span class="mi">14</span>,<span class="nv">a0014</span>.<span class="nv">tif</span>,,
+<span class="mi">15</span>,<span class="nv">a0015</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(146, 65)(146, 89)(139, 146)(16, 68)</span><span class="s2">&quot;</span>
+<span class="mi">16</span>,<span class="nv">a0016</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(51, 59)(77, 69)(145, 78)(139, 112)(97, 123)(17, 148)</span><span class="s2">&quot;</span>
+<span class="mi">17</span>,<span class="nv">a0017</span>.<span class="nv">tif</span>,,
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">2</span>
+
+#<span class="nv">bloc</span> <span class="mi">3</span>
+<span class="mi">18</span>,<span class="nv">a0018</span>.<span class="nv">tif</span>,,
+<span class="mi">19</span>,<span class="nv">a0019</span>.<span class="nv">tif</span>,,
+<span class="mi">20</span>,<span class="nv">a0020</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(57, 99)(12, 113)(27, 139)(16, 158)</span><span class="s2">&quot;</span>
+<span class="mi">21</span>,<span class="nv">a0021</span>.<span class="nv">tif</span>,,
+<span class="mi">22</span>,<span class="nv">a0022</span>.<span class="nv">tif</span>,,
+<span class="mi">23</span>,<span class="nv">a0023</span>.<span class="nv">tif</span>,,
+<span class="mi">24</span>,<span class="nv">a0024</span>.<span class="nv">tif</span>,,
+<span class="mi">25</span>,<span class="nv">a0025</span>.<span class="nv">tif</span>,,
+<span class="mi">26</span>,<span class="nv">a0026</span>.<span class="nv">tif</span>,,
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">3</span>
+
+<span class="mi">27</span>,<span class="nv">a0027</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(11, 86)(29, 74)(92, 68)(109, 129)(132, 104)</span><span class="s2">&quot;</span>
+<span class="mi">28</span>,<span class="nv">a0028</span>.<span class="nv">tif</span>,,
+<span class="mi">29</span>,<span class="nv">a0029</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(128, 58)</span><span class="s2">&quot;</span>
 
 
-## footer : end of file 
+<span class="mi">30</span>,<span class="nv">a0030</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(133, 59)(99, 77)(111, 100)(115, 153)</span><span class="s2">&quot;</span>
+<span class="mi">31</span>,<span class="nv">a0031</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(43, 154)(27, 177)</span><span class="s2">&quot;</span>
+
+
+## <span class="nv">footer</span> : <span class="k">end</span> <span class="nv">of</span> <span class="nv">file</span> 
 </pre></div>
 
 
@@ -201,59 +201,59 @@
 
 <p>so we have <code>s</code> meaning that we want to use the replace command followed by a <code>/</code> and the caracter(s) we want to replace followed by a <code>/</code> and the caracter(s) we want to replace it with and finally a <code>/</code>.</p>
 <p>The result is the following :</p>
-<div class="highlight"><pre><span></span>## Header
-#this file contains information I want to parse with a simple program.
-#The header; the footer or any comment starting with a &quot;#&quot; will be removed
-#The blank lines will also be removed
+<div class="highlight"><pre><span></span>## <span class="nv">Header</span>
+#<span class="nv">this</span> <span class="nv">file</span> <span class="nv">contains</span> <span class="nv">information</span> <span class="nv">I</span> <span class="nv">want</span> <span class="nv">to</span> <span class="nv">parse</span> <span class="nv">with</span> <span class="nv">a</span> <span class="nv">simple</span> <span class="nv">program</span>.
+#<span class="nv">The</span> <span class="nv">header</span><span class="c1">; the footer or any comment starting with a &quot;#&quot; will be removed</span>
+#<span class="nv">The</span> <span class="nv">blank</span> <span class="nv">lines</span> <span class="nv">will</span> <span class="nv">also</span> <span class="nv">be</span> <span class="nv">removed</span>
 
-#img;processed,defaut
-#bloc 1
-0;a0000.tif,,
-1;a0001.tif,True,&quot;(139, 63)(145, 91)&quot;
-2;a0002.tif,True,&quot;(93, 72)(24, 162)(31, 64)&quot;
-3;a0003.tif,,
-4;a0004.tif,,
-5;a0005.tif,,
-6;a0006.tif,,
-7;a0007.tif,,
-8;a0008.tif,,
-9;a0009.tif,True,&quot;(127, 80)(104, 60)(87, 63)(53, 78)(17, 126)&quot;
-10;a0010.tif,,
-11;a0011.tif,True,&quot;(39, 78)(84, 110)&quot; # a random comment passing by
-#end of bloc 1
-
-
-#bloc 2
-12;a0012.tif,,
-13;a0013.tif,,
-14;a0014.tif,,
-15;a0015.tif,True,&quot;(146, 65)(146, 89)(139, 146)(16, 68)&quot;
-16;a0016.tif,True,&quot;(51, 59)(77, 69)(145, 78)(139, 112)(97, 123)(17, 148)&quot;
-17;a0017.tif,,
-#end of bloc 2
-
-#bloc 3
-18;a0018.tif,,
-19;a0019.tif,,
-20;a0020.tif,True,&quot;(57, 99)(12, 113)(27, 139)(16, 158)&quot;
-21;a0021.tif,,
-22;a0022.tif,,
-23;a0023.tif,,
-24;a0024.tif,,
-25;a0025.tif,,
-26;a0026.tif,,
-#end of bloc 3
-
-27;a0027.tif,True,&quot;(11, 86)(29, 74)(92, 68)(109, 129)(132, 104)&quot;
-28;a0028.tif,,
-29;a0029.tif,True,&quot;(128, 58)&quot;
+#<span class="nv">img</span><span class="c1">;processed,defaut</span>
+#<span class="nv">bloc</span> <span class="mi">1</span>
+<span class="mi">0</span><span class="c1">;a0000.tif,,</span>
+<span class="mi">1</span><span class="c1">;a0001.tif,True,&quot;(139, 63)(145, 91)&quot;</span>
+<span class="mi">2</span><span class="c1">;a0002.tif,True,&quot;(93, 72)(24, 162)(31, 64)&quot;</span>
+<span class="mi">3</span><span class="c1">;a0003.tif,,</span>
+<span class="mi">4</span><span class="c1">;a0004.tif,,</span>
+<span class="mi">5</span><span class="c1">;a0005.tif,,</span>
+<span class="mi">6</span><span class="c1">;a0006.tif,,</span>
+<span class="mi">7</span><span class="c1">;a0007.tif,,</span>
+<span class="mi">8</span><span class="c1">;a0008.tif,,</span>
+<span class="mi">9</span><span class="c1">;a0009.tif,True,&quot;(127, 80)(104, 60)(87, 63)(53, 78)(17, 126)&quot;</span>
+<span class="mi">10</span><span class="c1">;a0010.tif,,</span>
+<span class="mi">11</span><span class="c1">;a0011.tif,True,&quot;(39, 78)(84, 110)&quot; # a random comment passing by</span>
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">1</span>
 
 
-30;a0030.tif,True,&quot;(133, 59)(99, 77)(111, 100)(115, 153)&quot;
-31;a0031.tif,True,&quot;(43, 154)(27, 177)&quot;
+#<span class="nv">bloc</span> <span class="mi">2</span>
+<span class="mi">12</span><span class="c1">;a0012.tif,,</span>
+<span class="mi">13</span><span class="c1">;a0013.tif,,</span>
+<span class="mi">14</span><span class="c1">;a0014.tif,,</span>
+<span class="mi">15</span><span class="c1">;a0015.tif,True,&quot;(146, 65)(146, 89)(139, 146)(16, 68)&quot;</span>
+<span class="mi">16</span><span class="c1">;a0016.tif,True,&quot;(51, 59)(77, 69)(145, 78)(139, 112)(97, 123)(17, 148)&quot;</span>
+<span class="mi">17</span><span class="c1">;a0017.tif,,</span>
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">2</span>
+
+#<span class="nv">bloc</span> <span class="mi">3</span>
+<span class="mi">18</span><span class="c1">;a0018.tif,,</span>
+<span class="mi">19</span><span class="c1">;a0019.tif,,</span>
+<span class="mi">20</span><span class="c1">;a0020.tif,True,&quot;(57, 99)(12, 113)(27, 139)(16, 158)&quot;</span>
+<span class="mi">21</span><span class="c1">;a0021.tif,,</span>
+<span class="mi">22</span><span class="c1">;a0022.tif,,</span>
+<span class="mi">23</span><span class="c1">;a0023.tif,,</span>
+<span class="mi">24</span><span class="c1">;a0024.tif,,</span>
+<span class="mi">25</span><span class="c1">;a0025.tif,,</span>
+<span class="mi">26</span><span class="c1">;a0026.tif,,</span>
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">3</span>
+
+<span class="mi">27</span><span class="c1">;a0027.tif,True,&quot;(11, 86)(29, 74)(92, 68)(109, 129)(132, 104)&quot;</span>
+<span class="mi">28</span><span class="c1">;a0028.tif,,</span>
+<span class="mi">29</span><span class="c1">;a0029.tif,True,&quot;(128, 58)&quot;</span>
 
 
-## footer : end of file
+<span class="mi">30</span><span class="c1">;a0030.tif,True,&quot;(133, 59)(99, 77)(111, 100)(115, 153)&quot;</span>
+<span class="mi">31</span><span class="c1">;a0031.tif,True,&quot;(43, 154)(27, 177)&quot;</span>
+
+
+## <span class="nv">footer</span> : <span class="k">end</span> <span class="nv">of</span> <span class="nv">file</span>
 </pre></div>
 
 
@@ -262,59 +262,59 @@
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>## Header
-#this file contains information I want to parse with a simple program.
-#The header; the footer or any comment starting with a &quot;#&quot; will be removed
-#The blank lines will also be removed
+<div class="highlight"><pre><span></span>## <span class="nv">Header</span>
+#<span class="nv">this</span> <span class="nv">file</span> <span class="nv">contains</span> <span class="nv">information</span> <span class="nv">I</span> <span class="nv">want</span> <span class="nv">to</span> <span class="nv">parse</span> <span class="nv">with</span> <span class="nv">a</span> <span class="nv">simple</span> <span class="nv">program</span>.
+#<span class="nv">The</span> <span class="nv">header</span><span class="c1">; the footer or any comment starting with a &quot;#&quot; will be removed</span>
+#<span class="nv">The</span> <span class="nv">blank</span> <span class="nv">lines</span> <span class="nv">will</span> <span class="nv">also</span> <span class="nv">be</span> <span class="nv">removed</span>
 
-#img;processed;defaut
-#bloc 1
-0;a0000.tif;;
-1;a0001.tif;True;&quot;(139; 63)(145; 91)&quot;
-2;a0002.tif;True;&quot;(93; 72)(24; 162)(31; 64)&quot;
-3;a0003.tif;;
-4;a0004.tif;;
-5;a0005.tif;;
-6;a0006.tif;;
-7;a0007.tif;;
-8;a0008.tif;;
-9;a0009.tif;True;&quot;(127; 80)(104; 60)(87; 63)(53; 78)(17; 126)&quot;
-10;a0010.tif;;
-11;a0011.tif;True;&quot;(39; 78)(84; 110)&quot; # a random comment passing by
-#end of bloc 1
-
-
-#bloc 2
-12;a0012.tif;;
-13;a0013.tif;;
-14;a0014.tif;;
-15;a0015.tif;True;&quot;(146; 65)(146; 89)(139; 146)(16; 68)&quot;
-16;a0016.tif;True;&quot;(51; 59)(77; 69)(145; 78)(139; 112)(97; 123)(17; 148)&quot;
-17;a0017.tif;;
-#end of bloc 2
-
-#bloc 3
-18;a0018.tif;;
-19;a0019.tif;;
-20;a0020.tif;True;&quot;(57; 99)(12; 113)(27; 139)(16; 158)&quot;
-21;a0021.tif;;
-22;a0022.tif;;
-23;a0023.tif;;
-24;a0024.tif;;
-25;a0025.tif;;
-26;a0026.tif;;
-#end of bloc 3
-
-27;a0027.tif;True;&quot;(11; 86)(29; 74)(92; 68)(109; 129)(132; 104)&quot;
-28;a0028.tif;;
-29;a0029.tif;True;&quot;(128; 58)&quot;
+#<span class="nv">img</span><span class="c1">;processed;defaut</span>
+#<span class="nv">bloc</span> <span class="mi">1</span>
+<span class="mi">0</span><span class="c1">;a0000.tif;;</span>
+<span class="mi">1</span><span class="c1">;a0001.tif;True;&quot;(139; 63)(145; 91)&quot;</span>
+<span class="mi">2</span><span class="c1">;a0002.tif;True;&quot;(93; 72)(24; 162)(31; 64)&quot;</span>
+<span class="mi">3</span><span class="c1">;a0003.tif;;</span>
+<span class="mi">4</span><span class="c1">;a0004.tif;;</span>
+<span class="mi">5</span><span class="c1">;a0005.tif;;</span>
+<span class="mi">6</span><span class="c1">;a0006.tif;;</span>
+<span class="mi">7</span><span class="c1">;a0007.tif;;</span>
+<span class="mi">8</span><span class="c1">;a0008.tif;;</span>
+<span class="mi">9</span><span class="c1">;a0009.tif;True;&quot;(127; 80)(104; 60)(87; 63)(53; 78)(17; 126)&quot;</span>
+<span class="mi">10</span><span class="c1">;a0010.tif;;</span>
+<span class="mi">11</span><span class="c1">;a0011.tif;True;&quot;(39; 78)(84; 110)&quot; # a random comment passing by</span>
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">1</span>
 
 
-30;a0030.tif;True;&quot;(133; 59)(99; 77)(111; 100)(115; 153)&quot;
-31;a0031.tif;True;&quot;(43; 154)(27; 177)&quot;
+#<span class="nv">bloc</span> <span class="mi">2</span>
+<span class="mi">12</span><span class="c1">;a0012.tif;;</span>
+<span class="mi">13</span><span class="c1">;a0013.tif;;</span>
+<span class="mi">14</span><span class="c1">;a0014.tif;;</span>
+<span class="mi">15</span><span class="c1">;a0015.tif;True;&quot;(146; 65)(146; 89)(139; 146)(16; 68)&quot;</span>
+<span class="mi">16</span><span class="c1">;a0016.tif;True;&quot;(51; 59)(77; 69)(145; 78)(139; 112)(97; 123)(17; 148)&quot;</span>
+<span class="mi">17</span><span class="c1">;a0017.tif;;</span>
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">2</span>
+
+#<span class="nv">bloc</span> <span class="mi">3</span>
+<span class="mi">18</span><span class="c1">;a0018.tif;;</span>
+<span class="mi">19</span><span class="c1">;a0019.tif;;</span>
+<span class="mi">20</span><span class="c1">;a0020.tif;True;&quot;(57; 99)(12; 113)(27; 139)(16; 158)&quot;</span>
+<span class="mi">21</span><span class="c1">;a0021.tif;;</span>
+<span class="mi">22</span><span class="c1">;a0022.tif;;</span>
+<span class="mi">23</span><span class="c1">;a0023.tif;;</span>
+<span class="mi">24</span><span class="c1">;a0024.tif;;</span>
+<span class="mi">25</span><span class="c1">;a0025.tif;;</span>
+<span class="mi">26</span><span class="c1">;a0026.tif;;</span>
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">3</span>
+
+<span class="mi">27</span><span class="c1">;a0027.tif;True;&quot;(11; 86)(29; 74)(92; 68)(109; 129)(132; 104)&quot;</span>
+<span class="mi">28</span><span class="c1">;a0028.tif;;</span>
+<span class="mi">29</span><span class="c1">;a0029.tif;True;&quot;(128; 58)&quot;</span>
 
 
-## footer : end of file
+<span class="mi">30</span><span class="c1">;a0030.tif;True;&quot;(133; 59)(99; 77)(111; 100)(115; 153)&quot;</span>
+<span class="mi">31</span><span class="c1">;a0031.tif;True;&quot;(43; 154)(27; 177)&quot;</span>
+
+
+## <span class="nv">footer</span> : <span class="k">end</span> <span class="nv">of</span> <span class="nv">file</span>
 </pre></div>
 
 
@@ -333,49 +333,49 @@
 
 
 <p>If we run that command, all our comments have disappeared </p>
-<div class="highlight"><pre><span></span>0,a0000.tif,,
-1,a0001.tif,True,&quot;(139, 63)(145, 91)&quot;
-2,a0002.tif,True,&quot;(93, 72)(24, 162)(31, 64)&quot;
-3,a0003.tif,,
-4,a0004.tif,,
-5,a0005.tif,,
-6,a0006.tif,,
-7,a0007.tif,,
-8,a0008.tif,,
-9,a0009.tif,True,&quot;(127, 80)(104, 60)(87, 63)(53, 78)(17, 126)&quot;
-10,a0010.tif,,
-11,a0011.tif,True,&quot;(39, 78)(84, 110)&quot;
+<div class="highlight"><pre><span></span><span class="mi">0</span><span class="p">,</span><span class="n">a0000</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">1</span><span class="p">,</span><span class="n">a0001</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(139, 63)(145, 91)&quot;</span>
+<span class="mi">2</span><span class="p">,</span><span class="n">a0002</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(93, 72)(24, 162)(31, 64)&quot;</span>
+<span class="mi">3</span><span class="p">,</span><span class="n">a0003</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">4</span><span class="p">,</span><span class="n">a0004</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">5</span><span class="p">,</span><span class="n">a0005</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">6</span><span class="p">,</span><span class="n">a0006</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">7</span><span class="p">,</span><span class="n">a0007</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">8</span><span class="p">,</span><span class="n">a0008</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">9</span><span class="p">,</span><span class="n">a0009</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(127, 80)(104, 60)(87, 63)(53, 78)(17, 126)&quot;</span>
+<span class="mi">10</span><span class="p">,</span><span class="n">a0010</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">11</span><span class="p">,</span><span class="n">a0011</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(39, 78)(84, 110)&quot;</span>
 
 
 
 
-12,a0012.tif,,
-13,a0013.tif,,
-14,a0014.tif,,
-15,a0015.tif,True,&quot;(146, 65)(146, 89)(139, 146)(16, 68)&quot;
-16,a0016.tif,True,&quot;(51, 59)(77, 69)(145, 78)(139, 112)(97, 123)(17, 148)&quot;
-17,a0017.tif,,
+<span class="mi">12</span><span class="p">,</span><span class="n">a0012</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">13</span><span class="p">,</span><span class="n">a0013</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">14</span><span class="p">,</span><span class="n">a0014</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">15</span><span class="p">,</span><span class="n">a0015</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(146, 65)(146, 89)(139, 146)(16, 68)&quot;</span>
+<span class="mi">16</span><span class="p">,</span><span class="n">a0016</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(51, 59)(77, 69)(145, 78)(139, 112)(97, 123)(17, 148)&quot;</span>
+<span class="mi">17</span><span class="p">,</span><span class="n">a0017</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
 
 
 
-18,a0018.tif,,
-19,a0019.tif,,
-20,a0020.tif,True,&quot;(57, 99)(12, 113)(27, 139)(16, 158)&quot;
-21,a0021.tif,,
-22,a0022.tif,,
-23,a0023.tif,,
-24,a0024.tif,,
-25,a0025.tif,,
-26,a0026.tif,,
+<span class="mi">18</span><span class="p">,</span><span class="n">a0018</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">19</span><span class="p">,</span><span class="n">a0019</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">20</span><span class="p">,</span><span class="n">a0020</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(57, 99)(12, 113)(27, 139)(16, 158)&quot;</span>
+<span class="mi">21</span><span class="p">,</span><span class="n">a0021</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">22</span><span class="p">,</span><span class="n">a0022</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">23</span><span class="p">,</span><span class="n">a0023</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">24</span><span class="p">,</span><span class="n">a0024</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">25</span><span class="p">,</span><span class="n">a0025</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">26</span><span class="p">,</span><span class="n">a0026</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
 
 
-27,a0027.tif,True,&quot;(11, 86)(29, 74)(92, 68)(109, 129)(132, 104)&quot;
-28,a0028.tif,,
-29,a0029.tif,True,&quot;(128, 58)&quot;
+<span class="mi">27</span><span class="p">,</span><span class="n">a0027</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(11, 86)(29, 74)(92, 68)(109, 129)(132, 104)&quot;</span>
+<span class="mi">28</span><span class="p">,</span><span class="n">a0028</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">29</span><span class="p">,</span><span class="n">a0029</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(128, 58)&quot;</span>
 
 
-30,a0030.tif,True,&quot;(133, 59)(99, 77)(111, 100)(115, 153)&quot;
-31,a0031.tif,True,&quot;(43, 154)(27, 177)&quot;
+<span class="mi">30</span><span class="p">,</span><span class="n">a0030</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(133, 59)(99, 77)(111, 100)(115, 153)&quot;</span>
+<span class="mi">31</span><span class="p">,</span><span class="n">a0031</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(43, 154)(27, 177)&quot;</span>
 </pre></div>
 
 
@@ -387,50 +387,50 @@
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>## Header
-#this file contains information I want to parse with a simple program.
-#The header, the footer or any comment starting with a &quot;#&quot; will be removed
-#The blank lines will also be removed
-#img,processed,defaut
-#bloc 1
-0,a0000.tif,,
-1,a0001.tif,True,&quot;(139, 63)(145, 91)&quot;
-2,a0002.tif,True,&quot;(93, 72)(24, 162)(31, 64)&quot;
-3,a0003.tif,,
-4,a0004.tif,,
-5,a0005.tif,,
-6,a0006.tif,,
-7,a0007.tif,,
-8,a0008.tif,,
-9,a0009.tif,True,&quot;(127, 80)(104, 60)(87, 63)(53, 78)(17, 126)&quot;
-10,a0010.tif,,
-11,a0011.tif,True,&quot;(39, 78)(84, 110)&quot; # a random comment passing by
-#end of bloc 1
-#bloc 2
-12,a0012.tif,,
-13,a0013.tif,,
-14,a0014.tif,,
-15,a0015.tif,True,&quot;(146, 65)(146, 89)(139, 146)(16, 68)&quot;
-16,a0016.tif,True,&quot;(51, 59)(77, 69)(145, 78)(139, 112)(97, 123)(17, 148)&quot;
-17,a0017.tif,,
-#end of bloc 2
-#bloc 3
-18,a0018.tif,,
-19,a0019.tif,,
-20,a0020.tif,True,&quot;(57, 99)(12, 113)(27, 139)(16, 158)&quot;
-21,a0021.tif,,
-22,a0022.tif,,
-23,a0023.tif,,
-24,a0024.tif,,
-25,a0025.tif,,
-26,a0026.tif,,
-#end of bloc 3
-27,a0027.tif,True,&quot;(11, 86)(29, 74)(92, 68)(109, 129)(132, 104)&quot;
-28,a0028.tif,,
-29,a0029.tif,True,&quot;(128, 58)&quot;
-30,a0030.tif,True,&quot;(133, 59)(99, 77)(111, 100)(115, 153)&quot;
-31,a0031.tif,True,&quot;(43, 154)(27, 177)&quot;
-## footer : end of file
+<div class="highlight"><pre><span></span>## <span class="nv">Header</span>
+#<span class="nv">this</span> <span class="nv">file</span> <span class="nv">contains</span> <span class="nv">information</span> <span class="nv">I</span> <span class="nv">want</span> <span class="nv">to</span> <span class="nv">parse</span> <span class="nv">with</span> <span class="nv">a</span> <span class="nv">simple</span> <span class="nv">program</span>.
+#<span class="nv">The</span> <span class="nv">header</span>, <span class="nv">the</span> <span class="nv">footer</span> <span class="nv">or</span> <span class="nv">any</span> <span class="nv">comment</span> <span class="nv">starting</span> <span class="nv">with</span> <span class="nv">a</span> <span class="s2">&quot;</span><span class="s">#</span><span class="s2">&quot;</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">removed</span>
+#<span class="nv">The</span> <span class="nv">blank</span> <span class="nv">lines</span> <span class="nv">will</span> <span class="nv">also</span> <span class="nv">be</span> <span class="nv">removed</span>
+#<span class="nv">img</span>,<span class="nv">processed</span>,<span class="nv">defaut</span>
+#<span class="nv">bloc</span> <span class="mi">1</span>
+<span class="mi">0</span>,<span class="nv">a0000</span>.<span class="nv">tif</span>,,
+<span class="mi">1</span>,<span class="nv">a0001</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(139, 63)(145, 91)</span><span class="s2">&quot;</span>
+<span class="mi">2</span>,<span class="nv">a0002</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(93, 72)(24, 162)(31, 64)</span><span class="s2">&quot;</span>
+<span class="mi">3</span>,<span class="nv">a0003</span>.<span class="nv">tif</span>,,
+<span class="mi">4</span>,<span class="nv">a0004</span>.<span class="nv">tif</span>,,
+<span class="mi">5</span>,<span class="nv">a0005</span>.<span class="nv">tif</span>,,
+<span class="mi">6</span>,<span class="nv">a0006</span>.<span class="nv">tif</span>,,
+<span class="mi">7</span>,<span class="nv">a0007</span>.<span class="nv">tif</span>,,
+<span class="mi">8</span>,<span class="nv">a0008</span>.<span class="nv">tif</span>,,
+<span class="mi">9</span>,<span class="nv">a0009</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(127, 80)(104, 60)(87, 63)(53, 78)(17, 126)</span><span class="s2">&quot;</span>
+<span class="mi">10</span>,<span class="nv">a0010</span>.<span class="nv">tif</span>,,
+<span class="mi">11</span>,<span class="nv">a0011</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(39, 78)(84, 110)</span><span class="s2">&quot;</span> # <span class="nv">a</span> <span class="k">random</span> <span class="nv">comment</span> <span class="nv">passing</span> <span class="nv">by</span>
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">1</span>
+#<span class="nv">bloc</span> <span class="mi">2</span>
+<span class="mi">12</span>,<span class="nv">a0012</span>.<span class="nv">tif</span>,,
+<span class="mi">13</span>,<span class="nv">a0013</span>.<span class="nv">tif</span>,,
+<span class="mi">14</span>,<span class="nv">a0014</span>.<span class="nv">tif</span>,,
+<span class="mi">15</span>,<span class="nv">a0015</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(146, 65)(146, 89)(139, 146)(16, 68)</span><span class="s2">&quot;</span>
+<span class="mi">16</span>,<span class="nv">a0016</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(51, 59)(77, 69)(145, 78)(139, 112)(97, 123)(17, 148)</span><span class="s2">&quot;</span>
+<span class="mi">17</span>,<span class="nv">a0017</span>.<span class="nv">tif</span>,,
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">2</span>
+#<span class="nv">bloc</span> <span class="mi">3</span>
+<span class="mi">18</span>,<span class="nv">a0018</span>.<span class="nv">tif</span>,,
+<span class="mi">19</span>,<span class="nv">a0019</span>.<span class="nv">tif</span>,,
+<span class="mi">20</span>,<span class="nv">a0020</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(57, 99)(12, 113)(27, 139)(16, 158)</span><span class="s2">&quot;</span>
+<span class="mi">21</span>,<span class="nv">a0021</span>.<span class="nv">tif</span>,,
+<span class="mi">22</span>,<span class="nv">a0022</span>.<span class="nv">tif</span>,,
+<span class="mi">23</span>,<span class="nv">a0023</span>.<span class="nv">tif</span>,,
+<span class="mi">24</span>,<span class="nv">a0024</span>.<span class="nv">tif</span>,,
+<span class="mi">25</span>,<span class="nv">a0025</span>.<span class="nv">tif</span>,,
+<span class="mi">26</span>,<span class="nv">a0026</span>.<span class="nv">tif</span>,,
+#<span class="k">end</span> <span class="nv">of</span> <span class="nv">bloc</span> <span class="mi">3</span>
+<span class="mi">27</span>,<span class="nv">a0027</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(11, 86)(29, 74)(92, 68)(109, 129)(132, 104)</span><span class="s2">&quot;</span>
+<span class="mi">28</span>,<span class="nv">a0028</span>.<span class="nv">tif</span>,,
+<span class="mi">29</span>,<span class="nv">a0029</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(128, 58)</span><span class="s2">&quot;</span>
+<span class="mi">30</span>,<span class="nv">a0030</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(133, 59)(99, 77)(111, 100)(115, 153)</span><span class="s2">&quot;</span>
+<span class="mi">31</span>,<span class="nv">a0031</span>.<span class="nv">tif</span>,<span class="nv">True</span>,<span class="s2">&quot;</span><span class="s">(43, 154)(27, 177)</span><span class="s2">&quot;</span>
+## <span class="nv">footer</span> : <span class="k">end</span> <span class="nv">of</span> <span class="nv">file</span>
 </pre></div>
 
 
@@ -441,38 +441,38 @@
 
 
 <p>and the final output is </p>
-<div class="highlight"><pre><span></span>0,a0000.tif,,
-1,a0001.tif,True,&quot;(139, 63)(145, 91)&quot;
-2,a0002.tif,True,&quot;(93, 72)(24, 162)(31, 64)&quot;
-3,a0003.tif,,
-4,a0004.tif,,
-5,a0005.tif,,
-6,a0006.tif,,
-7,a0007.tif,,
-8,a0008.tif,,
-9,a0009.tif,True,&quot;(127, 80)(104, 60)(87, 63)(53, 78)(17, 126)&quot;
-10,a0010.tif,,
-11,a0011.tif,True,&quot;(39, 78)(84, 110)&quot;
-12,a0012.tif,,
-13,a0013.tif,,
-14,a0014.tif,,
-15,a0015.tif,True,&quot;(146, 65)(146, 89)(139, 146)(16, 68)&quot;
-16,a0016.tif,True,&quot;(51, 59)(77, 69)(145, 78)(139, 112)(97, 123)(17, 148)&quot;
-17,a0017.tif,,
-18,a0018.tif,,
-19,a0019.tif,,
-20,a0020.tif,True,&quot;(57, 99)(12, 113)(27, 139)(16, 158)&quot;
-21,a0021.tif,,
-22,a0022.tif,,
-23,a0023.tif,,
-24,a0024.tif,,
-25,a0025.tif,,
-26,a0026.tif,,
-27,a0027.tif,True,&quot;(11, 86)(29, 74)(92, 68)(109, 129)(132, 104)&quot;
-28,a0028.tif,,
-29,a0029.tif,True,&quot;(128, 58)&quot;
-30,a0030.tif,True,&quot;(133, 59)(99, 77)(111, 100)(115, 153)&quot;
-31,a0031.tif,True,&quot;(43, 154)(27, 177)&quot;
+<div class="highlight"><pre><span></span><span class="mi">0</span><span class="p">,</span><span class="n">a0000</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">1</span><span class="p">,</span><span class="n">a0001</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(139, 63)(145, 91)&quot;</span>
+<span class="mi">2</span><span class="p">,</span><span class="n">a0002</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(93, 72)(24, 162)(31, 64)&quot;</span>
+<span class="mi">3</span><span class="p">,</span><span class="n">a0003</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">4</span><span class="p">,</span><span class="n">a0004</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">5</span><span class="p">,</span><span class="n">a0005</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">6</span><span class="p">,</span><span class="n">a0006</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">7</span><span class="p">,</span><span class="n">a0007</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">8</span><span class="p">,</span><span class="n">a0008</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">9</span><span class="p">,</span><span class="n">a0009</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(127, 80)(104, 60)(87, 63)(53, 78)(17, 126)&quot;</span>
+<span class="mi">10</span><span class="p">,</span><span class="n">a0010</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">11</span><span class="p">,</span><span class="n">a0011</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(39, 78)(84, 110)&quot;</span>
+<span class="mi">12</span><span class="p">,</span><span class="n">a0012</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">13</span><span class="p">,</span><span class="n">a0013</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">14</span><span class="p">,</span><span class="n">a0014</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">15</span><span class="p">,</span><span class="n">a0015</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(146, 65)(146, 89)(139, 146)(16, 68)&quot;</span>
+<span class="mi">16</span><span class="p">,</span><span class="n">a0016</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(51, 59)(77, 69)(145, 78)(139, 112)(97, 123)(17, 148)&quot;</span>
+<span class="mi">17</span><span class="p">,</span><span class="n">a0017</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">18</span><span class="p">,</span><span class="n">a0018</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">19</span><span class="p">,</span><span class="n">a0019</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">20</span><span class="p">,</span><span class="n">a0020</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(57, 99)(12, 113)(27, 139)(16, 158)&quot;</span>
+<span class="mi">21</span><span class="p">,</span><span class="n">a0021</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">22</span><span class="p">,</span><span class="n">a0022</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">23</span><span class="p">,</span><span class="n">a0023</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">24</span><span class="p">,</span><span class="n">a0024</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">25</span><span class="p">,</span><span class="n">a0025</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">26</span><span class="p">,</span><span class="n">a0026</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">27</span><span class="p">,</span><span class="n">a0027</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(11, 86)(29, 74)(92, 68)(109, 129)(132, 104)&quot;</span>
+<span class="mi">28</span><span class="p">,</span><span class="n">a0028</span><span class="p">.</span><span class="n">tif</span><span class="p">,,</span>
+<span class="mi">29</span><span class="p">,</span><span class="n">a0029</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(128, 58)&quot;</span>
+<span class="mi">30</span><span class="p">,</span><span class="n">a0030</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(133, 59)(99, 77)(111, 100)(115, 153)&quot;</span>
+<span class="mi">31</span><span class="p">,</span><span class="n">a0031</span><span class="p">.</span><span class="n">tif</span><span class="p">,</span><span class="k">True</span><span class="p">,</span><span class="ss">&quot;(43, 154)(27, 177)&quot;</span>
 </pre></div>
 
 
@@ -494,7 +494,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 93 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 94 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

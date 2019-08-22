@@ -127,12 +127,12 @@
 <div class='article_content'>
 <p>InfiniBand (abbreviated IB) is a computer-networking communications standard used in high-performance computing that features very high throughput and very low latency. It is used for data interconnect both among and within computers. InfiniBand is also used as either a direct or switched interconnect between servers and storage systems, as well as an interconnect between storage systems. (source Wikipedia).</p>
 <p>If you want to leverage this high speed network instead of the regular ethernet network, you have to specify to the scheduler that you want to used infiniband as your interface. Assuming that you Infiniband interface is <code>ib0</code>, you would call the scheduler like this :</p>
-<div class="highlight"><pre><span></span>dask-scheduler --interface ib0 --scheduler-file ./cluster.yaml
+<div class="highlight"><pre><span></span><span class="n">dask</span><span class="o">-</span><span class="n">scheduler</span> <span class="c1">--interface ib0 --scheduler-file ./cluster.yaml</span>
 </pre></div>
 
 
 <p>you would have to call the worker using the same interface :</p>
-<div class="highlight"><pre><span></span>dask-worker --interface ib0 --scheduler-file ./cluster.yaml
+<div class="highlight"><pre><span></span><span class="n">dask</span><span class="o">-</span><span class="n">worker</span> <span class="c1">--interface ib0 --scheduler-file ./cluster.yaml</span>
 </pre></div>
 </div>
     <aside>
@@ -148,7 +148,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 93 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 94 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.
