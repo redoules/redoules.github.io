@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Counting values in an array - Python</title>
+    <title>Log experiements - Machine Learning</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Basics" />
+    <meta name="tags" content="Basic" />
 
 
 </head>
@@ -112,61 +112,56 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Counting values in an array
+      Log experiements
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-07T22:57:00+01:00">
-            07 novembre 2018
+        <time class="published" datetime="2019-10-25T22:58:00+02:00">
+            25 octobre 2019
         </time>
     </li>
-    <li>Python</li>
-    <li>Basics</li>
+    <li>Machine Learning</li>
+    <li>Basic</li>
 </ol>
 </header>
 <div class='article_content'>
-<h2>Using lists</h2>
-<p>If you want to count the number of occurences of an element in a list you can use the .count() function of the list object</p>
-<div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Array : {arr}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;The number 3 appears {arr.count(3)} times in the list&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;The number 7 appears {arr.count(7)} times in the list&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;The number 4 appears {arr.count(4)} times in the list&#39;</span><span class="p">)</span>
+<p>Machine learning is a very iterative process, algorithm have multiples hyperparameters to keep track of. And the performance of the models evolves as you get more data. In order to manage the model lifecycle, we will use mlflow.</p>
+<p>First, import mlflow </p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="nb">Array</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
-
-<span class="n">The</span> <span class="nb">number</span> <span class="mi">3</span> <span class="n">appears</span> <span class="mi">3</span> <span class="n">times</span> <span class="k">in</span> <span class="n">the</span> <span class="n">list</span>
-<span class="n">The</span> <span class="nb">number</span> <span class="mi">7</span> <span class="n">appears</span> <span class="mi">2</span> <span class="n">times</span> <span class="k">in</span> <span class="n">the</span> <span class="n">list</span>
-<span class="n">The</span> <span class="nb">number</span> <span class="mi">4</span> <span class="n">appears</span> <span class="mi">1</span> <span class="n">times</span> <span class="k">in</span> <span class="n">the</span> <span class="n">list</span>
+<p>Mlflow can be run on the local computer in order to try it out but I recommend deploying it on a server. In our case, the server is located on the local network at 192.168.1.5:4444. The mlflow client can connect to it via the <code>set_tracking_url</code> method </p>
+<div class="highlight"><pre><span></span><span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="s2">&quot;http://192.168.1.5:4444&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<h2>Using collections</h2>
-<p>you can get a dictonnary of the number of occurences of each elements in a list thanks to the collections object like this</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
-
-<span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+<p>Mlflow can be used to record and query experiements : code, data, config, results... Let's specify that we are working on <code>my-experiment</code> with the method <code>set_experiment</code>. If the experiement does not exist, it will be created.</p>
+<div class="highlight"><pre><span></span><span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="s2">&quot;my-experiment&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="n">Counter</span><span class="p">(</span><span class="err">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="mi">2</span><span class="err">}</span><span class="p">)</span>
+<p><img alt="png" src="../images/mlflow/empty_exp.PNG"></p>
+<div class="highlight"><pre><span></span><span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s2">&quot;regularization&quot;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 
 
-<h2>Using numpy</h2>
-<p>You can have a simular result with numpy by hacking the unique function </p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-<span class="n">unique</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">unique</span><span class="p">,</span> <span class="n">counts</span><span class="p">))</span>
+<p><img alt="png" src="../images/mlflow/params_logged.PNG"></p>
+<p>Metrics can be logged as well in mlflow, just use the <code>log_metric</code> method.</p>
+<div class="highlight"><pre><span></span> <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="err">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="mi">2</span><span class="err">}</span>
+<p><img alt="png" src="../images/mlflow/metric_logged.PNG"></p>
+<div class="highlight"><pre><span></span> <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">)</span>
 </pre></div>
+
+
+<p>Metrics can be updated at a later time. The changes will be tracked across versions.
+<img alt="png" src="../images/mlflow/metric_over_iterations.PNG"></p>
+<p>You can use MLflow Tracking in any environment (for example, a standalone script or a notebook) to log results to local files or to a server, then compare multiple runs. Using the web UI, you can view and compare the output of multiple runs. Teams can also use the tools to compare results from different users:</p>
+<p><img alt="png" src="../images/mlflow/mlflow-web-ui.png"></p>
 </div>
     <aside>
     <div class="bug-reporting__panel">
