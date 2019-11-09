@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Reverse row order in pandas - Python</title>
+    <title>Natural sort of list - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Data Wrangling" />
+    <meta name="tags" content="Other" />
 
 
 </head>
@@ -112,239 +112,29 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Reverse row order in pandas
+      Natural sort of list
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2019-08-03T08:38:00+02:00">
-            03 août 2019
+        <time class="published" datetime="2019-11-04T14:34:00+01:00">
+            04 novembre 2019
         </time>
     </li>
     <li>Python</li>
-    <li>Data Wrangling</li>
+    <li>Other</li>
 </ol>
 </header>
 <div class='article_content'>
-<div class="highlight"><pre><span></span><span class="c1"># Import modules</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<p>Natural sort order is an ordering of strings in alphabetical order, except that multi-digit numbers are ordered as a single character. Natural sort order has been promoted as being more human-friendly ("natural") than the machine-oriented pure alphabetical order.</p>
+<p>For example, in alphabetical sorting "z11" would be sorted before "z2" because "1" is sorted as smaller than "2", while in natural sorting "z2" is sorted before "z11" because "2" is sorted as smaller than "11".</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">natural_sort</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    return the list l in a natural sort order</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">convert</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">alphanum_key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">key</span><span class="p">:</span> <span class="p">[</span><span class="n">convert</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;([0-9]+)&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">alphanum_key</span><span class="p">)</span>
 </pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="c1"># Example dataframe</span>
-
-<span class="n">raw_data</span>  <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;fruit&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Banana&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;lemon&#39;</span><span class="p">,</span> <span class="s2">&quot;lime&quot;</span><span class="p">,</span> <span class="s2">&quot;plum&quot;</span><span class="p">],</span> 
-        <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;purple&quot;</span><span class="p">],</span> 
-        <span class="s1">&#39;kcal&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">89</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">28</span><span class="p">]</span>
-    <span class="p">}</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fruit&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;kcal&#39;</span><span class="p">])</span>
-<span class="n">df</span>
-</pre></div>
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>fruit</th>
-      <th>color</th>
-      <th>kcal</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Banana</td>
-      <td>yellow</td>
-      <td>89</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Orange</td>
-      <td>orange</td>
-      <td>47</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Apple</td>
-      <td>red</td>
-      <td>52</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>lemon</td>
-      <td>yellow</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>lime</td>
-      <td>green</td>
-      <td>30</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>plum</td>
-      <td>purple</td>
-      <td>28</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<p>The rows of a dataframe can be reversed by using the loc accessor and passing  <code>::-1</code>. This notation is the same as the one used to reverse a list in python</p>
-<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>fruit</th>
-      <th>color</th>
-      <th>kcal</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>5</th>
-      <td>plum</td>
-      <td>purple</td>
-      <td>28</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>lime</td>
-      <td>green</td>
-      <td>30</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>lemon</td>
-      <td>yellow</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Apple</td>
-      <td>red</td>
-      <td>52</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Orange</td>
-      <td>orange</td>
-      <td>47</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>Banana</td>
-      <td>yellow</td>
-      <td>89</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<p>If you want to reset the index as well so that the dataframe starts with a 0, you can combine what we just learned with the <code>reset_index</code> method </p>
-<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</pre></div>
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>fruit</th>
-      <th>color</th>
-      <th>kcal</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>plum</td>
-      <td>purple</td>
-      <td>28</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>lime</td>
-      <td>green</td>
-      <td>30</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>lemon</td>
-      <td>yellow</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Apple</td>
-      <td>red</td>
-      <td>52</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Orange</td>
-      <td>orange</td>
-      <td>47</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Banana</td>
-      <td>yellow</td>
-      <td>89</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<p>that way, the rows are in reverse order but the index column has been re-initialized so it starts with 0</p>
 </div>
     <aside>
     <div class="bug-reporting__panel">
