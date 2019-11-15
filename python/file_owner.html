@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Random integer - Python</title>
+    <title>Find the file owner - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Basics" />
+    <meta name="tags" content="Other" />
 
 
 </head>
@@ -112,35 +112,37 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Random integer
+      Find the file owner
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-12-03T22:17:00+01:00">
-            03 décembre 2018
+        <time class="published" datetime="2019-11-14T10:03:00+01:00">
+            14 novembre 2019
         </time>
     </li>
     <li>Python</li>
-    <li>Basics</li>
+    <li>Other</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>The random module comes with the randint function that returns a pseudo random number between 2 values :</p>
-<div class="highlight"><pre><span></span><span class="c1"># Return a random integer N such that a &lt;= N &lt;= b.</span>
-<span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<p>You can find the owner of a file by running the following command. The command will return the owner of the file and the domain</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">win32api</span>
+<span class="kn">import</span> <span class="nn">win32con</span>
+<span class="kn">import</span> <span class="nn">win32security</span>
+
+<span class="k">def</span> <span class="nf">owner</span><span class="p">(</span><span class="nb">file</span><span class="p">):</span>
+    <span class="n">sd</span> <span class="o">=</span> <span class="n">win32security</span><span class="o">.</span><span class="n">GetFileSecurity</span> <span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">win32security</span><span class="o">.</span><span class="n">OWNER_SECURITY_INFORMATION</span><span class="p">)</span>
+    <span class="n">owner_sid</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">GetSecurityDescriptorOwner</span> <span class="p">()</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="n">win32security</span><span class="o">.</span><span class="n">LookupAccountSid</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">owner_sid</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">domain</span><span class="p">)</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;my.file&quot;</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;The owner of the file {filename} is {owner(filename)[0]}&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="c1">#### import random</span>
-
-<span class="n">min_int</span> <span class="o">=</span> <span class="mi">126</span>
-<span class="n">max_int</span> <span class="o">=</span> <span class="mi">211</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;My pseudo random number between {min_int} and {max_int} : {random.randint(min_int, max_int)}&quot;</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="nv">My</span> <span class="nv">pseudo</span> <span class="k">random</span> <span class="nv">number</span> <span class="nv">between</span> <span class="mi">126</span> <span class="nv">and</span> <span class="mi">211</span> : <span class="mi">206</span>
+<div class="highlight"><pre><span></span><span class="n">The</span> <span class="k">owner</span> <span class="k">of</span> <span class="n">the</span> <span class="n">file</span> <span class="n">my</span><span class="p">.</span><span class="n">file</span> <span class="k">is</span> <span class="n">my</span><span class="p">.</span><span class="k">user</span>
 </pre></div>
 </div>
     <aside>

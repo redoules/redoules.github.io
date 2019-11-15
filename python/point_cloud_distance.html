@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Random integer - Python</title>
+    <title>Get min and max distance withing a point cloud - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Basics" />
+    <meta name="tags" content="Data Wrangling" />
 
 
 </head>
@@ -112,35 +112,81 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Random integer
+      Get min and max distance withing a point cloud
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-12-03T22:17:00+01:00">
-            03 décembre 2018
+        <time class="published" datetime="2019-11-14T09:33:00+01:00">
+            14 novembre 2019
         </time>
     </li>
     <li>Python</li>
-    <li>Basics</li>
+    <li>Data Wrangling</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>The random module comes with the randint function that returns a pseudo random number between 2 values :</p>
-<div class="highlight"><pre><span></span><span class="c1"># Return a random integer N such that a &lt;= N &lt;= b.</span>
-<span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<p>Here we will learn how to find the maximal or minimal distance between two points in a cloud of points. To do so, we will use the <code>pdist</code> function available in the <code>scipy.spatial.distance</code> package.</p>
+<p>This function computes the pairwise distances between observations in n-dimensional space; in order to find the longest or shortest distance, juste take the max or min.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">pdist</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span> <span class="c1">#generate 100 points </span>
+
+<span class="n">pairwise</span> <span class="o">=</span> <span class="n">pdist</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="c1"># compute the pairwise distance between those points</span>
+
+<span class="c1">#compute the maximal and minimal distance</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;maximal distance : {np.max(pairwise)}&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;minimal distance : {np.min(pairwise)}&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="c1">#### import random</span>
-
-<span class="n">min_int</span> <span class="o">=</span> <span class="mi">126</span>
-<span class="n">max_int</span> <span class="o">=</span> <span class="mi">211</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;My pseudo random number between {min_int} and {max_int} : {random.randint(min_int, max_int)}&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="n">maximal</span> <span class="n">distance</span> <span class="p">:</span> <span class="mi">1</span><span class="p">.</span><span class="mi">1393617436726384</span>
+<span class="n">minimal</span> <span class="n">distance</span> <span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2382615513731064</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="nv">My</span> <span class="nv">pseudo</span> <span class="k">random</span> <span class="nv">number</span> <span class="nv">between</span> <span class="mi">126</span> <span class="nv">and</span> <span class="mi">211</span> : <span class="mi">206</span>
+<p>The pdist function can that different metric for the distance computation. The default metrics are :
+ * braycurtis
+ * canberra
+ * chebyshev
+ * cityblock
+ * correlation
+ * cosine
+ * dice
+ * euclidean
+ * hamming
+ * jaccard
+ * jensenshannon
+ * kulsinski
+ * mahalanobis
+ * matching
+ * minkowski
+ * rogerstanimoto
+ * russellrao
+ * seuclidean
+ * sokalmichener
+ * sokalsneath
+ * sqeuclidean
+ * yule</p>
+<p>You can also define your own distances with a lambda function</p>
+<div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">pdist</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(((</span><span class="n">u</span><span class="o">-</span><span class="n">v</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())))</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">.</span><span class="mi">1393617436726384</span>
+</pre></div>
+
+
+<p>or with a classical function</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dfun</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(((</span><span class="n">u</span><span class="o">-</span><span class="n">v</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+
+<span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">pdist</span><span class="p">(</span><span class="n">points</span><span class="p">,</span>  <span class="n">dfun</span><span class="p">))</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">.</span><span class="mi">1393617436726384</span>
 </pre></div>
 </div>
     <aside>

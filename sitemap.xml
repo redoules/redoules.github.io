@@ -5,7 +5,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>redoules.github.io/</loc>
-<lastmod>2019-11-12T23:04:32-00:00</lastmod>
+<lastmod>2019-11-15T22:40:31-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -13,6 +13,27 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>redoules.github.io/pages/about.html</loc>
 <lastmod>2017-11-02T08:13:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>redoules.github.io/python/file_owner.html</loc>
+<lastmod>2019-11-14T10:03:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>redoules.github.io/python/file_creation_date.html</loc>
+<lastmod>2019-11-14T09:57:00+01:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>redoules.github.io/python/point_cloud_distance.html</loc>
+<lastmod>2019-11-14T09:33:00+01:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
