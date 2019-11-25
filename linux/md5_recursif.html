@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Reloading .bashrc - Linux</title>
+    <title>Recursively compute md5 checksum - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -112,12 +112,12 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Reloading .bashrc
+      Recursively compute md5 checksum
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-01-03T16:29:00+01:00">
-            03 janvier 2018
+        <time class="published" datetime="2019-11-21T09:26:00+01:00">
+            21 novembre 2019
         </time>
     </li>
     <li>Linux</li>
@@ -125,10 +125,9 @@
 </ol>
 </header>
 <div class='article_content'>
-<h3>Reload .bashrc</h3>
-<p>The .bashrc file,  located at ~/.bashrc allows a user to personalize its bash shell. If you edit this file, the changes won't  be loaded without login out and back in. 
-However, you can use the following command to do it </p>
-<div class="highlight"><pre><span></span> <span class="nb">source</span> ~/.bashrc
+<p>The md5 checksum for all files in a folder can be recursively computed then stored in a text file called md5sum.txt with the command :*</p>
+<div class="highlight"><pre><span></span><span class="nb">cd</span> /you/folder/of/interest
+find -type f <span class="se">\(</span> -not -name <span class="s2">&quot;md5sum.txt&quot;</span> <span class="se">\)</span> -exec md5sum <span class="s1">&#39;{}&#39;</span> <span class="se">\;</span> &gt; md5sum.txt
 </pre></div>
 </div>
     <aside>
