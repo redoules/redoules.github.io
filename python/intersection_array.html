@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Premutations and combinations - Mathematics</title>
+    <title>Compute the intersection of 2 numpy arrays - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
         
 
-    <meta name="tags" content="Statistics" />
+    <meta name="tags" content="Basics" />
 
 
 </head>
@@ -112,83 +112,39 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Premutations and combinations
+      Compute the intersection of 2 numpy arrays
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-10T12:35:00+01:00">
-            10 novembre 2018
+        <time class="published" datetime="2019-12-01T20:05:00+01:00">
+            01 décembre 2019
         </time>
     </li>
-    <li>Mathematics</li>
-    <li>Statistics</li>
+    <li>Python</li>
+    <li>Basics</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>Finding patterns in the possible ways events can occur is very useful in helping us count the number of desirable events in our sample space. Two of the easiest methods for doing this are with permutations (when order matters) and combinations (when order doesn't matter). </p>
-<h2>Permutations</h2>
-<p>An <strong>ordered</strong> arrangement r of objects from a set, A, of n objects (where <span class="math">\(0\lt r \leq n\)</span>) is called an r-element permutation of A. You can also think of this as a permutation of A's elements taken r at a time. The number of r-element permutations of an n-object set is denoted by the following formula: </p>
-<div class="math">$$_{n}P_{r}=\frac{n!}{(n-r)!}$$</div>
-<h2>Combinations</h2>
-<p>An <strong>unordered</strong> arrangement of r objects from a set, A, of n objects (where <span class="math">\(0\lt r \leq n\)</span>) is called an r-element combination of A. You can also think of this as a combination of A's elements taken r at a time.</p>
-<p>Because the only difference between permutations and combinations is that combinations are unordered, we can easily find the number of r-element combinations by dividing out the permutations (r!):
-</p>
-<div class="math">$$_{n}C_{r}=\frac{_{n}P_{r}}{r!}=\frac{n!}{r!(n-r)!}$$</div>
-<p>When we talk about combinations, we're talking about the number of subsets of size r that can be made from a set of size n. In fact, <span class="math">\(_{n}C_{r}\)</span> is often referred to as "n choose r", because it's counting the number of r-element combinations that can be chosen from a set of n elements.</p>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
+<p>In this article we will use sets to compute the intersection of 2 numpy arrays</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-    if (false) {
-        align = (screen.width < 768) ? "left" : align;
-        indent = (screen.width < 768) ? "0em" : indent;
-        linebreak = (screen.width < 768) ? 'true' : linebreak;
-    }
+<span class="n">array2a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">array2b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
 
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}</script>
+
+<span class="n">a</span> <span class="o">=</span> <span class="nb">set</span><span class="p">((</span><span class="nb">tuple</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">array2a</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">set</span><span class="p">((</span><span class="nb">tuple</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">array2b</span><span class="p">))</span>
+
+<span class="n">a</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="c1"># {(2, 1), (3, 3)}</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">{</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="err">}</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>
+</pre></div>
 </div>
     <aside>
     <div class="bug-reporting__panel">
