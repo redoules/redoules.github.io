@@ -127,7 +127,7 @@
 <div class='article_content'>
 <h3>Create a sample dataframe</h3>
 <div class="highlight"><pre><span></span><span class="c1"># Import modules</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 
 
@@ -210,16 +210,16 @@
 <h3>Using the iterrows method</h3>
 <p>Pandas DataFrames can return a generator with the iterrrows method. It can then be used to loop over the rows of the DataFrame</p>
 <div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;At line {0} there is a {1} which is {2} and contains {3} kcal&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;fruit&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;kcal&quot;</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At line </span><span class="si">{0}</span><span class="s2"> there is a </span><span class="si">{1}</span><span class="s2"> which is </span><span class="si">{2}</span><span class="s2"> and contains </span><span class="si">{3}</span><span class="s2"> kcal&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;fruit&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;kcal&quot;</span><span class="p">]))</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="k">At</span> <span class="n">line</span> <span class="mi">0</span> <span class="n">there</span> <span class="k">is</span> <span class="n">a</span> <span class="n">Banana</span> <span class="n">which</span> <span class="k">is</span> <span class="n">yellow</span> <span class="k">and</span> <span class="k">contains</span> <span class="mi">89</span> <span class="n">kcal</span>
-<span class="k">At</span> <span class="n">line</span> <span class="mi">1</span> <span class="n">there</span> <span class="k">is</span> <span class="n">a</span> <span class="n">Orange</span> <span class="n">which</span> <span class="k">is</span> <span class="n">orange</span> <span class="k">and</span> <span class="k">contains</span> <span class="mi">47</span> <span class="n">kcal</span>
-<span class="k">At</span> <span class="n">line</span> <span class="mi">2</span> <span class="n">there</span> <span class="k">is</span> <span class="n">a</span> <span class="n">Apple</span> <span class="n">which</span> <span class="k">is</span> <span class="n">red</span> <span class="k">and</span> <span class="k">contains</span> <span class="mi">52</span> <span class="n">kcal</span>
-<span class="k">At</span> <span class="n">line</span> <span class="mi">3</span> <span class="n">there</span> <span class="k">is</span> <span class="n">a</span> <span class="n">lemon</span> <span class="n">which</span> <span class="k">is</span> <span class="n">yellow</span> <span class="k">and</span> <span class="k">contains</span> <span class="mi">15</span> <span class="n">kcal</span>
-<span class="k">At</span> <span class="n">line</span> <span class="mi">4</span> <span class="n">there</span> <span class="k">is</span> <span class="n">a</span> <span class="n">lime</span> <span class="n">which</span> <span class="k">is</span> <span class="n">green</span> <span class="k">and</span> <span class="k">contains</span> <span class="mi">30</span> <span class="n">kcal</span>
-<span class="k">At</span> <span class="n">line</span> <span class="mi">5</span> <span class="n">there</span> <span class="k">is</span> <span class="n">a</span> <span class="n">plum</span> <span class="n">which</span> <span class="k">is</span> <span class="n">purple</span> <span class="k">and</span> <span class="k">contains</span> <span class="mi">28</span> <span class="n">kcal</span>
+<div class="highlight"><pre><span></span><span class="err">At line 0 there is a Banana which is yellow and contains 89 kcal</span>
+<span class="err">At line 1 there is a Orange which is orange and contains 47 kcal</span>
+<span class="err">At line 2 there is a Apple which is red and contains 52 kcal</span>
+<span class="err">At line 3 there is a lemon which is yellow and contains 15 kcal</span>
+<span class="err">At line 4 there is a lime which is green and contains 30 kcal</span>
+<span class="err">At line 5 there is a plum which is purple and contains 28 kcal</span>
 </pre></div>
 </div>
     <aside>
@@ -235,7 +235,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 107 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

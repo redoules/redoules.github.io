@@ -130,17 +130,17 @@
 * localhost</p>
 <p>The program you are using to connect is not indentifying itself as 127.0.0.1 or localhost. You will have to verify the IP access it's being identified as, then add that to your grant table.</p>
 <p>In order to add grant an IP address you can use the following commands :</p>
-<div class="highlight"><pre><span></span><span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;user&#39;</span><span class="o">@</span><span class="s1">&#39;computer.host.com&#39;</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;user&#39;</span><span class="o">@</span><span class="s1">&#39;192.168.1.6&#39;</span><span class="p">;</span>
-<span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;user&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="err">GRANT ALL ON *.* TO &#39;user&#39;@&#39;computer.host.com&#39;;</span>
+<span class="err">GRANT ALL ON *.* TO &#39;user&#39;@&#39;192.168.1.6&#39;;</span>
+<span class="err">GRANT ALL ON *.* TO &#39;user&#39;@&#39;%&#39;;</span>
 </pre></div>
 
 
 <p>The <code>%</code> is a wildcard that means any IP. Be careful when using it especially on the root user.</p>
 <p>If you want to remove the rights you granted, you can use the command </p>
-<div class="highlight"><pre><span></span><span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;user&#39;</span><span class="o">@</span><span class="s1">&#39;computer.host.com&#39;</span><span class="p">;</span>
-<span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;user&#39;</span><span class="o">@</span><span class="s1">&#39;192.168.1.6&#39;</span><span class="p">;</span>
-<span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="s1">&#39;user&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span>
+<div class="highlight"><pre><span></span><span class="err">REVOKE ALL PRIVILEGES ON *.* TO &#39;user&#39;@&#39;computer.host.com&#39;;</span>
+<span class="err">REVOKE ALL PRIVILEGES ON *.* TO &#39;user&#39;@&#39;192.168.1.6&#39;;</span>
+<span class="err">REVOKE ALL PRIVILEGES ON *.* FROM &#39;user&#39;@&#39;%&#39;</span>
 </pre></div>
 </div>
     <aside>
@@ -156,7 +156,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 107 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

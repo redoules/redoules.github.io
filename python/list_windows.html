@@ -149,59 +149,59 @@
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="err">{</span><span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="mi">3802422</span><span class="p">,</span>
- <span class="s1">&#39;Forcepad driver tray window&#39;</span><span class="p">:</span> <span class="mi">65676</span><span class="p">,</span>
- <span class="s1">&#39;Jauge de batterie&#39;</span><span class="p">:</span> <span class="mi">131542</span><span class="p">,</span>
- <span class="s1">&#39;Network Flyout&#39;</span><span class="p">:</span> <span class="mi">131650</span><span class="p">,</span>
- <span class="s1">&#39;Dashlane&#39;</span><span class="p">:</span> <span class="mi">5570658</span><span class="p">,</span>
- <span class="s1">&#39;Wox&#39;</span><span class="p">:</span> <span class="mi">131770</span><span class="p">,</span>
- <span class="s1">&#39;JupyterLab - Brave&#39;</span><span class="p">:</span> <span class="mi">66990</span><span class="p">,</span>
- <span class="s1">&#39;python&#39;</span><span class="p">:</span> <span class="mi">4261478</span><span class="p">,</span>
- <span class="s1">&#39;Visual Studio Code - Insiders&#39;</span><span class="p">:</span> <span class="mi">329780</span><span class="p">,</span>
- <span class="s1">&#39;Code - Insiders&#39;</span><span class="p">:</span> <span class="mi">526478</span><span class="p">,</span>
- <span class="s1">&#39;Documents&#39;</span><span class="p">:</span> <span class="mi">526010</span><span class="p">,</span>
- <span class="s1">&#39;Windows PowerShell&#39;</span><span class="p">:</span> <span class="mi">198580</span><span class="p">,</span>
- <span class="s1">&#39;Progression&#39;</span><span class="p">:</span> <span class="mi">394934</span><span class="p">,</span>
- <span class="s1">&#39;Microsoft Edge&#39;</span><span class="p">:</span> <span class="mi">131586</span><span class="p">,</span>
- <span class="s1">&#39;Microsoft Store&#39;</span><span class="p">:</span> <span class="mi">197328</span><span class="p">,</span>
- <span class="s1">&#39;QTrayIconMessageWindow&#39;</span><span class="p">:</span> <span class="mi">327816</span><span class="p">,</span>
- <span class="s1">&#39;Hidden Window&#39;</span><span class="p">:</span> <span class="mi">459506</span><span class="p">,</span>
- <span class="s1">&#39;.NET-BroadcastEventWindow.4.0.0.0.3e2c690.0&#39;</span><span class="p">:</span> <span class="mi">131824</span><span class="p">,</span>
- <span class="s1">&#39;SystemResourceNotifyWindow&#39;</span><span class="p">:</span> <span class="mi">197346</span><span class="p">,</span>
- <span class="s1">&#39;MediaContextNotificationWindow&#39;</span><span class="p">:</span> <span class="mi">197344</span><span class="p">,</span>
- <span class="s1">&#39;Resilio Sync 2.6.3&#39;</span><span class="p">:</span> <span class="mi">262934</span><span class="p">,</span>
+<div class="highlight"><pre><span></span><span class="err">{&#39;&#39;: 3802422,</span>
+<span class="err"> &#39;Forcepad driver tray window&#39;: 65676,</span>
+<span class="err"> &#39;Jauge de batterie&#39;: 131542,</span>
+<span class="err"> &#39;Network Flyout&#39;: 131650,</span>
+<span class="err"> &#39;Dashlane&#39;: 5570658,</span>
+<span class="err"> &#39;Wox&#39;: 131770,</span>
+<span class="err"> &#39;JupyterLab - Brave&#39;: 66990,</span>
+<span class="err"> &#39;python&#39;: 4261478,</span>
+<span class="err"> &#39;Visual Studio Code - Insiders&#39;: 329780,</span>
+<span class="err"> &#39;Code - Insiders&#39;: 526478,</span>
+<span class="err"> &#39;Documents&#39;: 526010,</span>
+<span class="err"> &#39;Windows PowerShell&#39;: 198580,</span>
+<span class="err"> &#39;Progression&#39;: 394934,</span>
+<span class="err"> &#39;Microsoft Edge&#39;: 131586,</span>
+<span class="err"> &#39;Microsoft Store&#39;: 197328,</span>
+<span class="err"> &#39;QTrayIconMessageWindow&#39;: 327816,</span>
+<span class="err"> &#39;Hidden Window&#39;: 459506,</span>
+<span class="err"> &#39;.NET-BroadcastEventWindow.4.0.0.0.3e2c690.0&#39;: 131824,</span>
+<span class="err"> &#39;SystemResourceNotifyWindow&#39;: 197346,</span>
+<span class="err"> &#39;MediaContextNotificationWindow&#39;: 197344,</span>
+<span class="err"> &#39;Resilio Sync 2.6.3&#39;: 262934,</span>
 </pre></div>
 
 
 <p>}</p>
-<div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;List of all opened windows : &quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List of all opened windows : &quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">get_all_windows</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span> 
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">* &quot;</span> <span class="o">+</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">* &quot;</span> <span class="o">+</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="n">List</span> <span class="k">of</span> <span class="k">all</span> <span class="n">opened</span> <span class="n">windows</span> <span class="p">:</span> 
-    <span class="o">*</span> <span class="n">Forcepad</span> <span class="n">driver</span> <span class="n">tray</span> <span class="n">window</span>
-    <span class="o">*</span> <span class="n">Jauge</span> <span class="n">de</span> <span class="n">batterie</span>
-    <span class="o">*</span> <span class="n">Network</span> <span class="n">Flyout</span>
-    <span class="o">*</span> <span class="n">Dashlane</span>
-    <span class="o">*</span> <span class="n">Wox</span>
-    <span class="o">*</span> <span class="n">JupyterLab</span> <span class="o">-</span> <span class="n">Brave</span>
-    <span class="o">*</span> <span class="n">python</span>
-    <span class="o">*</span> <span class="n">Visual</span> <span class="n">Studio</span> <span class="n">Code</span> <span class="o">-</span> <span class="n">Insiders</span>
-    <span class="o">*</span> <span class="n">Code</span> <span class="o">-</span> <span class="n">Insiders</span>
-    <span class="o">*</span> <span class="n">Documents</span>
-    <span class="o">*</span> <span class="n">Windows</span> <span class="n">PowerShell</span>
-    <span class="o">*</span> <span class="n">Progression</span>
-    <span class="o">*</span> <span class="n">Microsoft</span> <span class="n">Edge</span>
-    <span class="o">*</span> <span class="n">Microsoft</span> <span class="n">Store</span>
-    <span class="o">*</span> <span class="n">QTrayIconMessageWindow</span>
-    <span class="o">*</span> <span class="n">Hidden</span> <span class="n">Window</span>
-    <span class="o">*</span> <span class="p">.</span><span class="n">NET</span><span class="o">-</span><span class="n">BroadcastEventWindow</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">3</span><span class="n">e2c690</span><span class="p">.</span><span class="mi">0</span>
-    <span class="o">*</span> <span class="n">SystemResourceNotifyWindow</span>
-    <span class="o">*</span> <span class="n">MediaContextNotificationWindow</span>
-    <span class="o">*</span> <span class="n">Resilio</span> <span class="n">Sync</span> <span class="mi">2</span><span class="p">.</span><span class="mi">6</span><span class="p">.</span><span class="mi">3</span>
+<div class="highlight"><pre><span></span><span class="err">List of all opened windows : </span>
+<span class="err">    * Forcepad driver tray window</span>
+<span class="err">    * Jauge de batterie</span>
+<span class="err">    * Network Flyout</span>
+<span class="err">    * Dashlane</span>
+<span class="err">    * Wox</span>
+<span class="err">    * JupyterLab - Brave</span>
+<span class="err">    * python</span>
+<span class="err">    * Visual Studio Code - Insiders</span>
+<span class="err">    * Code - Insiders</span>
+<span class="err">    * Documents</span>
+<span class="err">    * Windows PowerShell</span>
+<span class="err">    * Progression</span>
+<span class="err">    * Microsoft Edge</span>
+<span class="err">    * Microsoft Store</span>
+<span class="err">    * QTrayIconMessageWindow</span>
+<span class="err">    * Hidden Window</span>
+<span class="err">    * .NET-BroadcastEventWindow.4.0.0.0.3e2c690.0</span>
+<span class="err">    * SystemResourceNotifyWindow</span>
+<span class="err">    * MediaContextNotificationWindow</span>
+<span class="err">    * Resilio Sync 2.6.3</span>
 </pre></div>
 </div>
     <aside>
@@ -217,7 +217,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 107 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

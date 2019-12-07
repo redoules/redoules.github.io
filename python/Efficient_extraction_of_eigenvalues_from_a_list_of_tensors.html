@@ -131,7 +131,7 @@
 * tensor field.</p>
 <p>With tensorial results, it is often useful to extract the eigenvalues in order to find the principal values.</p>
 <p>I have found that it is easier to store the components of the tensors in a 6 column pandas dataframe (because of the symmetric property of stress and strain tensors)</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">node</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1003</span><span class="p">,</span> <span class="mi">1004</span><span class="p">]</span> <span class="c1">#when dealing with FEM results you should remember at which element/node the result is computed (in the example, let&#39;s assume that we look at node from 1001 to 1004)</span>
 <span class="n">tensor1</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#eigen : 1</span>
 <span class="n">tensor2</span><span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#eigen : 5.58443, -1.77931, -0.805118</span>
@@ -212,7 +212,7 @@
 
 <p>If you want to extract the eigenvalues of a tensor with numpy you have to pass a n by n ndarray to the eigenvalue function. In order to avoid having to loop over each node, this oneliner is highly optimized and will help you invert a large number of tensors efficiently.</p>
 <p>The steps are basically, create a list of n by n values (here n=3) in the right order =&gt; reshape it to a list of tensors =&gt; pass it to the eigenvals function</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
 </pre></div>
 
@@ -222,10 +222,10 @@
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="nb">array</span><span class="p">([[</span> <span class="mi">1</span><span class="p">.</span>        <span class="p">,</span>  <span class="mi">1</span><span class="p">.</span>        <span class="p">,</span>  <span class="mi">1</span><span class="p">.</span>        <span class="p">],</span>
-       <span class="p">[</span> <span class="mi">5</span><span class="p">.</span><span class="mi">58442834</span><span class="p">,</span> <span class="o">-</span><span class="mi">0</span><span class="p">.</span><span class="mi">80511809</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">.</span><span class="mi">77931025</span><span class="p">],</span>
-       <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">.</span><span class="mi">31577211</span><span class="p">,</span>  <span class="mi">8</span><span class="p">.</span><span class="mi">85035616</span><span class="p">,</span>  <span class="mi">4</span><span class="p">.</span><span class="mi">46541595</span><span class="p">],</span>
-       <span class="p">[</span> <span class="mi">1</span><span class="p">.</span>        <span class="p">,</span>  <span class="mi">2</span><span class="p">.</span>        <span class="p">,</span>  <span class="mi">3</span><span class="p">.</span>        <span class="p">]])</span>
+<div class="highlight"><pre><span></span><span class="err">array([[ 1.        ,  1.        ,  1.        ],</span>
+<span class="err">       [ 5.58442834, -0.80511809, -1.77931025],</span>
+<span class="err">       [-1.31577211,  8.85035616,  4.46541595],</span>
+<span class="err">       [ 1.        ,  2.        ,  3.        ]])</span>
 </pre></div>
 </div>
     <aside>
@@ -241,7 +241,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 107 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

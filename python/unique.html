@@ -128,28 +128,28 @@
 <h2>Using lists</h2>
 <p>An easy way to extract the unique values of a list in python is to convert the list to a set. A set is an unordered collection of items. Every element is unique (no duplicates) and must be immutable. </p>
 <div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Original List : {my_list}&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original List : </span><span class="si">{my_list}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="n">my_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
 <span class="n">my_new_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">my_set</span><span class="p">)</span> <span class="c1"># the set is converted back to a list with the list() function</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;List of unique numbers : {my_new_list}&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;List of unique numbers : </span><span class="si">{my_new_list}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="n">Original</span> <span class="n">List</span> <span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
-<span class="n">List</span> <span class="k">of</span> <span class="k">unique</span> <span class="n">numbers</span> <span class="p">:</span> <span class="p">[</span><span class="mi">40</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><span class="err">Original List : [10, 20, 30, 40, 20, 50, 60, 40]</span>
+<span class="err">List of unique numbers : [40, 10, 50, 20, 60, 30]</span>
 </pre></div>
 
 
 <h2>Using numpy</h2>
 <p>If you are using numpy you can extract the unique values of an array with the unique function builtin numpy:</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Initial numpy array : {arr}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initial numpy array : </span><span class="si">{arr}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
 
 <span class="n">unique_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Numpy array with unique values : {unique_arr}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Numpy array with unique values : </span><span class="si">{unique_arr}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -171,7 +171,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 107 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

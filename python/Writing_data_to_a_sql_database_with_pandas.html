@@ -130,7 +130,7 @@ Pandas provides multiple ways to export dataframes. The most common consist in e
 However, exporting to a sql database can prove very useful. Indeed, having a well structured database is a great for storing all the data related to your analysis in one place.</p>
 <p>In this tutorial, we will see how to store a dataframe in a new table of a sqlite dataframe. Note than it would also work with any other sql database a long as you change the connxion to the one that suits your needs.</p>
 <p>First let's import pandas and sqlite3</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">sqlite3</span>
 <span class="kn">from</span> <span class="nn">sqlite3</span> <span class="kn">import</span> <span class="n">Error</span>
 </pre></div>
@@ -218,9 +218,9 @@ However, exporting to a sql database can prove very useful. Indeed, having a wel
     <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
         <span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s2">&quot;tutyfrutty&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
 <span class="k">except</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">ValueError</span> <span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The TABLE tutyfrutty already exists, read below to understand how to handle this case&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The TABLE tutyfrutty already exists, read below to understand how to handle this case&quot;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -323,7 +323,7 @@ However, exporting to a sql database can prove very useful. Indeed, having a wel
     <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
         <span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s2">&quot;tutyfrutty&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s2">&quot;replace&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 </pre></div>
 </div>
     <aside>
@@ -339,7 +339,7 @@ However, exporting to a sql database can prove very useful. Indeed, having a wel
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 107 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

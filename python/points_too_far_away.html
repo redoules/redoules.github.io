@@ -130,8 +130,8 @@
  * the target in blue</p>
 <p>And we want to find all the points in the target ensemble that are at most at a distance of 0.5 of any point in the source distribution.</p>
 <div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span> 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
 <span class="n">target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
@@ -152,8 +152,8 @@
 
 
 <p>Once the distance has been computed, we filter out all the points that have more distant that the threshold value.</p>
-<div class="highlight"><pre><span></span><span class="n">dist</span><span class="p">[</span><span class="n">dist</span><span class="o">&gt;</span><span class="n">thres</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="n">dist</span><span class="p">[</span><span class="n">dist</span> <span class="o">!=</span> <span class="bp">False</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+<div class="highlight"><pre><span></span><span class="n">dist</span><span class="p">[</span><span class="n">dist</span><span class="o">&gt;</span><span class="n">thres</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">dist</span><span class="p">[</span><span class="n">dist</span> <span class="o">!=</span> <span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 
 
@@ -175,8 +175,8 @@
 <span class="sd">    This function is made for 2D points</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dist</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">dist</span><span class="p">[</span><span class="n">dist</span><span class="o">&gt;</span><span class="n">thres</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="n">dist</span><span class="p">[</span><span class="n">dist</span> <span class="o">!=</span> <span class="bp">False</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">dist</span><span class="o">&gt;</span><span class="n">thres</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">dist</span> <span class="o">!=</span> <span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">a</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">target</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">dist</span><span class="p">,</span> <span class="n">target</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">dist</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
     <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
 </pre></div>
@@ -191,7 +191,7 @@
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="p">.</span><span class="n">collections</span><span class="p">.</span><span class="n">PathCollection</span> <span class="k">at</span> <span class="mi">0</span><span class="n">x7fde375a4490</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><span class="err">&lt;matplotlib.collections.PathCollection at 0x7fde375a4490&gt;</span>
 </pre></div>
 
 
@@ -209,8 +209,8 @@
 <span class="sd">    This function is made for 3D points</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dist</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">dist</span><span class="p">[</span><span class="n">dist</span><span class="o">&gt;</span><span class="n">thres</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="n">dist</span><span class="p">[</span><span class="n">dist</span> <span class="o">!=</span> <span class="bp">False</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">dist</span><span class="o">&gt;</span><span class="n">thres</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">dist</span> <span class="o">!=</span> <span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">a</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">target</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">dist</span><span class="p">,</span> <span class="n">target</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">dist</span><span class="p">,</span> <span class="n">target</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">dist</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
     <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
 </pre></div>
@@ -256,7 +256,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 107 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

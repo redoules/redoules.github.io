@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Data Science for Political and Social Phenomena">
+    <meta name="author" content="Guillaume Redoulès">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>Introduction to dask DataFrames - Python</title>
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="../theme/js/jquery.min.js"><\/script>')
+    </script>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../theme/css/bootstrap.css" />
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" type="text/css" href="../theme/css/ie10-viewport-bug-workaround.css" />
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="../theme/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../theme/css/notebooks.css" />
+    <link href='https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto:400,500,700' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+        
+
+    <meta name="tags" content="Parallel" />
+
+
+</head>
+
+<body>
+
+    <div class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="..">Guillaume Redoulès</a>
+            </div>
+            <div class="navbar-collapse collapse" id="searchbar">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../pages/about.html">About Guillaume</a></li>
+                            <li><a href="https://github.com/redoules">GitHub</a></li>
+                            <li><a href="https://www.linkedin.com/in/guillaume-redoul%C3%A8s-33923860/">LinkedIn</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Science<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="..#Blog">Blog</a></li>
+                            <li><a href="..#Python">Python</a></li>
+                            <li><a href="..#Bash">Bash</a></li>
+                            <li><a href="..#SQL">SQL</a></li>
+                            <li><a href="..#Mathematics">Mathematics</a></li>
+                            <li><a href="..#Machine_Learning">Machine Learning</a></li>
+                            <li><a href="..#Projects">Projects</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://github.com/redoules/redoules.github.io">Notes (Github)</a></li>
+                        </ul>
+                    </li>
+
+                    <!--<li class="dropdown">
+                        <a href="../feeds/blog.rss.xml">Blog RSS</a>
+                    </li>-->
+
+
+                </ul>
+
+                <form class="navbar-form" action="../search.html" onsubmit="return validateForm(this.elements['q'].value);">
+                    <div class="form-group" style="display:inline;">
+                        <div class="input-group" style="display:table;">
+                            <span class="input-group-addon" style="width:1%;"><span class="glyphicon glyphicon-search"></span></span>
+                            <input class="form-control search-query" name="q" id="tipue_search_input" placeholder="e.g. scikit KNN, pandas merge" required autocomplete="off" type="text">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+
+
+
+    <!-- end of header section -->
+    <div class="container">
+<!-- <div class="alert alert-warning" role="alert">
+    Did you find this page useful? Please do me a quick favor and <a href="#" class="alert-link">endorse me for data science on LinkedIn</a>.
+</div> -->
+<section id="content" class="body">
+    <header>
+    <h1>
+      Introduction to dask DataFrames
+    </h1>
+<ol class="breadcrumb">
+    <li>
+        <time class="published" datetime="2019-12-07T19:35:00+01:00">
+            07 décembre 2019
+        </time>
+    </li>
+    <li>Python</li>
+    <li>Parallel</li>
+</ol>
+</header>
+<div class='article_content'>
+<p>Dask arrays extend the pandas interface to work on larger than memory datasets on a single machine or distributed datasets on a cluster of machines. It reuses a lot of the pandas code but extends it to larger scales.</p>
+<h3>Start with pandas</h3>
+<p>To see how that works, we start with pandas in order to show a bit later how similar the interfaces look.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/1.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Z</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10000</td>
+      <td>0.613648</td>
+      <td>0.514523</td>
+      <td>0.675306</td>
+      <td>0.997480</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10001</td>
+      <td>0.785925</td>
+      <td>0.418075</td>
+      <td>0.558356</td>
+      <td>0.435089</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10002</td>
+      <td>0.382117</td>
+      <td>0.841691</td>
+      <td>0.263298</td>
+      <td>0.120973</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10003</td>
+      <td>0.374417</td>
+      <td>0.534436</td>
+      <td>0.093729</td>
+      <td>0.104052</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10004</td>
+      <td>0.061580</td>
+      <td>0.404272</td>
+      <td>0.826618</td>
+      <td>0.980229</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Once the data is loaded, we can work on it pretty easily. For instance we can take the mean of the value column and get the result instantly.</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">0.5004419057234618</span>
+</pre></div>
+
+
+<p>When we want to operate on many files or if the size of the dataset is larger than memory pandas breaks down. </p>
+<h3>Read all CSV files lazily with Dask DataFrames</h3>
+<p>Intead of using pandas we will use the dask DataFrame to load the csv.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/1.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+
+
+<div><strong>Dask DataFrame Structure:</strong></div>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Z</th>
+      <th>value</th>
+    </tr>
+    <tr>
+      <th>npartitions=1</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th></th>
+      <td>int64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div>Dask Name: from-delayed, 3 tasks</div>
+
+<p>As you can see, the dask DataFrame didn't return any data. If we want some data we can use the <code>head</code> function.</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Z</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10000</td>
+      <td>0.613648</td>
+      <td>0.514523</td>
+      <td>0.675306</td>
+      <td>0.997480</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10001</td>
+      <td>0.785925</td>
+      <td>0.418075</td>
+      <td>0.558356</td>
+      <td>0.435089</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10002</td>
+      <td>0.382117</td>
+      <td>0.841691</td>
+      <td>0.263298</td>
+      <td>0.120973</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10003</td>
+      <td>0.374417</td>
+      <td>0.534436</td>
+      <td>0.093729</td>
+      <td>0.104052</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10004</td>
+      <td>0.061580</td>
+      <td>0.404272</td>
+      <td>0.826618</td>
+      <td>0.980229</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Like previously, we can compute the mean of the value column</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">dd.Scalar&lt;series-..., dtype=float64&gt;</span>
+</pre></div>
+
+
+<p>Notice that we didn't get a full result. Indeed the dask DataFrame like every Dask objects is lazy by default. You have to use the compute function to get the result.</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">0.5004419057234627</span>
+</pre></div>
+
+
+<p>Another advantage of Dask DataFrames is that we can work on multiple files instead of a file at once.</p>
+<div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/*.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+
+
+<div><strong>Dask DataFrame Structure:</strong></div>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Z</th>
+      <th>value</th>
+    </tr>
+    <tr>
+      <th>npartitions=64</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th></th>
+      <td>int64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div>Dask Name: from-delayed, 192 tasks</div>
+
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">0.5005328752185645</span>
+</pre></div>
+
+
+<h3>Index, partitions and sorting</h3>
+<p>Every Dask DataFrames is composed of many Pandas DataFrames/Series arranged along the index. A Dask DataFrame is partitioned row-wise, grouping rows by index value for efficiency. These Pandas objects may live on disk or on other machines.</p>
+<p>All those partitions are loaded in parallel.</p>
+<p><img alt="daskdataframe" src="../images/daskdataframe/dask-dataframe.svg"></p>
+<div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+
+
+<div><strong>Dask DataFrame Structure:</strong></div>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Z</th>
+      <th>value</th>
+    </tr>
+    <tr>
+      <th>npartitions=64</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th></th>
+      <td>int64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div>Dask Name: from-delayed, 192 tasks</div>
+
+<p>When we look at the structure of the Dask Dataframe, we see that is is composed of 192 python functions that must be run in order to run the dask dataframe.</p>
+<p>Each of this partitions is a pandas DataFrame</p>
+<div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">partitions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">compute</span><span class="p">())</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">pandas.core.frame.DataFrame</span>
+</pre></div>
+
+
+<p>We can write a function mapped to all the partitions of the dask dataframe in order to see that we have 64 partitions. Each of them is a pandas DataFrame.</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">map_partitions</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="err">0     &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="err">1     &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="err">2     &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="err">3     &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="err">4     &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="err">                      ...                  </span>
+<span class="err">59    &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="err">60    &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="err">61    &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="err">62    &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="err">63    &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="c">Length: 64, dtype: object</span>
+</pre></div>
+
+
+<p>In the df dataframe, we notice that there is a column of unique values called index. We will use this as the index of the dataframe. </p>
+<div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+
+
+<div><strong>Dask DataFrame Structure:</strong></div>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>Z</th>
+      <th>value</th>
+    </tr>
+    <tr>
+      <th>npartitions=64</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th>9624</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>629999</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>639999</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div>Dask Name: sort_index, 642 tasks</div>
+
+<p>This operation requires to load all the data in order to find the minimal and maximal values of this column.
+Thanks to this operation, if we want to get some data contained between two indices dask will know in which file to find the data and won't have to reload all the files.</p>
+<h3>Write the data to Parquet</h3>
+<p>Parquet is a columnar file format and is tightly integrated with both dask and pandas. You can you the <code>to_parquet</code> function to export the dataframe to a parquet file.</p>
+<div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s2">&quot;data/data.parquet&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+    <aside>
+    <div class="bug-reporting__panel">
+        <h3>Find an error or bug? Have a suggestion?</h3>
+        <p>Everything on this site is avaliable on GitHub. Head on over and <a href='https://github.com/redoules/redoules.github.io/issues/new'>submit an issue.</a> You can also message me directly by <a href='mailto:guillaume.redoules@gadz.org'>email</a>.</p>
+    </div>
+    </aside>
+</section>
+
+    </div>
+    <!-- start of footer section -->
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <br/>
+                Copyright &copy; Guillaume Redoulès,
+                    <time datetime="2018">2018</time>.
+                </center>
+            </p>
+        </div>
+    </footer>
+
+    <!-- This jQuery line finds any span that contains code highlighting classes and then selects the parent <pre> tag and adds a border. This is done as a workaround to visually distinguish the code inputs and outputs -->
+    <script>
+        $( ".hll, .n, .c, .err, .k, .o, .cm, .cp, .c1, .cs, .gd, .ge, .gr, .gh, .gi, .go, .gp, .gs, .gu, .gt, .kc, .kd, .kn, .kp, .kr, .kt, .m, .s, .na, .nb, .nc, .no, .nd, .ni, .ne, .nf, .nl, .nn, .nt, .nv, .ow, .w, .mf, .mh, .mi, .mo, .sb, .sc, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss, .bp, .vc, .vg, .vi, .il" ).parent( "pre" ).css( "border", "1px solid #DEDEDE" );
+    </script>
+
+    
+    <!-- Load Google Analytics -->
+    <script>
+        /*
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-66582-32', 'auto');
+        ga('send', 'pageview');
+        */
+    </script>
+    <!-- End of Google Analytics -->
+
+    <!-- Bootstrap core JavaScript
+      ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../theme/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../theme/js/ie10-viewport-bug-workaround.js"></script>
+
+
+</body>
+
+</html>

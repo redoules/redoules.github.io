@@ -161,12 +161,12 @@
 
 <div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">18</span><span class="p">]</span>
 <span class="n">Q1</span><span class="p">,</span> <span class="n">Q2</span><span class="p">,</span> <span class="n">Q3</span> <span class="o">=</span> <span class="n">quartiles</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Sample : {L}</span><span class="se">\n</span><span class="s2">Q1 : {Q1}, Q2 : {Q2}, Q3 : {Q3}&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sample : </span><span class="si">{L}</span><span class="se">\n</span><span class="s2">Q1 : </span><span class="si">{Q1}</span><span class="s2">, Q2 : </span><span class="si">{Q2}</span><span class="s2">, Q3 : </span><span class="si">{Q3}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="n">Sample</span> <span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
-<span class="n">Q1</span> <span class="p">:</span> <span class="mi">6</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="n">Q2</span> <span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="n">Q3</span> <span class="p">:</span> <span class="mi">16</span><span class="p">.</span><span class="mi">0</span>
+<div class="highlight"><pre><span></span><span class="err">Sample : [3, 7, 8, 5, 12, 14, 21, 13, 18]</span>
+<span class="err">Q1 : 6.0, Q2 : 12, Q3 : 16.0</span>
 </pre></div>
 
 
@@ -174,11 +174,11 @@
 <h3>Definition</h3>
 <p>The interquartile range of an array is the difference between its first (Q1) and third (Q3) quartiles. Hence the interquartile range is Q3-Q1</p>
 <h3>Implementation in python without using the scientific libraries</h3>
-<div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Interquatile range : {Q3-Q1}&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Interquatile range : {Q3-Q1}&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="n">Interquatile</span> <span class="n">range</span> <span class="p">:</span> <span class="mi">10</span><span class="p">.</span><span class="mi">0</span>
+<div class="highlight"><pre><span></span><span class="err">Interquatile range : 10.0</span>
 </pre></div>
 
 
@@ -199,11 +199,11 @@
 <span class="n">std</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
     <span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
     <span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;The distribution {X} has a standard deviation of {std}&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The distribution </span><span class="si">{X}</span><span class="s2"> has a standard deviation of </span><span class="si">{std}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">distribution</span> <span class="p">[</span><span class="mi">400</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span><span class="p">]</span> <span class="n">has</span> <span class="n">a</span> <span class="n">standard</span> <span class="n">deviation</span> <span class="k">of</span> <span class="mi">14</span><span class="p">.</span><span class="mi">142135623730951</span>
+<div class="highlight"><pre><span></span><span class="err">The distribution [400.0, 100.0, 0.0, 400.0, 100.0] has a standard deviation of 14.142135623730951</span>
 </pre></div>
 </div>
     <aside>
@@ -219,7 +219,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 107 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

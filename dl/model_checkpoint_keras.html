@@ -128,7 +128,7 @@
 <p>Let's see how we can save the model weights after every epoch. 
 Let's first import some libraries</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">keras</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 
 
@@ -183,8 +183,8 @@ Let's first import some libraries</p>
 <div class="highlight"><pre><span></span><span class="n">save_to_hdf5</span> <span class="o">=</span> <span class="n">ModelCheckpoint</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;my_model.h5&quot;</span><span class="p">,</span>
                                <span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;acc&#39;</span><span class="p">,</span>
                                <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                               <span class="n">save_best_only</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                               <span class="n">save_weights_only</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                               <span class="n">save_best_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">save_weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
                                <span class="n">period</span><span class="o">=</span><span class="mi">1</span>
                               <span class="p">)</span>
@@ -213,13 +213,13 @@ Let's first import some libraries</p>
 
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span> 
 <span class="k">if</span> <span class="s2">&quot;my_model.h5&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">()</span> <span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The model is saved to my_model.h5&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The model is saved to my_model.h5&quot;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;no model saved to disk&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;no model saved to disk&#39;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">model</span> <span class="k">is</span> <span class="n">saved</span> <span class="k">to</span> <span class="n">my_model</span><span class="p">.</span><span class="n">h5</span>
+<div class="highlight"><pre><span></span><span class="err">The model is saved to my_model.h5</span>
 </pre></div>
 </div>
     <aside>
@@ -235,7 +235,7 @@ Let's first import some libraries</p>
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 107 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

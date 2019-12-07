@@ -127,9 +127,9 @@
 <div class='article_content'>
 <h2>general workflow</h2>
 <p>Let's see how we can get tensorboard to work with a Keras-based Tensorflow code.</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">keras</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 
 
@@ -185,23 +185,23 @@
 
 <p>During the training we can see the process, including the loss and the accuracy in the output.</p>
 <div class="highlight"><pre><span></span><span class="n">test_loss</span><span class="p">,</span> <span class="n">test_acc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Test accuracy : {test_acc}&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test accuracy : </span><span class="si">{test_acc}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="mi">10000</span><span class="o">/</span><span class="mi">10000</span> <span class="p">[</span><span class="o">==============================</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="n">s</span> <span class="mi">67</span><span class="n">us</span><span class="o">/</span><span class="n">step</span>
-<span class="n">Test</span> <span class="n">accuracy</span> <span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">8763</span>
+<div class="highlight"><pre><span></span><span class="err">10000/10000 [==============================] - 1s 67us/step</span>
+<span class="err">Test accuracy : 0.8763</span>
 </pre></div>
 
 
 <p>When the model finishes training, we get an accuracy of about 87%, and we output some sample predictions</p>
 <div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_images</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">.</span><span class="mi">8075149</span><span class="n">e</span><span class="o">-</span><span class="mi">05</span> <span class="mi">3</span><span class="p">.</span><span class="mi">6810281</span><span class="n">e</span><span class="o">-</span><span class="mi">08</span> <span class="mi">6</span><span class="p">.</span><span class="mi">3094416</span><span class="n">e</span><span class="o">-</span><span class="mi">07</span> <span class="mi">5</span><span class="p">.</span><span class="mi">1111499</span><span class="n">e</span><span class="o">-</span><span class="mi">07</span> <span class="mi">1</span><span class="p">.</span><span class="mi">6264809</span><span class="n">e</span><span class="o">-</span><span class="mi">06</span>
- <span class="mi">3</span><span class="p">.</span><span class="mi">5973577</span><span class="n">e</span><span class="o">-</span><span class="mi">04</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0840570</span><span class="n">e</span><span class="o">-</span><span class="mi">06</span> <span class="mi">3</span><span class="p">.</span><span class="mi">1453002</span><span class="n">e</span><span class="o">-</span><span class="mi">02</span> <span class="mi">1</span><span class="p">.</span><span class="mi">7062060</span><span class="n">e</span><span class="o">-</span><span class="mi">06</span> <span class="mi">9</span><span class="p">.</span><span class="mi">6816361</span><span class="n">e</span><span class="o">-</span><span class="mi">01</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><span class="err">[1.8075149e-05 3.6810281e-08 6.3094416e-07 5.1111499e-07 1.6264809e-06</span>
+<span class="err"> 3.5973577e-04 1.0840570e-06 3.1453002e-02 1.7062060e-06 9.6816361e-01]</span>
 </pre></div>
 
 
@@ -218,7 +218,7 @@
 <p>After having imported our data and defined our model, we specify a log directory where the training information will get written to. </p>
 <div class="highlight"><pre><span></span><span class="c1">#keep in mind that we already imported the data and defined the model.</span>
 
-<span class="n">tensorboard</span> <span class="o">=</span> <span class="n">TensorBoard</span><span class="p">(</span><span class="n">log_dir</span><span class="o">=</span><span class="n">f</span><span class="s2">&quot;logs/{time()}&quot;</span><span class="p">)</span>
+<span class="n">tensorboard</span> <span class="o">=</span> <span class="n">TensorBoard</span><span class="p">(</span><span class="n">log_dir</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;logs/{time()}&quot;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -235,7 +235,7 @@
 
 
 <p>TensorBoard will return a http address </p>
-<div class="highlight"><pre><span></span><span class="n">TensorBoard</span> <span class="mi">1</span><span class="p">.</span><span class="mi">12</span><span class="p">.</span><span class="mi">0</span> <span class="k">at</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">6006</span> <span class="p">(</span><span class="n">Press</span> <span class="n">CTRL</span><span class="o">+</span><span class="k">C</span> <span class="k">to</span> <span class="n">quit</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="err">TensorBoard 1.12.0 at http://localhost:6006 (Press CTRL+C to quit)</span>
 </pre></div>
 
 
@@ -280,7 +280,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 107 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

@@ -146,17 +146,17 @@ For a continuous probability distribution, the median is the value such that a n
 
 <span class="k">def</span> <span class="nf">mode</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="n">dico</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="n">data</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="p">))}</span>
-    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
 
 <div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">64630</span><span class="p">,</span><span class="mi">11735</span><span class="p">,</span><span class="mi">14216</span><span class="p">,</span><span class="mi">99233</span><span class="p">,</span><span class="mi">14470</span><span class="p">,</span><span class="mi">4978</span><span class="p">,</span><span class="mi">73429</span><span class="p">,</span><span class="mi">38120</span><span class="p">,</span><span class="mi">51135</span><span class="p">,</span><span class="mi">67060</span><span class="p">,</span> <span class="mi">4978</span><span class="p">,</span> <span class="mi">73429</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Sample : {L}</span><span class="se">\n</span><span class="s2">Mean : {mean(L)}, Median : {median(L)}, Mode : {mode(L)}&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sample : </span><span class="si">{L}</span><span class="se">\n</span><span class="s2">Mean : {mean(L)}, Median : {median(L)}, Mode : {mode(L)}&quot;</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="n">Sample</span> <span class="p">:</span> <span class="p">[</span><span class="mi">64630</span><span class="p">,</span> <span class="mi">11735</span><span class="p">,</span> <span class="mi">14216</span><span class="p">,</span> <span class="mi">99233</span><span class="p">,</span> <span class="mi">14470</span><span class="p">,</span> <span class="mi">4978</span><span class="p">,</span> <span class="mi">73429</span><span class="p">,</span> <span class="mi">38120</span><span class="p">,</span> <span class="mi">51135</span><span class="p">,</span> <span class="mi">67060</span><span class="p">,</span> <span class="mi">4978</span><span class="p">,</span> <span class="mi">73429</span><span class="p">]</span>
-<span class="n">Mean</span> <span class="p">:</span> <span class="mi">43117</span><span class="p">.</span><span class="mi">75</span><span class="p">,</span> <span class="n">Median</span> <span class="p">:</span> <span class="mi">44627</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="k">Mode</span> <span class="p">:</span> <span class="mi">4978</span>
+<div class="highlight"><pre><span></span><span class="err">Sample : [64630, 11735, 14216, 99233, 14470, 4978, 73429, 38120, 51135, 67060, 4978, 73429]</span>
+<span class="err">Mean : 43117.75, Median : 44627.5, Mode : 4978</span>
 </pre></div>
 
 
@@ -165,11 +165,11 @@ For a continuous probability distribution, the median is the value such that a n
 <div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">20</span><span class="p">]</span>
 <span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
 <span class="n">sum_X</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="o">*</span><span class="n">w</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">w</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">weights</span><span class="p">)])</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="n">sum_X</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">)),</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="n">sum_X</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">)),</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="mi">32</span><span class="p">.</span><span class="mi">0</span>
+<div class="highlight"><pre><span></span><span class="err">32.0</span>
 </pre></div>
 </div>
     <aside>
@@ -185,7 +185,7 @@ For a continuous probability distribution, the median is the value such that a n
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 107 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 111 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.
