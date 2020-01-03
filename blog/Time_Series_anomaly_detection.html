@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>12/19 Time Series anomaly detection - Blog</title>
+    <title>Time Series anomaly detection - Blog</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -112,7 +112,7 @@
 <section id="content" class="body">
     <header>
     <h1>
-      12/19 Time Series anomaly detection
+      Time Series anomaly detection
     </h1>
 <ol class="breadcrumb">
     <li>
@@ -138,50 +138,81 @@
 <h2>Feature extraction</h2>
 <p>This represent the most important part of the analysis.
 Either you use knowledge of the experts, intuition of literatures (especially for bearing and rotating machines).</p>
-<p>Or you perform an automated feature extraction using packages such as :
- * [HTCSA (highly comparative time-series analysis)]https://github.com/benfulcher/hctsa) is a library implementing more than 7000 features (use pyopy for Python on Linux and OSX). It allows to normalize and clster the data, produce low dimensional representation of the data, identify and discriminate features between different classes of time series, learn multivariate classification models, vizualise the data, etc.
- * <a href="https://github.com/chlubba/catch22">Catch22</a> reduces the 7000 features coded in HTCSA to the 22 that produced the best results across 93 real world time-series datasets. 
- * <a href="https://github.com/blue-yonder/tsfresh">tsfresh</a> is a package that automatically calculates a large number of time series characteristics and contains methods to evaluate the explaining power and importance of such characteristics for regression or classification tasks</p>
+<p>Or you perform an automated feature extraction using packages such as :</p>
+<ul>
+<li><a href="https://github.com/benfulcher/hctsa">HTCSA (highly comparative time-series analysis)</a> is a library implementing more than 7000 features (use pyopy for Python on Linux and OSX). It allows to normalize and clster the data, produce low dimensional representation of the data, identify and discriminate features between different classes of time series, learn multivariate classification models, vizualise the data, etc.</li>
+<li><a href="https://github.com/chlubba/catch22">Catch22</a> reduces the 7000 features coded in HTCSA to the 22 that produced the best results across 93 real world time-series datasets. </li>
+<li><a href="https://github.com/blue-yonder/tsfresh">tsfresh</a> is a package that automatically calculates a large number of time series characteristics and contains methods to evaluate the explaining power and importance of such characteristics for regression or classification tasks</li>
+</ul>
 <p>A combinaison of both automatically extracted knowledge and human knowledge can be combined. For instance, you can filter the spikes with a rolling median and then use catch22 on the resulting data. Or you can in parallel use your knowledge about bearing degradation and some automatically extracted feature.</p>
 <h2>Unsupervised Anomaly Detection algorithms</h2>
 <p>When you are using unsupervised anomaly detection algorithm you postulate that the majority is normal and you try to find outliers. Those outliers are the anomalies. This approach is useful when you only have unlabeled data.  </p>
-<p>Algorithms used in this case are often :
- * nearest neighbor / density based :
-     * Global : K-Nearest Neighbor (K-NN), DBSCAN
-     * Local : Local Outlier Factor (LOF)
- * Clustering based:
-     * Global : Cluster Based Local Outlier Factor (CBLOF/uCBLOF)
-     * Local : Local Density Cluster-based Outlier Factor (LDCOF)
-The tricky part is to set k, the number of clusters and the other hyperparameters.</p>
+<p>Algorithms used in this case are often :</p>
+<ul>
+<li>
+<p>nearest neighbor / density based :</p>
+<ul>
+<li>Global : K-Nearest Neighbor (K-NN), DBSCAN</li>
+<li>Local : Local Outlier Factor (LOF)</li>
+</ul>
+</li>
+<li>
+<p>Clustering based:</p>
+<ul>
+<li>Global : Cluster Based Local Outlier Factor (CBLOF/uCBLOF)</li>
+<li>Local : Local Density Cluster-based Outlier Factor (LDCOF)</li>
+</ul>
+</li>
+</ul>
+<p>The tricky part is to set k, the number of clusters and the other hyperparameters.</p>
 <p>Furthermore, this kind of alogrithms perform poorly against persitant changes because the normal and anormal states would be in two clusters but they would be identified as normal by the algorithm since they represent the majority of the data. </p>
 <h2>Semi-supervised Anomaly Detection algorithms</h2>
 <p>The first approach is to train the algorithm on healthy data and detect an anomaly when the distance between the measured point and the healthy cluster exceeds a value.
  * Distance based measures to healthy states such as the measure of the Mahalanobis distance
 <img alt="Mahalanobis distance" src="../images/time_series_anomaly_detection/distancefeatured-1.png"></p>
-<p>You can also model the surface of the healthy state and detect an anomaly when the measure crosses the surface : 
- * Rich Representation of Healthy State:
-     * One-class Support Vector Machines (SVM)
-     * One-class Neuronal Networks
-Finally you can perform a dimension reduction of the space by finding new basis function of the state, and keeping only the n most important feature vector. An anomaly is detected when the reconstruction error grows because it is not part of what is considered normal.
- * Reconstruction Error with Basis Functions :
-     * Principal Component Analysis (PCA)
-     * Neuronal Network (Autoencoders)</p>
+<p>You can also model the surface of the healthy state and detect an anomaly when the measure crosses the surface : </p>
+<ul>
+<li>
+<p>Rich Representation of Healthy State:</p>
+<ul>
+<li>One-class Support Vector Machines (SVM)</li>
+<li>One-class Neuronal Networks</li>
+</ul>
+</li>
+</ul>
+<p>Finally you can perform a dimension reduction of the space by finding new basis function of the state, and keeping only the n most important feature vector. An anomaly is detected when the reconstruction error grows because it is not part of what is considered normal.</p>
+<ul>
+<li>
+<p>Reconstruction Error with Basis Functions :</p>
+<ul>
+<li>Principal Component Analysis (PCA)</li>
+<li>Neuronal Network (Autoencoders)</li>
+</ul>
+</li>
+</ul>
 <p>Very important : Do not use dimensionality reduction (like PCA) before the anomaly detection because you would throw away all the anomalies. </p>
+<p><img alt="PCA" src="../images/time_series_anomaly_detection/GaussianScatterPCA.svg"></p>
 <p>This kind of semi supervised approach is strongly dependent on the data. Hence if you don't have a healthy state in the training set then the output of the algorithm won't be useful.</p>
 <h2>Supervised anomaly detection algorithm</h2>
 <p>Here, you apply classical classification methods for machine learning. However, be careful when training your classifiers because you have very imbalanced classes.</p>
 <h2>Conclusions</h2>
 <p>Anomalies may or may not be harmful! Hence you have to focus on the one that can damage your system.
 Anomaly interpretation depend a lot on the context (spike, progressive change, persitent change)
-Questions for feature extraction (collective, contextual or point like):
- * which external influence ?
- * which kind of events should be detected ? 
-Questions for choice of algorithm :
- * Does data have labelled events ? -&gt; Supervised learning
- * Is healthy state marked ? -&gt; Semi Supervised
- * If no knowledge at all -&gt; Unsupervised
-Questions for model deployment
- * When is information needed (real-time vs historic)?</p>
+Questions for feature extraction (collective, contextual or point like):</p>
+<ul>
+<li>which external influence ?</li>
+<li>which kind of events should be detected ? </li>
+</ul>
+<p>Questions for choice of algorithm :</p>
+<ul>
+<li>Does data have labelled events ? -&gt; Supervised learning</li>
+<li>Is healthy state marked ? -&gt; Semi Supervised</li>
+<li>If no knowledge at all -&gt; Unsupervised</li>
+</ul>
+<p>Questions for model deployment</p>
+<ul>
+<li>When is information needed (real-time vs historic)?</li>
+</ul>
 </div>
     <aside>
     <div class="bug-reporting__panel">
