@@ -32,7 +32,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-        
+
 
     <meta name="tags" content="Bash" />
 
@@ -125,69 +125,142 @@
 </ol>
 </header>
 <div class='article_content'>
-<div class="highlight"><pre><span></span><span class="c1">############</span>
-<span class="c1"># Anaconda #</span>
-<span class="c1">############</span>
+<div class="highlight"><pre><span></span><span class="c1"># ~/.bashrc: executed by bash(1) for non-login shells.</span>
+<span class="c1"># see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)</span>
+<span class="c1"># for examples</span>
 
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/station/guillaume/anaconda3/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
-<span class="nb">alias</span> <span class="nv">python</span><span class="o">=</span><span class="s1">&#39;/station/guillaume/anaconda3/bin/python&#39;</span>
+<span class="c1"># If not running interactively, don&#39;t do anything</span>
+<span class="k">case</span> <span class="nv">$-</span> in
+    *i*<span class="o">)</span> <span class="p">;;</span>
+      *<span class="o">)</span> <span class="k">return</span><span class="p">;;</span>
+<span class="k">esac</span>
 
+<span class="c1"># don&#39;t put duplicate lines or lines starting with space in the history.</span>
+<span class="c1"># See bash(1) for more options</span>
+<span class="nv">HISTCONTROL</span><span class="o">=</span>ignoreboth
 
-<span class="c1">#########</span>
-<span class="c1"># Alias #</span>
-<span class="c1">#########</span>
+<span class="c1"># append to the history file, don&#39;t overwrite it</span>
+<span class="nb">shopt</span> -s histappend
 
+<span class="c1"># for setting history length see HISTSIZE and HISTFILESIZE in bash(1)</span>
+<span class="nv">HISTSIZE</span><span class="o">=</span><span class="m">1000</span>
+<span class="nv">HISTFILESIZE</span><span class="o">=</span><span class="m">2000</span>
 
+<span class="c1"># check the window size after each command and, if necessary,</span>
+<span class="c1"># update the values of LINES and COLUMNS.</span>
+<span class="nb">shopt</span> -s checkwinsize
 
-<span class="nb">alias</span> <span class="nv">ding</span><span class="o">=</span><span class="s1">&#39;echo -e &quot;\a&quot;&#39;</span>
-<span class="nb">alias</span> <span class="nv">calc</span><span class="o">=</span><span class="s1">&#39;python -ic &quot;from __future__ import division; from math import *&quot;&#39;</span>
-<span class="nb">alias</span> <span class="nv">h</span><span class="o">=</span><span class="s2">&quot;history|grep &quot;</span>
-<span class="nb">alias</span> <span class="nv">f</span><span class="o">=</span><span class="s2">&quot;find . |grep &quot;</span>
-<span class="nb">alias</span> <span class="nv">p</span><span class="o">=</span><span class="s2">&quot;ps aux |grep &quot;</span>
-<span class="nb">alias</span> <span class="nv">cdl</span><span class="o">=</span><span class="s2">&quot;cd /data/guillaume&quot;</span>
-<span class="nb">alias</span> <span class="nv">cp</span><span class="o">=</span><span class="s2">&quot;rsync -avz --progress&quot;</span>
-<span class="nb">alias</span> <span class="nv">grep</span><span class="o">=</span><span class="s2">&quot;grep --color=auto&quot;</span>
-<span class="nb">alias</span> <span class="nv">ls</span><span class="o">=</span><span class="s2">&quot;ls  -hN --color=auto --group-directories-first&quot;</span>
-<span class="nb">alias</span> <span class="nv">ll</span><span class="o">=</span><span class="s2">&quot;ls -hal&quot;</span>
-<span class="nb">alias</span> <span class="nv">sv</span><span class="o">=</span><span class="s2">&quot;ssh compute_cluster&quot;</span>
-<span class="nb">alias</span> <span class="nv">ms</span><span class="o">=</span><span class="s2">&quot;ls&quot;</span> 
+<span class="c1"># If set, the pattern &quot;**&quot; used in a pathname expansion context will</span>
+<span class="c1"># match all files and zero or more directories and subdirectories.</span>
+<span class="c1">#shopt -s globstar</span>
 
-<span class="nb">alias</span> <span class="nv">jl</span><span class="o">=</span><span class="s2">&quot;jupyter lab&quot;</span>
-<span class="nb">alias</span> <span class="nv">lst</span><span class="o">=</span><span class="s2">&quot;jupyter notebook list&quot;</span>
+<span class="c1"># make less more friendly for non-text input files, see lesspipe(1)</span>
+<span class="o">[</span> -x /usr/bin/lesspipe <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span><span class="nv">SHELL</span><span class="o">=</span>/bin/sh lesspipe<span class="k">)</span><span class="s2">&quot;</span>
 
+<span class="c1"># set variable identifying the chroot you work in (used in the prompt below)</span>
+<span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="si">${</span><span class="nv">debian_chroot</span><span class="k">:-</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -r /etc/debian_chroot <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">debian_chroot</span><span class="o">=</span><span class="k">$(</span>cat /etc/debian_chroot<span class="k">)</span>
+<span class="k">fi</span>
 
+<span class="c1"># set a fancy prompt (non-color, unless we know we &quot;want&quot; color)</span>
+<span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$TERM</span><span class="s2">&quot;</span> in
+    xterm-color<span class="p">|</span>*-256color<span class="o">)</span> <span class="nv">color_prompt</span><span class="o">=</span>yes<span class="p">;;</span>
+<span class="k">esac</span>
 
-<span class="c1">##########################</span>
-<span class="c1"># bashrc personnalisation#</span>
-<span class="c1">##########################</span>
-
+<span class="c1"># uncomment for a colored prompt, if the terminal has the capability; turned</span>
+<span class="c1"># off by default to not distract the user: the focus in a terminal window</span>
+<span class="c1"># should be on the output of commands, not on the prompt</span>
 <span class="nv">force_color_prompt</span><span class="o">=</span>yes
-<span class="nb">export</span> <span class="nv">EDITOR</span><span class="o">=</span>nano
-<span class="nb">export</span> <span class="nv">BROWSER</span><span class="o">=</span><span class="s2">&quot;firefox &#39;%s&#39; &amp;&quot;</span>
+
 <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;</span><span class="nv">$force_color_prompt</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="k">if</span> <span class="o">[</span> -x /usr/bin/tput <span class="o">]</span> <span class="o">&amp;&amp;</span> tput setaf <span class="m">1</span> &gt;<span class="p">&amp;</span>/dev/null<span class="p">;</span> <span class="k">then</span>
-        <span class="c1"># We have color support; assume it&#39;s compliant with Ecma-48</span>
-        <span class="c1"># (ISO/IEC-6429). (Lack of such support is extremely rare, and such</span>
-        <span class="c1"># a case would tend to support setf rather than setaf.)</span>
-        <span class="nv">color_prompt</span><span class="o">=</span>yes
+    <span class="c1"># We have color support; assume it&#39;s compliant with Ecma-48</span>
+    <span class="c1"># (ISO/IEC-6429). (Lack of such support is extremely rare, and such</span>
+    <span class="c1"># a case would tend to support setf rather than setaf.)</span>
+    <span class="nv">color_prompt</span><span class="o">=</span>yes
     <span class="k">else</span>
-        <span class="nv">color_prompt</span><span class="o">=</span>
+    <span class="nv">color_prompt</span><span class="o">=</span>
     <span class="k">fi</span>
 <span class="k">fi</span>
 
 <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$color_prompt</span><span class="s2">&quot;</span> <span class="o">=</span> yes <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="c1">#\h : hostname</span>
-    <span class="c1">#\u : user</span>
-    <span class="c1">#\w : current working directory</span>
-    <span class="c1">#\d : date</span>
-    <span class="c1">#\t : time</span>
+    <span class="nv">PS1</span><span class="o">=</span><span class="s1">&#39;${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ &#39;</span>
+<span class="k">else</span>
+    <span class="nv">PS1</span><span class="o">=</span><span class="s1">&#39;${debian_chroot:+($debian_chroot)}\u@\h:\w\$ &#39;</span>
+<span class="k">fi</span>
+<span class="nb">unset</span> color_prompt force_color_prompt
 
-    <span class="nv">yellow</span><span class="o">=</span><span class="m">226</span>
-    <span class="nv">green</span><span class="o">=</span><span class="m">83</span>
-    <span class="nv">pink</span><span class="o">=</span><span class="m">198</span>
-    <span class="nv">blue</span><span class="o">=</span><span class="m">34</span>
+<span class="c1"># If this is an xterm set the title to user@host:dir</span>
+<span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$TERM</span><span class="s2">&quot;</span> in
+xterm*<span class="p">|</span>rxvt*<span class="o">)</span>
+    <span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;\[\e]0;</span><span class="si">${</span><span class="nv">debian_chroot</span><span class="p">:+(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="si">}</span><span class="s2">\u@\h: \w\a\]</span><span class="nv">$PS1</span><span class="s2">&quot;</span>
+    <span class="p">;;</span>
+*<span class="o">)</span>
+    <span class="p">;;</span>
+<span class="k">esac</span>
 
-   <span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;\[\033[38;5;22m\]\u\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;163m\]@\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;22m\]\h\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;162m\]:\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;172m\]{\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;39m\]\w\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;172m\]}\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]\[\033[38;5;162m\]&gt;\[</span><span class="k">$(</span>tput sgr0<span class="k">)</span><span class="s2">\]&quot;</span>
+<span class="c1"># enable color support of ls and also add handy aliases</span>
+<span class="k">if</span> <span class="o">[</span> -x /usr/bin/dircolors <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">test</span> -r ~/.dircolors <span class="o">&amp;&amp;</span> <span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>dircolors -b ~/.dircolors<span class="k">)</span><span class="s2">&quot;</span> <span class="o">||</span> <span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>dircolors -b<span class="k">)</span><span class="s2">&quot;</span>
+    <span class="nb">alias</span> <span class="nv">ls</span><span class="o">=</span><span class="s1">&#39;ls --color=auto&#39;</span>
+    <span class="c1">#alias dir=&#39;dir --color=auto&#39;</span>
+    <span class="c1">#alias vdir=&#39;vdir --color=auto&#39;</span>
+
+    <span class="nb">alias</span> <span class="nv">grep</span><span class="o">=</span><span class="s1">&#39;grep --color=auto&#39;</span>
+    <span class="nb">alias</span> <span class="nv">fgrep</span><span class="o">=</span><span class="s1">&#39;fgrep --color=auto&#39;</span>
+    <span class="nb">alias</span> <span class="nv">egrep</span><span class="o">=</span><span class="s1">&#39;egrep --color=auto&#39;</span>
+<span class="k">fi</span>
+
+<span class="c1"># colored GCC warnings and errors</span>
+<span class="c1">#export GCC_COLORS=&#39;error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01&#39;</span>
+
+<span class="c1"># some more ls aliases</span>
+<span class="nb">alias</span> <span class="nv">ll</span><span class="o">=</span><span class="s1">&#39;ls -alF&#39;</span>
+<span class="nb">alias</span> <span class="nv">la</span><span class="o">=</span><span class="s1">&#39;ls -A&#39;</span>
+<span class="nb">alias</span> <span class="nv">l</span><span class="o">=</span><span class="s1">&#39;ls -CF&#39;</span>
+
+<span class="c1"># Add an &quot;alert&quot; alias for long running commands.  Use like so:</span>
+<span class="c1">#   sleep 10; alert</span>
+<span class="nb">alias</span> <span class="nv">alert</span><span class="o">=</span><span class="s1">&#39;notify-send --urgency=low -i &quot;$([ $? = 0 ] &amp;&amp; echo terminal || echo error)&quot; &quot;$(history|tail -n1|sed -e &#39;</span><span class="se">\&#39;</span><span class="s1">&#39;s/^\s*[0-9]\+\s*//;s/[;&amp;|]\s*alert$//&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;)&quot;&#39;</span>
+
+<span class="c1"># Alias definitions.</span>
+<span class="c1"># You may want to put all your additions into a separate file like</span>
+<span class="c1"># ~/.bash_aliases, instead of adding them here directly.</span>
+<span class="c1"># See /usr/share/doc/bash-doc/examples in the bash-doc package.</span>
+
+<span class="k">if</span> <span class="o">[</span> -f ~/.bash_aliases <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    . ~/.bash_aliases
+<span class="k">fi</span>
+
+<span class="c1"># enable programmable completion features (you don&#39;t need to enable</span>
+<span class="c1"># this, if it&#39;s already enabled in /etc/bash.bashrc and /etc/profile</span>
+<span class="c1"># sources /etc/bash.bashrc).</span>
+<span class="k">if</span> ! <span class="nb">shopt</span> -oq posix<span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[</span> -f /usr/share/bash-completion/bash_completion <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    . /usr/share/bash-completion/bash_completion
+  <span class="k">elif</span> <span class="o">[</span> -f /etc/bash_completion <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    . /etc/bash_completion
+  <span class="k">fi</span>
+<span class="k">fi</span>
+
+
+<span class="c1"># export PATH=&quot;/home/guillaume/anaconda3/bin:$PATH&quot;  # commented out by conda initialize</span>
+<span class="c1">#source activate base</span>
+<span class="c1"># &gt;&gt;&gt; conda initialize &gt;&gt;&gt;</span>
+<span class="c1"># !! Contents within this block are managed by &#39;conda init&#39; !!</span>
+<span class="nv">__conda_setup</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;/home/guillaume/anaconda3/bin/conda&#39;</span> <span class="s1">&#39;shell.bash&#39;</span> <span class="s1">&#39;hook&#39;</span> <span class="m">2</span>&gt; /dev/null<span class="k">)</span><span class="s2">&quot;</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">eval</span> <span class="s2">&quot;</span><span class="nv">$__conda_setup</span><span class="s2">&quot;</span>
+<span class="k">else</span>
+    <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&quot;/home/guillaume/anaconda3/etc/profile.d/conda.sh&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        . <span class="s2">&quot;/home/guillaume/anaconda3/etc/profile.d/conda.sh&quot;</span>
+    <span class="k">else</span>
+        <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/home/guillaume/anaconda3/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+    <span class="k">fi</span>
+<span class="k">fi</span>
+<span class="nb">unset</span> __conda_setup
+<span class="c1"># &lt;&lt;&lt; conda initialize &lt;&lt;&lt;</span>
+<span class="nb">source</span> activate base
 </pre></div>
 </div>
     <aside>
@@ -203,7 +276,7 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 115 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 117 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

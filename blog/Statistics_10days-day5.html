@@ -32,7 +32,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-        
+
 
     <meta name="tags" content="Basics" />
 
@@ -143,7 +143,7 @@
 <span class="n">l</span> <span class="o">=</span> <span class="mf">2.5</span>
 <span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that a random variable X following a Poisson distribution of mean </span><span class="si">{l}</span><span class="s1"> equals </span><span class="si">{k}</span><span class="s1"> : {round(poisson(l,k),3)}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that a random variable X following a Poisson distribution of mean </span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s1"> equals </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1"> : </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">poisson</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -174,8 +174,8 @@ Since the expectation is a linear operator :
 <span class="n">CostX</span> <span class="o">=</span> <span class="mi">160</span> <span class="o">+</span> <span class="mi">40</span><span class="o">*</span><span class="p">(</span><span class="n">averageX</span> <span class="o">+</span> <span class="n">averageX</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">CostY</span> <span class="o">=</span> <span class="mi">128</span> <span class="o">+</span> <span class="mi">40</span><span class="o">*</span><span class="p">(</span><span class="n">averageY</span> <span class="o">+</span> <span class="n">averageY</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Expected cost to run machine A : {round(CostX, 3)}&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Expected cost to run machine A : {round(CostY, 3)}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Expected cost to run machine A : </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">CostX</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Expected cost to run machine A : </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">CostY</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -202,7 +202,7 @@ Between 20 and 22 hours?</p>
 
 <span class="n">mean</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">sd</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that the car is built in less than 19.5 hours : {round(cumulative(19.5,mean,sd),3)}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that the car is built in less than 19.5 hours : </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">cumulative</span><span class="p">(</span><span class="mf">19.5</span><span class="p">,</span><span class="n">mean</span><span class="p">,</span><span class="n">sd</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -212,7 +212,7 @@ Between 20 and 22 hours?</p>
 
 <p>Similarly, the probability that a car is built between 20 and 22hours can be computed thanks to the cumulative density function:</p>
 <div class="math">$$P(20\leq x\leq 22) = F_X(22)-F_X(20)$$</div>
-<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that the car is built between 20 and 22 hours : {round(cumulative(22,mean,sd)-cumulative(20,mean,sd),3)}&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that the car is built between 20 and 22 hours : </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">cumulative</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span><span class="n">mean</span><span class="p">,</span><span class="n">sd</span><span class="p">)</span><span class="o">-</span><span class="n">cumulative</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="n">mean</span><span class="p">,</span><span class="n">sd</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -233,7 +233,7 @@ Between 20 and 22 hours?</p>
 <div class="math">$$P(X\gt80) = 1- F_X(80)$$</div>
 <div class="highlight"><pre><span></span><span class="n">mean</span> <span class="o">=</span> <span class="mi">70</span>
 <span class="n">sd</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that the the student scored higher than 80 : {round(1- cumulative(80,mean,sd),3)}&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that the the student scored higher than 80 : </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span> <span class="n">cumulative</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span><span class="n">mean</span><span class="p">,</span><span class="n">sd</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -245,7 +245,7 @@ Between 20 and 22 hours?</p>
 </p>
 <div class="math">$$P(X\gt60) = 1- P(X\lt60)$$</div>
 <div class="math">$$P(X\gt80) = 1- F_X(60)$$</div>
-<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that the the student passed the test : {round(1- cumulative(60,mean,sd),3)}&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that the the student passed the test : </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span> <span class="n">cumulative</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="n">mean</span><span class="p">,</span><span class="n">sd</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -255,7 +255,7 @@ Between 20 and 22 hours?</p>
 
 <p>Probability that they failed : </p>
 <div class="math">$$P(X\lt60) = F_X(60)$$</div>
-<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that the student failed the test: {round(cumulative(60,mean,sd),3)}&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Probability that the student failed the test: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">cumulative</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="n">mean</span><span class="p">,</span><span class="n">sd</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -331,7 +331,7 @@ Between 20 and 22 hours?</p>
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 115 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 117 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

@@ -32,7 +32,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-        
+
 
     <meta name="tags" content="Data ingestion" />
     <meta name="tags" content="web scrapping" />
@@ -217,15 +217,15 @@ BeautifulSoup is a package we will use to parse the html of the webpage opened i
     <span class="k">for</span> <span class="n">coordY</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lat_begin</span><span class="p">,</span> <span class="n">lat_end</span><span class="p">,</span> <span class="n">nb</span><span class="p">):</span>
 
 
-        <span class="n">url_journey1</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://www.google.com/maps/dir/</span><span class="si">{coordX}</span><span class="s2">,</span><span class="si">{coordY}</span><span class="s2">/@</span><span class="si">{longitudeDestination1}</span><span class="s2">,</span><span class="si">{latitudeDestination1}</span><span class="s2">,12z/data=!3m1!4b1!4m14!4m13!1m0!1m5!1m1!1s0x47e67bff078f6575:0x95df2619f9304bd7!2m2!1d2.1825421!2d48.778384!2m4!2b1!6e0!7e2!8j1570521600!3e0&quot;</span>
-        <span class="n">url_journey2</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;https://www.google.com/maps/dir/</span><span class="si">{coordX}</span><span class="s1">,</span><span class="si">{coordY}</span><span class="s1">/@</span><span class="si">{longitudeDestination2}</span><span class="s1">,</span><span class="si">{latitudeDestination2}</span><span class="s1">,14z/data=!3m1!4b1!4m14!4m13!1m0!1m5!1m1!1s0x47e665df0cb0b919:0x5f513cdf2fe6d39d!2m2!1d2.2572779!2d48.9368666!2m4!2b1!6e0!7e2!8j1570521600!3e0&#39;</span>
+        <span class="n">url_journey1</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://www.google.com/maps/dir/</span><span class="si">{</span><span class="n">coordX</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">coordY</span><span class="si">}</span><span class="s2">/@</span><span class="si">{</span><span class="n">longitudeDestination1</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">latitudeDestination1</span><span class="si">}</span><span class="s2">,12z/data=!3m1!4b1!4m14!4m13!1m0!1m5!1m1!1s0x47e67bff078f6575:0x95df2619f9304bd7!2m2!1d2.1825421!2d48.778384!2m4!2b1!6e0!7e2!8j1570521600!3e0&quot;</span>
+        <span class="n">url_journey2</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;https://www.google.com/maps/dir/</span><span class="si">{</span><span class="n">coordX</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">coordY</span><span class="si">}</span><span class="s1">/@</span><span class="si">{</span><span class="n">longitudeDestination2</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">latitudeDestination2</span><span class="si">}</span><span class="s1">,14z/data=!3m1!4b1!4m14!4m13!1m0!1m5!1m1!1s0x47e665df0cb0b919:0x5f513cdf2fe6d39d!2m2!1d2.2572779!2d48.9368666!2m4!2b1!6e0!7e2!8j1570521600!3e0&#39;</span>
 
         <span class="n">temps_user1</span> <span class="o">=</span> <span class="n">get_travel_time</span><span class="p">(</span><span class="n">url_journey1</span><span class="p">,</span> <span class="n">driver</span><span class="p">)</span>
         <span class="n">temps_user2</span> <span class="o">=</span> <span class="n">get_travel_time</span><span class="p">(</span><span class="n">url_journey2</span><span class="p">,</span> <span class="n">driver</span><span class="p">)</span>
 
         <span class="n">ctn</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Downloaded : {ctn/(nb*nb)*100}%&#39;</span><span class="p">)</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">coordX</span><span class="p">,</span> <span class="n">coordY</span><span class="p">,</span> <span class="n">temps_user1</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">temps_user2</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;https://www.google.com/maps/place/</span><span class="si">{coordX}</span><span class="s1">,</span><span class="si">{coordY}</span><span class="s1">&#39;</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Downloaded : </span><span class="si">{</span><span class="n">ctn</span><span class="o">/</span><span class="p">(</span><span class="n">nb</span><span class="o">*</span><span class="n">nb</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">coordX</span><span class="p">,</span> <span class="n">coordY</span><span class="p">,</span> <span class="n">temps_user1</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">temps_user2</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;https://www.google.com/maps/place/</span><span class="si">{</span><span class="n">coordX</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">coordY</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span>
 </pre></div>
 
 
@@ -524,7 +524,7 @@ And we do the same for he 10 points that minimize time for user 2, color them is
     <footer class="footer">
         <div class="container">
             <p class="text-muted">
-                <center>This project contains 115 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
+                <center>This project contains 117 pages and is available on <a href="https://github.com/redoules/redoules.github.io">GitHub</a>.
                 <br/>
                 Copyright &copy; Guillaume Redoulès,
                     <time datetime="2018">2018</time>.

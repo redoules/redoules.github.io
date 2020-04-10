@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Bayes' Theorem - Mathematics</title>
+    <title>Clear unused docker images - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
 
 
-    <meta name="tags" content="Statistics" />
+    <meta name="tags" content="Docker" />
 
 
 </head>
@@ -112,76 +112,78 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Bayes' Theorem
+      Clear unused docker images
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-10T12:29:00+01:00">
-            10 novembre 2018
+        <time class="published" datetime="2020-04-10T17:10:00+02:00">
+            10 avril 2020
         </time>
     </li>
-    <li>Mathematics</li>
-    <li>Statistics</li>
+    <li>Linux</li>
+    <li>Docker</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>Let A and B be two events such that P(A|B) denotes the probability of the occurrence of A given that B has occurred and denotes the probability of the occurrence B of given that A has occurred, then:</p>
-<div class="math">$$ P(A|B)=\frac{P(B|A)P(A)}{P(B)}$$</div>
-<div class="math">$$ P(A|B)=\frac{P(B|A)P(A)}{P(B|A)P(A)+P(B|A^c)P(A^c)}$$</div>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
+<p>Run the following command to clean the unused docker images</p>
+<div class="highlight"><pre><span></span>docker images -q <span class="p">|</span>xargs docker rmi
+</pre></div>
 
-    if (false) {
-        align = (screen.width < 768) ? "left" : align;
-        indent = (screen.width < 768) ? "0em" : indent;
-        linebreak = (screen.width < 768) ? 'true' : linebreak;
-    }
 
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}</script>
+<p>Before </p>
+<div class="highlight"><pre><span></span>bitcoin                   latest              7b35f12891e7        <span class="m">18</span> minutes ago      167MB
+&lt;none&gt;                    &lt;none&gt;              4b24b9dbbd9f        <span class="m">26</span> minutes ago      167MB
+&lt;none&gt;                    &lt;none&gt;              418b6137c28e        <span class="m">35</span> minutes ago      167MB
+debian                    stable-slim         e7e5f8b110eb        <span class="m">10</span> days ago         <span class="m">69</span>.2MB
+mempool/mempool           v1.0                794703676c98        <span class="m">11</span> days ago         <span class="m">1</span>.01GB
+drone/drone               latest              f2e0470417c3        <span class="m">2</span> months ago        <span class="m">67</span>.5MB
+eps                       latest              9c7be9265c84        <span class="m">2</span> months ago        458MB
+&lt;none&gt;                    &lt;none&gt;              54c483efd98e        <span class="m">2</span> months ago        458MB
+&lt;none&gt;                    &lt;none&gt;              306b5cda6db6        <span class="m">2</span> months ago        458MB
+influxdb                  latest              15b283775653        <span class="m">4</span> months ago        311MB
+mlflow                    latest              2390c1d0c9aa        <span class="m">5</span> months ago        946MB
+&lt;none&gt;                    &lt;none&gt;              5f54797bd3bc        <span class="m">5</span> months ago        946MB
+&lt;none&gt;                    &lt;none&gt;              e0d050cd4f39        <span class="m">5</span> months ago        946MB
+&lt;none&gt;                    &lt;none&gt;              cb544a7cbbf4        <span class="m">5</span> months ago        946MB
+&lt;none&gt;                    &lt;none&gt;              81d3d87e6e00        <span class="m">5</span> months ago        946MB
+&lt;none&gt;                    &lt;none&gt;              76deb458df92        <span class="m">5</span> months ago        946MB
+&lt;none&gt;                    &lt;none&gt;              ff5c93f1c05e        <span class="m">5</span> months ago        430MB
+&lt;none&gt;                    &lt;none&gt;              3ccee6bb3930        <span class="m">5</span> months ago        638MB
+&lt;none&gt;                    &lt;none&gt;              49104572fcb2        <span class="m">5</span> months ago        638MB
+&lt;none&gt;                    &lt;none&gt;              18875f41afe1        <span class="m">5</span> months ago        <span class="m">1</span>.22GB
+&lt;none&gt;                    &lt;none&gt;              93c114c8870f        <span class="m">5</span> months ago        <span class="m">1</span>.22GB
+&lt;none&gt;                    &lt;none&gt;              8e2959da3ce1        <span class="m">5</span> months ago        <span class="m">1</span>.22GB
+&lt;none&gt;                    &lt;none&gt;              a392e8be4b98        <span class="m">5</span> months ago        <span class="m">1</span>.22GB
+&lt;none&gt;                    &lt;none&gt;              11241beda07a        <span class="m">5</span> months ago        <span class="m">1</span>.22GB
+&lt;none&gt;                    &lt;none&gt;              23e94992e3e4        <span class="m">5</span> months ago        <span class="m">1</span>.2GB
+&lt;none&gt;                    &lt;none&gt;              e22cc69bbfde        <span class="m">5</span> months ago        <span class="m">1</span>.2GB
+&lt;none&gt;                    &lt;none&gt;              5d3b30cf7774        <span class="m">5</span> months ago        <span class="m">1</span>.2GB
+&lt;none&gt;                    &lt;none&gt;              d055ea146c1e        <span class="m">5</span> months ago        <span class="m">1</span>.2GB
+&lt;none&gt;                    &lt;none&gt;              8163fda4e56b        <span class="m">5</span> months ago        <span class="m">1</span>.2GB
+&lt;none&gt;                    &lt;none&gt;              b990dc02b0dc        <span class="m">5</span> months ago        <span class="m">1</span>.2GB
+&lt;none&gt;                    &lt;none&gt;              7f3f8a79a336        <span class="m">5</span> months ago        <span class="m">1</span>.2GB
+&lt;none&gt;                    &lt;none&gt;              4bc4af0d6774        <span class="m">5</span> months ago        <span class="m">1</span>.2GB
+redis                     latest              de25a81a5a0b        <span class="m">5</span> months ago        <span class="m">98</span>.2MB
+gitea/gitea               latest              9f07e22ee4b9        <span class="m">7</span> months ago        109MB
+ruimarinho/bitcoin-core   &lt;none&gt;              9a73f94058c2        <span class="m">7</span> months ago        168MB
+python                    <span class="m">3</span>.7.0               a187104266fb        <span class="m">18</span> months ago       922MB
+</pre></div>
+
+
+<p>After</p>
+<div class="highlight"><pre><span></span>REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+bitcoin             latest              7b35f12891e7        <span class="m">30</span> minutes ago      167MB
+debian              stable-slim         e7e5f8b110eb        <span class="m">10</span> days ago         <span class="m">69</span>.2MB
+mempool/mempool     v1.0                794703676c98        <span class="m">11</span> days ago         <span class="m">1</span>.01GB
+eps                 latest              9c7be9265c84        <span class="m">2</span> months ago        458MB
+influxdb            latest              15b283775653        <span class="m">4</span> months ago        311MB
+mlflow              latest              2390c1d0c9aa        <span class="m">5</span> months ago        946MB
+gitea/gitea         latest              9f07e22ee4b9        <span class="m">7</span> months ago        109MB
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>
+</pre></div>
 </div>
     <aside>
     <div class="bug-reporting__panel">

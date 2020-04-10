@@ -10,7 +10,7 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Bayes' Theorem - Mathematics</title>
+    <title>What's inside my .bashr_aliases ? - Linux</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,7 +34,7 @@
     <![endif]-->
 
 
-    <meta name="tags" content="Statistics" />
+    <meta name="tags" content="Bash" />
 
 
 </head>
@@ -112,76 +112,45 @@
 <section id="content" class="body">
     <header>
     <h1>
-      Bayes' Theorem
+      What's inside my .bashr_aliases ?
     </h1>
 <ol class="breadcrumb">
     <li>
-        <time class="published" datetime="2018-11-10T12:29:00+01:00">
-            10 novembre 2018
+        <time class="published" datetime="2020-04-10T17:14:00+02:00">
+            10 avril 2020
         </time>
     </li>
-    <li>Mathematics</li>
-    <li>Statistics</li>
+    <li>Linux</li>
+    <li>Bash</li>
 </ol>
 </header>
 <div class='article_content'>
-<p>Let A and B be two events such that P(A|B) denotes the probability of the occurrence of A given that B has occurred and denotes the probability of the occurrence B of given that A has occurred, then:</p>
-<div class="math">$$ P(A|B)=\frac{P(B|A)P(A)}{P(B)}$$</div>
-<div class="math">$$ P(A|B)=\frac{P(B|A)P(A)}{P(B|A)P(A)+P(B|A^c)P(A^c)}$$</div>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
+<div class="highlight"><pre><span></span><span class="nb">alias</span> <span class="nv">maj</span><span class="o">=</span><span class="s1">&#39;sudo apt update &amp;&amp; sudo apt upgrade -y&#39;</span>
+<span class="nb">alias</span> <span class="nv">ms</span><span class="o">=</span><span class="s1">&#39;ls&#39;</span>
+<span class="nb">alias</span> <span class="nv">nvtop</span><span class="o">=</span><span class="s1">&#39;watch nvidia-smi&#39;</span>
+<span class="nb">alias</span> <span class="nv">h</span><span class="o">=</span><span class="s1">&#39;history|grep &#39;</span>
+<span class="nb">alias</span> <span class="nv">f</span><span class="o">=</span><span class="s1">&#39;find . |grep &#39;</span>
+<span class="nb">alias</span> <span class="nv">where</span><span class="o">=</span><span class="s1">&#39;which&#39;</span>
+<span class="nb">alias</span> <span class="nv">p</span><span class="o">=</span><span class="s1">&#39;function _p(){ ps aux | grep $1 | grep -v grep;};_p&#39;</span>
+<span class="nb">alias</span> <span class="nv">wget</span><span class="o">=</span><span class="s1">&#39;wget -c&#39;</span>
 
-    if (false) {
-        align = (screen.width < 768) ? "left" : align;
-        indent = (screen.width < 768) ? "0em" : indent;
-        linebreak = (screen.width < 768) ? 'true' : linebreak;
-    }
+<span class="nb">alias</span> <span class="nv">calc</span><span class="o">=</span><span class="s1">&#39;python -ic &quot;from __future__ import division; from math import *&quot;&#39;</span>
 
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}</script>
+<span class="c1">## pass options to free ##</span>
+<span class="nb">alias</span> <span class="nv">meminfo</span><span class="o">=</span><span class="s1">&#39;free -m -l -t&#39;</span>
+<span class="c1">## Get cpu info ##</span>
+<span class="nb">alias</span> <span class="nv">cpuinfo</span><span class="o">=</span><span class="s1">&#39;lscpu&#39;</span>
+<span class="c1">## get top process eating memory</span>
+<span class="nb">alias</span> <span class="nv">psmem</span><span class="o">=</span><span class="s1">&#39;ps auxf | sort -nr -k 4&#39;</span>
+<span class="nb">alias</span> <span class="nv">psmem10</span><span class="o">=</span><span class="s1">&#39;ps auxf | sort -nr -k 4 | head -10&#39;</span>
+<span class="c1">## get top process eating cpu ##</span>
+<span class="nb">alias</span> <span class="nv">pscpu</span><span class="o">=</span><span class="s1">&#39;ps auxf | sort -nr -k 3&#39;</span>
+<span class="nb">alias</span> <span class="nv">pscpu10</span><span class="o">=</span><span class="s1">&#39;ps auxf | sort -nr -k 3 | head -10&#39;</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>
+</pre></div>
 </div>
     <aside>
     <div class="bug-reporting__panel">
