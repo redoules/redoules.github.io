@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-    <meta charset="utf-8">
+      <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -10,24 +10,22 @@
     <meta name="author" content="Guillaume Redoulès">
     <link rel="icon" href="../favicon.ico">
 
-    <title>  Seach Notes on python, machine learning, linux and other programming related topics
-</title>
+    <title>Upload/Download data to/from a sharepoint folder - Python</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
-        window.jQuery || document.write('<script src="./theme/js/jquery.min.js"><\/script>')
+        window.jQuery || document.write('<script src="../theme/js/jquery.min.js"><\/script>')
     </script>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="./theme/css/bootstrap.css" />
+    <link rel="stylesheet" href="../theme/css/bootstrap.css" />
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link rel="stylesheet" type="text/css" href="./theme/css/ie10-viewport-bug-workaround.css" />
+    <link rel="stylesheet" type="text/css" href="../theme/css/ie10-viewport-bug-workaround.css" />
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="./theme/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="./theme/css/notebooks.css" />
+    <link rel="stylesheet" type="text/css" href="../theme/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../theme/css/notebooks.css" />
     <link href='https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto:400,500,700' rel='stylesheet' type='text/css'>
-  <link href="./theme/tipuesearch/tipuesearch.css" rel='stylesheet' type='text/css'>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -35,6 +33,10 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
         
+
+    <meta name="tags" content="Other" />
+
+
 </head>
 
 <body>
@@ -47,7 +49,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href=".">Guillaume Redoulès</a>
+                <a class="navbar-brand" href="..">Guillaume Redoulès</a>
             </div>
             <div class="navbar-collapse collapse" id="searchbar">
 
@@ -55,7 +57,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="./pages/about.html">About Guillaume</a></li>
+                            <li><a href="../pages/about.html">About Guillaume</a></li>
                             <li><a href="https://github.com/redoules">GitHub</a></li>
                             <li><a href="https://www.linkedin.com/in/guillaume-redoul%C3%A8s-33923860/">LinkedIn</a></li>
                         </ul>
@@ -63,13 +65,13 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Science<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href=".#Blog">Blog</a></li>
-                            <li><a href=".#Python">Python</a></li>
-                            <li><a href=".#Bash">Bash</a></li>
-                            <li><a href=".#SQL">SQL</a></li>
-                            <li><a href=".#Mathematics">Mathematics</a></li>
-                            <li><a href=".#Machine_Learning">Machine Learning</a></li>
-                            <li><a href=".#Projects">Projects</a></li>
+                            <li><a href="..#Blog">Blog</a></li>
+                            <li><a href="..#Python">Python</a></li>
+                            <li><a href="..#Bash">Bash</a></li>
+                            <li><a href="..#SQL">SQL</a></li>
+                            <li><a href="..#Mathematics">Mathematics</a></li>
+                            <li><a href="..#Machine_Learning">Machine Learning</a></li>
+                            <li><a href="..#Projects">Projects</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -80,13 +82,13 @@
                     </li>
 
                     <!--<li class="dropdown">
-                        <a href="./feeds/blog.rss.xml">Blog RSS</a>
+                        <a href="../feeds/blog.rss.xml">Blog RSS</a>
                     </li>-->
 
 
                 </ul>
 
-                <form class="navbar-form" action="./search.html" onsubmit="return validateForm(this.elements['q'].value);">
+                <form class="navbar-form" action="../search.html" onsubmit="return validateForm(this.elements['q'].value);">
                     <div class="form-group" style="display:inline;">
                         <div class="input-group" style="display:table;">
                             <span class="input-group-addon" style="width:1%;"><span class="glyphicon glyphicon-search"></span></span>
@@ -104,9 +106,56 @@
 
     <!-- end of header section -->
     <div class="container">
+<!-- <div class="alert alert-warning" role="alert">
+    Did you find this page useful? Please do me a quick favor and <a href="#" class="alert-link">endorse me for data science on LinkedIn</a>.
+</div> -->
 <section id="content" class="body">
-    <div id="tipue_search_content"></div>
+    <header>
+    <h1>
+      Upload/Download data to/from a sharepoint folder
+    </h1>
+<ol class="breadcrumb">
+    <li>
+        <time class="published" datetime="2020-07-20T20:15:00+02:00">
+            20 juillet 2020
+        </time>
+    </li>
+    <li>Python</li>
+    <li>Other</li>
+</ol>
+</header>
+<div class='article_content'>
+<p>Here is how to upload/download file to/from a sharepoint folder without having to use any convoluted authentication method.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="n">problem</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://site.sharepoint.com/path/to/your/folder&#39;</span>
+
+<span class="c1">#mount sharepoint as a network share</span>
+<span class="k">if</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;net use S: </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;net use S: /delete /y&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;net use S: </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">problem</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">problem</span><span class="p">:</span>
+    <span class="c1">#do some stuff</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s2">&quot;link_to_local_file&quot;</span><span class="p">,</span><span class="s2">&quot;S:</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Problem with accessing the Sharepoint site : </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1">#unmount the network share</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;net use S: /delete /y&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+    <aside>
+    <div class="bug-reporting__panel">
+        <h3>Find an error or bug? Have a suggestion?</h3>
+        <p>Everything on this site is avaliable on GitHub. Head on over and <a href='https://github.com/redoules/redoules.github.io/issues/new'>submit an issue.</a> You can also message me directly by <a href='mailto:guillaume.redoules@gadz.org'>email</a>.</p>
+    </div>
+    </aside>
 </section>
+
     </div>
     <!-- start of footer section -->
     <footer class="footer">
@@ -151,23 +200,9 @@
     <!-- Bootstrap core JavaScript
       ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./theme/js/bootstrap.min.js"></script>
+    <script src="../theme/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="./theme/js/ie10-viewport-bug-workaround.js"></script>
-  <script type="text/javascript" src="./theme/tipuesearch/tipuesearch_content.js"></script>
-  <script type="text/javascript" src="./theme/tipuesearch/tipuesearch_set.js"></script>
-  <script type="text/javascript" src="./theme/tipuesearch/tipuesearch.js"></script>
-
-  <script>
-    $(document).ready(function() {
-      $('#tipue_search_input').tipuesearch({
-          'mode' : 'json',
-          'show': 1000,
-          'newWindow': false,
-          'contentLocation': './tipuesearch_content.json'
-      });
-    });
-  </script>
+    <script src="../theme/js/ie10-viewport-bug-workaround.js"></script>
 
 
 </body>
